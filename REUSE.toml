@@ -86,10 +86,9 @@ precedence = "closest"
 SPDX-FileCopyrightText = ["Jellyfin contributors", "Deadfin contributors"]
 SPDX-License-Identifier = "GPL-2.0-only"
 
-# Third-party: SkiaSharp native library and its notices.
+# Third-party: SkiaSharp native library notices.
 [[annotations]]
 path = [
-    "internal/images/native/skia/**",
     "third_party/skia-sharp/**",
 ]
 precedence = "override"

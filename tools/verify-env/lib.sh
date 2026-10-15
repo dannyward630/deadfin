@@ -53,28 +53,6 @@ verify_env_linux_arch() {
     esac
 }
 
-verify_env_skia_library() {
-    skia_root=$1
-    skia_arch=$(verify_env_linux_arch "$2") || return
-    skia_pattern="*/linux-${skia_arch}/libSkiaSharp.so"
-    skia_matches=$(find "$skia_root" -type f -path "$skia_pattern" -print | sort)
-
-    case $skia_matches in
-        '')
-            echo "verify-env: no linux-${skia_arch}/libSkiaSharp.so under $skia_root" >&2
-            return 1
-            ;;
-        *'
-'*)
-            echo "verify-env: multiple linux-${skia_arch}/libSkiaSharp.so files under $skia_root" >&2
-            return 1
-            ;;
-        *)
-            printf '%s\n' "$skia_matches"
-            ;;
-    esac
-}
-
 # Convert Docker's allocated loopback port to the host-network gate DSN.
 verify_env_postgres_dsn() {
     case $1 in

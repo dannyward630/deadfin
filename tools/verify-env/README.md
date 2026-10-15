@@ -72,12 +72,15 @@ x86_64 CI runner remains the sole attestation authority for
 - The image follows the Docker daemon's native Linux architecture; no
   `DOCKER_DEFAULT_PLATFORM` setting is required. The entrypoint normalizes
   `x86_64`/`amd64` to `linux-amd64` and `aarch64`/`arm64` to `linux-arm64`,
-  then copies only the matching checked-in `libSkiaSharp.so`. It fails rather
-  than selecting a different architecture or an ambiguous asset.
-- The entrypoint copies `libSkiaSharp.so` from the mounted Deadfin checkout to
-  `/usr/local/lib/deadfin/`. That is the fixed `dlopen` path in
-  `deadfin/internal/images/skia_webp_linux_cgo.go`. The library version tracks
-  the repository, not the image.
+  then installs only the matching pinned `libSkiaSharp.so`. It fails rather
+  than selecting a different architecture.
+- The entrypoint runs `tools/skia-fetch` from the mounted Deadfin checkout. It
+  installs `libSkiaSharp.so` to `/usr/local/lib/deadfin/`, the fixed `dlopen`
+  path in `internal/images/skia_webp_linux_cgo.go`. The tool takes the library
+  from the SkiaSharp.NativeAssets.Linux NuGet package and verifies the package
+  and the library by SHA-256. The verified library is cached in the `/cache`
+  volume, so only the first run downloads it. The library version tracks the
+  repository, not the image.
 - A `postgres` sidecar provides `DEADFIN_TEST_POSTGRES_DSN` on
   `127.0.0.1:5433`. Its data directory is a tmpfs. The store tests create
   and drop their own schemas, so no database state is kept.
@@ -142,8 +145,8 @@ sh tools/verify-env/portability_test.sh
 python3 -m unittest tools.goldenrec.tests.test_fixture_determinism
 ```
 
-They mock both host `stat` variants, make sure that Skia uses the exact
-architecture, and exercise publication across isolated repositories.
+They mock both host `stat` variants, reject an unsupported architecture, and
+exercise publication across isolated repositories.
 
 ### Parallel CI ownership
 

@@ -21,7 +21,7 @@ import (
 func TestDecodeSkiaBlurHashPixelsMatchesStockPoster(t *testing.T) {
 	pixels, err := DecodeSkiaBlurHashPixels(filepath.Join("testdata", "stock-corpus", "inputs", "landscape.jpg"))
 	if err != nil {
-		t.Fatalf("decode canonical poster through bundled libSkiaSharp: %v", err)
+		t.Fatalf("decode canonical poster through /usr/local/lib/deadfin/libSkiaSharp.so (install it with `make skia`): %v", err)
 	}
 	if got, want := pixels.Bounds().Dx(), 32; got != want {
 		t.Fatalf("Skia poster raster width = %d, want %d", got, want)

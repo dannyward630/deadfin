@@ -9,7 +9,8 @@ security problems privately; see [SECURITY.md](SECURITY.md).
 ## Build and test
 
 You need Go 1.26.9, libvips development files with `pkg-config`, and ffmpeg.
-`shell.nix` provides all of them (`nix-shell`).
+`shell.nix` provides all of them (`nix-shell`). On Linux, `make skia` installs
+the pinned SkiaSharp native library that the image tests load.
 
 ```sh
 make build

@@ -45,8 +45,8 @@ RUN case "$TARGETARCH" in \
 
 # The gate runs as the invoking host user (compose sets user:). /cache is a
 # named volume for toolchain caches; /usr/local/lib/deadfin receives the
-# repo's libSkiaSharp.so at container start (fixed dlopen path in
-# deadfin/internal/images/skia_webp_linux_cgo.go).
+# pinned libSkiaSharp.so from tools/skia-fetch at container start (fixed
+# dlopen path in internal/images/skia_webp_linux_cgo.go).
 RUN mkdir -p /cache /cache/home /usr/local/lib/deadfin \
     && chmod 1777 /cache /cache/home \
     && chmod 0777 /usr/local/lib/deadfin

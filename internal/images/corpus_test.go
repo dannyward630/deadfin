@@ -99,7 +99,7 @@ func testP301StockCorpus(t *testing.T, runtimeOwner *images.Runtime) {
 				return
 			}
 			if testCase.Request.OutputFormat == "webp" && testCase.Request.Quality == 0 && runtime.GOOS != "linux" {
-				t.Skip("WebP Q0 stock parity requires the packaged Linux libSkiaSharp 3.119.4 runtime; run the linux/amd64 image corpus")
+				t.Skip("WebP Q0 stock parity requires the packaged Linux libSkiaSharp 3.119.4 runtime (`make skia`); run the linux/amd64 image corpus")
 			}
 
 			stock, stockFormat := decodeStockImage(t, stockPath)

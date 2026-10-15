@@ -40,6 +40,8 @@ license. Deadfin runs ffmpeg and ffprobe as separate processes.
 * SkiaSharp 3.119.4 native library (/usr/local/lib/deadfin/libSkiaSharp.so)
   MIT License, with bundled third-party notices.
   /usr/share/licenses/skia-sharp/3.119.4/
+  Source: https://www.nuget.org/packages/SkiaSharp.NativeAssets.Linux/3.119.4
+  (https://github.com/mono/SkiaSharp)
 
 * Other Debian packages (the base image, ca-certificates, the libraries
   that libvips and jellyfin-ffmpeg depend on, and intel-opencl-icd on amd64)

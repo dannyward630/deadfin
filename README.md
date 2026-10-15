@@ -256,8 +256,11 @@ go build -o deadfin ./cmd/deadfin
 ./deadfin --program-data ./data --listen :8096
 ```
 
-`make build` compiles every package and `make test` runs the tests. To
-build a local container image:
+`make build` compiles every package and `make test` runs the tests. On
+Linux, the image tests load the SkiaSharp native library from
+`/usr/local/lib/deadfin/libSkiaSharp.so`. `make skia` installs it from the
+SkiaSharp.NativeAssets.Linux NuGet package, verified by SHA-256, and caches it
+for later runs. To build a local container image:
 
 ```bash
 make image PLATFORM=linux/amd64
@@ -286,7 +289,8 @@ Deadfin runs ffmpeg as a separate process.
   build. Source:
   <https://github.com/jellyfin/jellyfin-ffmpeg/releases/tag/v8.1.1-1>.
 - **libvips** (LGPL-2.1-or-later), from Debian bookworm.
-- **SkiaSharp 3.119.4** native library (MIT): `third_party/skia-sharp/`.
+- **SkiaSharp 3.119.4** native library (MIT), from the
+  SkiaSharp.NativeAssets.Linux NuGet package: `third_party/skia-sharp/`.
 
 `third_party/deadfin-image/NOTICE` (in the image:
 `/usr/share/doc/deadfin/NOTICE`) lists every component, where its license

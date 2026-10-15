@@ -48,6 +48,18 @@ FROM --platform=$BUILDPLATFORM golang:1.26.9-bookworm@sha256:d9c68c2c51161e12fd7
 ARG TARGETARCH
 RUN case "$TARGETARCH" in amd64) digest=33b6defb6fcd26c366e1fe062aa52af8b0157a4003ce67a8b3ae6b54245ebb3d ;; arm64) digest=062efa04b8f0de43fd4951d18095eaf16b5690cecf5fc19243cf52d781dba362 ;; *) echo "unsupported target architecture: $TARGETARCH" >&2; exit 1 ;; esac && mkdir -p /out && curl --fail --silent --show-error --location --output /out/jellyfin-ffmpeg.deb "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v8.1.1-1/jellyfin-ffmpeg8_8.1.1-1-bookworm_${TARGETARCH}.deb" && echo "$digest  /out/jellyfin-ffmpeg.deb" | sha256sum --check --strict -
 
+# SkiaSharp native library from the official SkiaSharp.NativeAssets.Linux
+# NuGet package, the version the pinned Jellyfin revision uses. skia-fetch
+# verifies the SHA-256 of the package and of the extracted library. Only the
+# tool's own files are copied, so source edits do not invalidate this layer.
+FROM --platform=$BUILDPLATFORM golang:1.26.9-bookworm@sha256:d9c68c2c51161e12fd77e4c6320687c9cd86e1af1e3ad6e6cd63ff970641453c AS skiasharp
+ARG TARGETARCH
+WORKDIR /src
+COPY go.mod ./
+COPY tools/skia-fetch/main.go tools/skia-fetch/
+RUN --mount=type=cache,target=/root/.cache/deadfin-skiasharp \
+    CGO_ENABLED=0 go run ./tools/skia-fetch -arch "$TARGETARCH" -cache /root/.cache/deadfin-skiasharp -o /out/libSkiaSharp.so
+
 FROM --platform=$TARGETPLATFORM debian:bookworm-slim@sha256:7b140f374b289a7c2befc338f42ebe6441b7ea838a042bbd5acbfca6ec875818 AS runtime
 ARG REVISION
 ARG VERSION
@@ -65,7 +77,7 @@ ENV PATH=/usr/lib/jellyfin-ffmpeg:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/
 RUN groupadd --gid 65532 deadfin && useradd --uid 65532 --gid 65532 --create-home --home-dir /var/lib/deadfin --shell /usr/sbin/nologin deadfin && mkdir -p /var/lib/deadfin && chown -R 65532:65532 /var/lib/deadfin
 ENV DEADFIN_DATA_DIR=/var/lib/deadfin
 
-COPY internal/images/native/skia/3.119.4/linux-${TARGETARCH}/libSkiaSharp.so /usr/local/lib/deadfin/libSkiaSharp.so
+COPY --from=skiasharp /out/libSkiaSharp.so /usr/local/lib/deadfin/libSkiaSharp.so
 COPY third_party/skia-sharp/3.119.4/ /usr/share/licenses/skia-sharp/3.119.4/
 # Deadfin's license and provenance, and the third-party NOTICE with the source offer.
 COPY LICENSE PROVENANCE.md third_party/deadfin-image/NOTICE /usr/share/doc/deadfin/

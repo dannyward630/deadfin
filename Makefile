@@ -21,7 +21,7 @@ IMAGE_LOAD_ARCHIVE ?= dist/.deadfin-image-$(IMAGE_TAG)-$(subst /,-,$(PLATFORM)).
 BUILDX ?= docker buildx build
 BUILD_ARGS = --build-arg REVISION="$(REVISION)" --build-arg VERSION="$(VERSION)" --build-arg CHANNEL="$(CHANNEL)" --build-arg DIRTY="$(DIRTY)" --build-arg SOURCE_DATE_EPOCH="$(SOURCE_DATE_EPOCH)"
 
-.PHONY: build build-identity test image image-archive image-verify image-push ensure-clean upstream
+.PHONY: build build-identity test skia image image-archive image-verify image-push ensure-clean upstream
 
 # Validation gates (difftool, goldenrec, ledger, convention gates).
 include validation.mk
@@ -53,6 +53,15 @@ build-identity:
 
 test:
 	go test ./...
+
+# skia installs the pinned SkiaSharp native library at the fixed dlopen path
+# that the Linux image tests use. tools/skia-fetch downloads the NuGet package
+# only on a cache miss and verifies the package and the library by SHA-256.
+SKIA_LIB ?= /usr/local/lib/deadfin/libSkiaSharp.so
+SUDO ?= sudo
+skia:
+	go run ./tools/skia-fetch -o dist/skia/libSkiaSharp.so
+	$(SUDO) install -D -m 0755 dist/skia/libSkiaSharp.so "$(SKIA_LIB)"
 
 image:
 	@mkdir -p "$(dir $(IMAGE_LOAD_ARCHIVE))"

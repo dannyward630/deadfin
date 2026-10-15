@@ -164,25 +164,8 @@ multiline_probe='991
 992'
 expect_failure "multiline effective socket gid is rejected" "numeric" verify_env_effective_docker_socket_gid "$multiline_probe"
 
-skia_root="$tmpdir/skia"
-amd64_library="$skia_root/3.119.4/linux-amd64/libSkiaSharp.so"
-arm64_library="$skia_root/3.119.4/linux-arm64/libSkiaSharp.so"
-mkdir -p "$(dirname "$amd64_library")" "$(dirname "$arm64_library")"
-: >"$amd64_library"
-: >"$arm64_library"
-
-# Architecture aliases must select only the matching Linux native asset.
-expect_output "x86_64 selects linux-amd64 Skia" "$amd64_library" verify_env_skia_library "$skia_root" x86_64
-expect_output "aarch64 selects linux-arm64 Skia" "$arm64_library" verify_env_skia_library "$skia_root" aarch64
-
-# Never fall back to the other architecture when the requested asset is absent.
-mismatch_root="$tmpdir/mismatch"
-mkdir -p "$mismatch_root/3.119.4/linux-arm64"
-: >"$mismatch_root/3.119.4/linux-arm64/libSkiaSharp.so"
-expect_failure "missing requested architecture rejects mismatch" "linux-amd64/libSkiaSharp.so" verify_env_skia_library "$mismatch_root" amd64
-
 # An unknown architecture is not a license to guess a library path.
-expect_failure "unsupported architecture is rejected" "unsupported" verify_env_skia_library "$skia_root" ppc64le
+expect_failure "unsupported architecture is rejected" "unsupported" verify_env_linux_arch ppc64le
 
 if [ "$failures" -ne 0 ]; then
     printf 'FAIL: %s portability regression(s) failed\n' "$failures" >&2
