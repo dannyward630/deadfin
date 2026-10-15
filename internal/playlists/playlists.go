@@ -248,14 +248,27 @@ func (s *Service) Create(ctx context.Context, request CreateRequest) (dto.UUID, 
 		return dto.NilUUID, err
 	}
 
-	directory := filepath.Join(*folder.Path, dfpath.ValidFilename(request.Name))
+	// GetTargetPath appends "1" until the name is free. Path.Combine does
+	// not normalize, so "." and ".." name existing directories there and
+	// take the suffix too; the playlist never leaves the playlists folder.
+	folderName := dfpath.ValidFilename(request.Name)
+	var directory string
 	for {
-		if _, err := os.Stat(directory); errors.Is(err, os.ErrNotExist) {
+		if folderName == "." || folderName == ".." {
+			folderName += "1"
+			continue
+		}
+		candidate, ok := dfpath.JoinLocal(*folder.Path, folderName)
+		if !ok {
+			return dto.NilUUID, fmt.Errorf("%w: invalid playlist name", ErrInvalid)
+		}
+		if _, err := os.Stat(candidate); errors.Is(err, os.ErrNotExist) {
+			directory = candidate
 			break
 		} else if err != nil {
-			return dto.NilUUID, fmt.Errorf("playlists: inspect %s: %w", directory, err)
+			return dto.NilUUID, fmt.Errorf("playlists: inspect %s: %w", candidate, err)
 		}
-		directory += "1"
+		folderName += "1"
 	}
 	if err := os.MkdirAll(directory, 0o750); err != nil {
 		return dto.NilUUID, fmt.Errorf("playlists: create %s: %w", directory, err)

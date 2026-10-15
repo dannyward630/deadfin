@@ -2150,3 +2150,28 @@ func TestSchedulerRejectsRegistrationAfterStart(t *testing.T) {
 		t.Fatalf("Register after Close = %v, want ErrSchedulerClosed", err)
 	}
 }
+
+// The task ID matches case-insensitively; the override file uses the
+// registered ID so the next start finds it.
+func TestSchedulerUpdateTriggersPersistsRegisteredID(t *testing.T) {
+	c := clock.NewFake(time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC))
+	s, _, configDir, _ := newTestScheduler(t, c)
+	if err := tasks.RegisterBuiltins(s, tasks.BuiltinDeps{}); err != nil {
+		t.Fatalf("RegisterBuiltins: %v", err)
+	}
+	ticks := int64(36e9)
+	triggers := []tasks.TriggerInfo{{Type: tasks.TriggerInterval, IntervalTicks: &ticks}}
+	if err := s.UpdateTriggers(strings.ToUpper(refreshLibraryID), triggers); err != nil {
+		t.Fatalf("UpdateTriggers: %v", err)
+	}
+	if _, err := os.Stat(filepath.Join(configDir, "7738148f-fcd0-7979-c7ce-b148e06b3aed.js")); err != nil {
+		t.Fatalf("trigger file under registered ID: %v", err)
+	}
+	entries, err := os.ReadDir(configDir)
+	if err != nil {
+		t.Fatalf("ReadDir: %v", err)
+	}
+	if len(entries) != 1 {
+		t.Fatalf("config dir has %d entries, want 1", len(entries))
+	}
+}

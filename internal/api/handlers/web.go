@@ -14,6 +14,7 @@ import (
 	"github.com/go-chi/chi/v5"
 
 	"github.com/deadfin-org/deadfin/internal/api/router"
+	dfpath "github.com/deadfin-org/deadfin/internal/path"
 )
 
 // registerWeb serves the web client distribution at /web, matching upstream
@@ -126,12 +127,15 @@ func (h web) serve(w http.ResponseWriter, r *http.Request) {
 
 	// Containment: reject any request whose cleaned relative path would
 	// escape the web root ("..", absolute paths). Never serve such a file.
-	if rest != "" && !filepath.IsLocal(strings.TrimSuffix(rest, "/")) {
-		w.WriteHeader(http.StatusNotFound)
-		return
+	name := h.root
+	if rest != "" {
+		local, ok := dfpath.JoinLocal(h.root, filepath.FromSlash(strings.TrimSuffix(rest, "/")))
+		if !ok {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+		name = local
 	}
-
-	name := filepath.Join(h.root, filepath.FromSlash(rest))
 	info, err := os.Stat(name)
 	if err == nil && info.IsDir() {
 		// Upstream's UseDefaultFiles maps a directory request to its

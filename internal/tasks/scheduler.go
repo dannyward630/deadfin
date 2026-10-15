@@ -292,7 +292,9 @@ func (s *Scheduler) UpdateTriggers(id string, triggers []TriggerInfo) error {
 	if !ok {
 		return ErrTaskNotFound
 	}
-	if err := s.persist.saveTriggers(id, triggers); err != nil {
+	// Persist under the registered ID, the name loadTriggers reads at
+	// startup, not the request casing.
+	if err := s.persist.saveTriggers(t.def.ID, triggers); err != nil {
 		return err
 	}
 	t.mu.Lock()

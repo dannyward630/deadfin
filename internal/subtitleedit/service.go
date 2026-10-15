@@ -26,6 +26,7 @@ import (
 	"github.com/deadfin-org/deadfin/internal/item"
 	"github.com/deadfin-org/deadfin/internal/library"
 	"github.com/deadfin-org/deadfin/internal/naming"
+	dfpath "github.com/deadfin-org/deadfin/internal/path"
 	"github.com/deadfin-org/deadfin/internal/playback"
 )
 
@@ -137,8 +138,8 @@ func (s *Service) Upload(ctx context.Context, userID, id dto.UUID, upload Upload
 	if err != nil {
 		return err
 	}
-	format := strings.ToLower(upload.Format)
-	if !allowedFormat(format) {
+	format, ok := allowedFormat(strings.ToLower(upload.Format))
+	if !ok {
 		return fmt.Errorf("%w: unsupported subtitle format: '%s'", ErrInvalidRequest, upload.Format)
 	}
 	language := strings.ToLower(upload.Language)
@@ -300,8 +301,8 @@ func (s *Service) refreshStreams(ctx context.Context, target item.Item) error {
 // existing file is never replaced: the name takes a counter
 // (<name>.0.<ext>, <name>.1.<ext>, ...) as upstream does.
 func saveSubtitle(directory, saveName, format string, data []byte) (string, error) {
-	base := filepath.Join(directory, saveName)
-	if filepath.Dir(base) != filepath.Clean(directory) {
+	base, ok := dfpath.JoinLocal(directory, saveName)
+	if !ok || filepath.Dir(base) != filepath.Clean(directory) {
 		return "", fmt.Errorf("%w: subtitle path is outside %q", ErrInvalidRequest, directory)
 	}
 	if err := os.MkdirAll(directory, 0o755); err != nil {
@@ -350,17 +351,18 @@ func decodeBase64(value string) ([]byte, error) {
 }
 
 // allowedFormat ports _allowedSubtitleFormats: the naming subtitle
-// extensions without the dot.
-func allowedFormat(format string) bool {
+// extensions without the dot. It returns the matched extension from the
+// list, not the request value.
+func allowedFormat(format string) (string, bool) {
 	if format == "" {
-		return false
+		return "", false
 	}
 	for _, extension := range naming.DefaultOptions().SubtitleFileExtensions {
-		if strings.TrimPrefix(extension, ".") == format {
-			return true
+		if allowed := strings.TrimPrefix(extension, "."); allowed == format {
+			return allowed, true
 		}
 	}
-	return false
+	return "", false
 }
 
 func isVideoFile(value item.Item) bool {

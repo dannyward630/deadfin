@@ -292,6 +292,25 @@ func TestPlaylistCreateAndRead(t *testing.T) {
 	f.expect(f.do(http.MethodPost, "/Playlists", f.friend.String(), `{"Name":"X","UserId":"`+owner+`"}`), http.StatusForbidden)
 }
 
+// TestPlaylistCreateDotNamesStayInFolder pins GetTargetPath for "." and
+// "..": Path.Combine keeps them as existing names, so they take the "1"
+// suffix inside the playlists folder.
+func TestPlaylistCreateDotNamesStayInFolder(t *testing.T) {
+	f := newPlaylistFixture(t)
+	owner := f.owner.String()
+	f.create(owner, `{"Name":"..","Ids":[]}`)
+	f.create(owner, `{"Name":".","Ids":[]}`)
+	f.create(owner, `{"Name":"../..","Ids":[]}`)
+	for _, name := range []string{"..1", ".1", ".. .."} {
+		if info, err := os.Stat(filepath.Join(f.data, "playlists", name)); err != nil || !info.IsDir() {
+			t.Fatalf("playlist directory %q: %v", name, err)
+		}
+	}
+	if _, err := os.Stat(filepath.Join(filepath.Dir(f.data), "data1")); !os.IsNotExist(err) {
+		t.Fatalf("playlist directory escaped the playlists folder: %v", err)
+	}
+}
+
 // TestPlaylistCreateRequiresName returns 400 for a nameless request.
 func TestPlaylistCreateRequiresName(t *testing.T) {
 	f := newPlaylistFixture(t)
