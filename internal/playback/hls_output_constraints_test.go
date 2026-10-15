@@ -418,6 +418,66 @@ func TestHLSServiceMasterCopiesDolbyBaseLayersForMatchingRequestedRanges(t *test
 	}
 }
 
+// TestHLSServiceCopiesDolbyEnhancementLayerAsHVC1 pins D-65: a profile 7
+// copy writes an hvc1 init with no Dolby Vision configuration, to match the
+// hvc1 master variant, even when the client lists DOVI. Profile 8.1 keeps
+// the dvh1 tag.
+func TestHLSServiceCopiesDolbyEnhancementLayerAsHVC1(t *testing.T) {
+	// Swiftfin AVPlayer hevc-rangetype (tools/qamatrix avPlayerRanges).
+	const swiftfinRanges = "SDR,DOVIWithSDR,HLG,DOVIWithHLG,HDR10,HDR10Plus,DOVIWithHDR10,DOVIWithHDR10Plus,DOVIWithEL,DOVIWithELHDR10Plus,DOVI"
+	for _, test := range []struct {
+		name          string
+		profile       int
+		compatibility int
+		hdr10Plus     bool
+		wantTag       string
+		wantStrict    bool
+	}{
+		{name: "profile 7 EL", profile: 7, compatibility: 6, wantTag: "hvc1"},
+		{name: "profile 7 EL with HDR10+", profile: 7, compatibility: 6, hdr10Plus: true, wantTag: "hvc1"},
+		{name: "profile 8.1 keeps dvh1", profile: 8, compatibility: 1, wantTag: "dvh1", wantStrict: true},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			source := progressiveCopySource("/media/dolby-enhancement-layer-feature.mkv")
+			video := &source.MediaStreams[0]
+			video.Codec = "hevc"
+			profileName, bitDepth, transfer := "Main 10", 10, "smpte2084"
+			level, rpu, base := 6, 1, 1
+			video.Profile, video.BitDepth, video.ColorTransfer = &profileName, &bitDepth, &transfer
+			video.DvProfile, video.DvLevel = &test.profile, &level
+			video.RpuPresentFlag, video.BlPresentFlag, video.DvBlSignalCompatibilityID = &rpu, &base, &test.compatibility
+			video.Hdr10PlusPresentFlag = &test.hdr10Plus
+			videoLevel := float64(153)
+			video.Level = &videoLevel
+
+			request := hlsMasterCopyRequest("hevc")
+			request.StreamOptions = playback.NewStreamOptions()
+			request.StreamOptions.Set("hevc-rangetype", swiftfinRanges)
+			manager := &hlsFakeManager{segment: "segment"}
+			service := newHLSService(&progressiveFakeSource{source: source}, manager)
+			master, err := service.Master(t.Context(), request)
+			if err != nil {
+				t.Fatalf("Master(): %v", err)
+			}
+			if playlist := readHLSResponse(t, master); !strings.Contains(playlist, `CODECS="hvc1.2.4.L153.B0`) || strings.Contains(playlist, `,CODECS="dvh1`) {
+				t.Fatalf("Master() playlist = %q, want only the hvc1 base-layer variant", playlist)
+			}
+
+			request.SegmentIndex = 0
+			if _, err := service.Segment(t.Context(), request); err != nil {
+				t.Fatalf("Segment(0): %v", err)
+			}
+			args := manager.lastRestart.Args
+			if !hlsArgPair(args, "-codec:v:0", "copy") || !hlsArgPair(args, "-tag:v:0", test.wantTag) {
+				t.Fatalf("HLS argv = %q, want video copy tagged %s", args, test.wantTag)
+			}
+			if got := hlsArgPair(args, "-strict", "-2"); got != test.wantStrict {
+				t.Fatalf("HLS argv = %q, -strict -2 = %t, want %t", args, got, test.wantStrict)
+			}
+		})
+	}
+}
+
 func TestHLSServiceMasterIncludesSelectedHLSSubtitlesWithoutManifestFlag(t *testing.T) {
 	for _, test := range []struct {
 		name              string
@@ -494,6 +554,8 @@ func TestHLSServiceConstrainedH264ProfileAndLevelMatchMasterAndEncoder(t *testin
 		{name: "High level 4.1", profile: "High", level: "4.1", codecToken: "avc1.640029", encoderProfile: "high", encoderLevel: "4.1"},
 		{name: "Main level 4.0", profile: "Main", level: "4.0", codecToken: "avc1.4D4028", encoderProfile: "main", encoderLevel: "4.0"},
 		{name: "Baseline level 4.0", profile: "Baseline", level: "4.0", codecToken: "avc1.42E028", encoderProfile: "baseline", encoderLevel: "4.0"},
+		// Swiftfin sends h264-level=80; NormalizeTranscodingLevel caps it at 5.1.
+		{name: "Swiftfin level 80", profile: "high,main,baseline,constrainedbaseline", level: "80", codecToken: "avc1.640033", encoderProfile: "high", encoderLevel: "5.1"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			manager := &hlsFakeManager{segment: "encoded segment"}
@@ -519,6 +581,52 @@ func TestHLSServiceConstrainedH264ProfileAndLevelMatchMasterAndEncoder(t *testin
 			}
 			if got := hlsConstraintArgumentValue(manager.lastRestart.Args, "-level:v:0"); got != test.encoderLevel {
 				t.Fatalf("Segment() level argv = %q, want constrained level %q; argv=%q", got, test.encoderLevel, manager.lastRestart.Args)
+			}
+		})
+	}
+}
+
+// TestHLSServiceUnconstrainedH264LevelFitsOutput pins D-66: without a
+// requested level, the master CODECS token and the encoder -level carry the
+// lowest level that holds the output, not below 4.1.
+func TestHLSServiceUnconstrainedH264LevelFitsOutput(t *testing.T) {
+	for _, test := range []struct {
+		name                      string
+		width, height             int
+		frameRate                 float32
+		maxWidth, maxHeight, rate int
+		codecToken, encoderLevel  string
+	}{
+		{name: "720p30 stays 4.1", width: 1280, height: 720, frameRate: 30, maxWidth: 1920, maxHeight: 1080, rate: 3_000_000, codecToken: "avc1.640029", encoderLevel: "4.1"},
+		{name: "1440p24 needs 5.0", width: 3840, height: 2160, frameRate: 23.976, maxWidth: 2560, maxHeight: 1440, rate: 19_360_000, codecToken: "avc1.640032", encoderLevel: "5.0"},
+		{name: "2160p24 needs 5.1", width: 3840, height: 2160, frameRate: 23.976, maxWidth: 3840, maxHeight: 2160, rate: 60_000_000, codecToken: "avc1.640033", encoderLevel: "5.1"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			source := progressiveCopySource("/media/unconstrained-level.mkv")
+			video := &source.MediaStreams[0]
+			video.Width, video.Height = &test.width, &test.height
+			video.AverageFrameRate, video.RealFrameRate = &test.frameRate, &test.frameRate
+			bitrate := 50_000_000
+			video.BitRate = &bitrate
+			manager := &hlsFakeManager{segment: "encoded segment"}
+			service := newHLSService(&progressiveFakeSource{source: source}, manager)
+			request := hlsTranscodeRequest()
+			request.Profile, request.Level = nil, nil
+			request.MaxWidth, request.MaxHeight = &test.maxWidth, &test.maxHeight
+			request.VideoBitrate = hlsInt(test.rate)
+
+			response, err := service.Master(t.Context(), request)
+			if err != nil {
+				t.Fatalf("Master(): %v", err)
+			}
+			if playlist := readHLSResponse(t, response); !strings.Contains(playlist, `CODECS="`+test.codecToken+",") {
+				t.Fatalf("Master() playlist = %q, want %s", playlist, test.codecToken)
+			}
+			if _, err := service.Segment(t.Context(), request); err != nil {
+				t.Fatalf("Segment(): %v", err)
+			}
+			if got := hlsConstraintArgumentValue(manager.lastRestart.Args, "-level:v:0"); got != test.encoderLevel {
+				t.Fatalf("Segment() level argv = %q, want %q; argv=%q", got, test.encoderLevel, manager.lastRestart.Args)
 			}
 		})
 	}

@@ -915,6 +915,9 @@ func hlsEncodingJob(source MediaSourceInfo, video, audio, subtitle *MediaStream,
 		if job.OutputVideoCodec != "copy" {
 			hlsApplyResolutionNormalizer(&job, video, request)
 		}
+		if job.OutputVideoCodec == "h264" && job.OutputVideoLevel == 0 {
+			job.OutputVideoLevel = hlsH264FitLevel(job, video)
+		}
 		if subtitle != nil {
 			job.SubtitleStream = &encoding.SubtitleStream{
 				InputIndex:    hlsSubtitleInputIndex(subtitle),
@@ -958,7 +961,7 @@ func hlsEncodingJob(source MediaSourceInfo, video, audio, subtitle *MediaStream,
 		SegmentLengthSeconds: request.SegmentLengthSeconds,
 		StartNumber:          0,
 		RunTimeTicks:         int64PointerValue(source.RunTimeTicks),
-		DirectDolbyVision:    !request.AudioOnly && job.OutputVideoCodec == "copy" && hlsDOVISource(video) && hlsDOVIRequested(video, request),
+		DirectDolbyVision:    !request.AudioOnly && job.OutputVideoCodec == "copy" && hlsDOVISource(video) && !hlsDOVIEnhancementLayer(video) && hlsDOVIRequested(video, request),
 	}
 }
 
@@ -1050,11 +1053,50 @@ func hlsH264OutputConstraints(request ProgressiveRequest) (string, int) {
 			break
 		}
 	}
-	level := 41
+	// NormalizeTranscodingLevel (EncodingHelper.cs:1895-1904) caps H.264 at
+	// 5.1. Without a requested level, hlsH264FitLevel sets it from the output.
+	level := 0
 	if requestedLevel != nil && *requestedLevel > 0 {
-		level = int(*requestedLevel)
+		level = min(int(*requestedLevel), 51)
 	}
 	return profile, level
+}
+
+// hlsH264FitLevel returns the lowest H.264 level, not below 4.1, that holds
+// the output frame size, macroblock rate and bitrate. The master CODECS
+// token and the encoder -level use it, so the playlist advertises the level
+// of the stream. Pinned upstream advertises 4.1 and passes no -level when
+// the request has none, and the encoder picks a higher level for larger
+// output (D-66).
+func hlsH264FitLevel(job encoding.EncodingJob, video *MediaStream) int {
+	width, height := job.OutputWidth, job.OutputHeight
+	if (width <= 0 || height <= 0) && video.Width != nil && video.Height != nil {
+		width, height = *video.Width, *video.Height
+	}
+	frameRate := job.OutputFrameRate
+	if frameRate <= 0 {
+		frameRate = hlsFrameRate(video.ReferenceFrameRate())
+	}
+	widthMBs, heightMBs := (width+15)/16, (height+15)/16
+	frameSize := widthMBs * heightMBs
+	mbps := int(math.Ceil(float64(frameSize) * frameRate))
+	// H.264 Table A-1 from level 4.1 up: MaxMBPS, MaxFS, and the High
+	// profile MaxBR (1.25 x MaxBR) in bit/s.
+	levels := [...]struct{ level, maxMBPS, maxFS, maxBitrate int }{
+		{41, 245_760, 8_192, 62_500_000},
+		{42, 522_240, 8_704, 62_500_000},
+		{50, 589_824, 22_080, 168_750_000},
+		{51, 983_040, 36_864, 300_000_000},
+		{52, 2_073_600, 36_864, 300_000_000},
+	}
+	for _, limits := range levels {
+		// A frame dimension must not exceed sqrt(8 * MaxFS) macroblocks.
+		maxSide := int(math.Sqrt(float64(8 * limits.maxFS)))
+		if frameSize <= limits.maxFS && widthMBs <= maxSide && heightMBs <= maxSide && mbps <= limits.maxMBPS && job.OutputVideoBitrate <= limits.maxBitrate {
+			return limits.level
+		}
+	}
+	return 51
 }
 
 func hlsAudioEncodingJob(source MediaSourceInfo, audio *MediaStream, outputPath string, request HLSRequest) encoding.EncodingJob {
@@ -1188,7 +1230,12 @@ func hlsHardwareOutputConstraints(codec string, request ProgressiveRequest) (str
 			level = int(*requested)
 		}
 	}
-	return "main", level
+	// NormalizeTranscodingLevel (EncodingHelper.cs:1874-1894) caps HEVC at
+	// 5.0 and AV1 at 5.3.
+	if codec == "av1" {
+		return "main", min(level, 15)
+	}
+	return "main", min(level, 150)
 }
 
 // validateHLSTargetCodecs rejects a request that Deadfin's encoder cannot
@@ -1361,8 +1408,11 @@ func (prepared preparedHLS) masterVariant() hls.MasterVariant {
 		}
 	} else {
 		profile, level := prepared.job.OutputVideoProfile, prepared.job.OutputVideoLevel
-		if profile == "" || level == 0 {
-			profile, level = "high", 41
+		if profile == "" {
+			profile = "high"
+		}
+		if level == 0 {
+			level = 41
 		}
 		variant.Video = hls.MasterVideo{Codec: prepared.job.OutputVideoCodec, Profile: profile, Level: level, BitDepth: 8, Range: hls.VideoRangeSDR}
 	}
@@ -1492,6 +1542,19 @@ func hlsDOVIRequested(video *MediaStream, request HLSRequest) bool {
 func hlsDOVISource(video *MediaStream) bool {
 	switch video.VideoRangeType() {
 	case VideoRangeDOVI, VideoRangeDOVIWithEL, VideoRangeDOVIWithHLG, VideoRangeDOVIWithSDR, VideoRangeDOVIWithHDR10, VideoRangeDOVIWithHDR10Plus, VideoRangeDOVIWithELHDR10Plus:
+		return true
+	default:
+		return false
+	}
+}
+
+// hlsDOVIEnhancementLayer reports a dual-layer (profile 7) source. Its copy
+// is tagged hvc1 with no Dolby Vision configuration box, so the init segment
+// matches the hvc1 master variant and the client plays the HDR10 base layer.
+// No AVPlayer decodes a profile 7 configuration (D-65).
+func hlsDOVIEnhancementLayer(video *MediaStream) bool {
+	switch video.VideoRangeType() {
+	case VideoRangeDOVIWithEL, VideoRangeDOVIWithELHDR10Plus:
 		return true
 	default:
 		return false

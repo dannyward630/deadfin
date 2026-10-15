@@ -40,7 +40,7 @@ func TestHLSServiceMasterSelectsTranscodeCodecByProbedEncoder(t *testing.T) {
 		wantCodecs string
 		wantArg    string
 	}{
-		{"Ada AV1 allowed", ada, true, true, []string{"av1", "hevc", "h264"}, "av01.0.19M.08", "av1_nvenc"},
+		{"Ada AV1 allowed", ada, true, true, []string{"av1", "hevc", "h264"}, "av01.0.15M.08", "av1_nvenc"}, // NormalizeTranscodingLevel caps AV1 at 15.
 		{"Ampere skips AV1 for HEVC", ampere, true, true, []string{"av1", "hevc", "h264"}, "hvc1.1.4.L120.B0", "hevc_nvenc"},
 		{"AV1 and HEVC not allowed", ada, false, false, []string{"av1", "hevc", "h264"}, "avc1.640029", "h264_nvenc"},
 		{"only disallowed codecs keep their order", ada, false, false, []string{"hevc", "av1"}, "hvc1.1.4.L120.B0", "hevc_nvenc"},
