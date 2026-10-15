@@ -309,6 +309,10 @@ class SentinelProxy:
                 if target.scheme != "http" or not target.hostname:
                     self.send_error(502, "sentinel received a non-HTTP proxy request")
                     return
+                # The sentinel forwards only to the loopback test servers.
+                if target.hostname not in ("127.0.0.1", "::1", "localhost"):
+                    self.send_error(502, "sentinel forwards only to loopback")
+                    return
                 connection = http.client.HTTPConnection(target.hostname, target.port or 80, timeout=2)
                 try:
                     headers = {

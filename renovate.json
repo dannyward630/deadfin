@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Renovate runs against the Gitea source repository. The GitHub repository receives the updates through the one-way export.",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests", "docker:pinDigests"],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 5,
+  "schedule": ["before 6am on monday"],
+  "ignorePaths": ["upstream/**", "corpora/**", "tools/difftool/vendor/**"],
+  "postUpdateOptions": ["gomodTidy"],
+  "packageRules": [
+    {
+      "description": "One pull request per week for Go module minor and patch updates.",
+      "matchManagers": ["gomod"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "groupName": "Go modules"
+    },
+    {
+      "description": "The Go toolchain moves with the golang base image digest.",
+      "matchPackageNames": ["go", "golang"],
+      "groupName": "Go toolchain"
+    },
+    {
+      "description": "One pull request per week for GitHub Actions digests.",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    }
+  ]
+}

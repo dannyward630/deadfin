@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/dlclark/regexp2"
 )
@@ -684,16 +686,54 @@ func removeSeasonPunctuation(value string) string {
 	}, value)
 }
 
+// removeFoldAll ports string.Replace(remove, "", OrdinalIgnoreCase): one
+// left-to-right pass that removes each non-overlapping case-insensitive
+// match. It compares rune by rune on value itself, so a case mapping that
+// changes the byte length cannot shift an index.
 func removeFoldAll(value, remove string) string {
 	if remove == "" {
 		return value
 	}
-	lowerValue, lowerRemove := strings.ToLower(value), strings.ToLower(remove)
-	for index := strings.Index(lowerValue, lowerRemove); index >= 0; index = strings.Index(lowerValue, lowerRemove) {
-		value = value[:index] + value[index+len(remove):]
-		lowerValue = lowerValue[:index] + lowerValue[index+len(lowerRemove):]
+	var result strings.Builder
+	for index := 0; index < len(value); {
+		if matched := foldPrefixLength(value[index:], remove); matched > 0 {
+			index += matched
+			continue
+		}
+		_, size := utf8.DecodeRuneInString(value[index:])
+		result.WriteString(value[index : index+size])
+		index += size
 	}
-	return value
+	return result.String()
+}
+
+// foldPrefixLength returns the byte length of the prefix of value that
+// equals prefix under simple case folding, or 0 when there is none.
+func foldPrefixLength(value, prefix string) int {
+	index := 0
+	for _, want := range prefix {
+		if index >= len(value) {
+			return 0
+		}
+		got, size := utf8.DecodeRuneInString(value[index:])
+		if !equalFoldRune(got, want) {
+			return 0
+		}
+		index += size
+	}
+	return index
+}
+
+func equalFoldRune(left, right rune) bool {
+	if left == right {
+		return true
+	}
+	for folded := unicode.SimpleFold(left); folded != left; folded = unicode.SimpleFold(folded) {
+		if folded == right {
+			return true
+		}
+	}
+	return false
 }
 
 func parseInt32Pointer(value string) *int {

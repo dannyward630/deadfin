@@ -25,8 +25,8 @@ RUN install -m 0755 -d /etc/apt/keyrings \
         docker-ce-cli docker-buildx-plugin \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL "https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_VERSION}/install.sh" \
-        | sh -s -- -b /usr/local/bin "${GOLANGCI_LINT_VERSION}"
+# go install verifies the module against the Go checksum database.
+RUN GOBIN=/usr/local/bin go install "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@${GOLANGCI_LINT_VERSION}"
 
 # The fixed SDK artifact and its SHA-512 keep generated assembly provenance
 # reproducible. TARGETARCH comes from the Docker build platform.
