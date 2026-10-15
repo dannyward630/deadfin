@@ -442,7 +442,7 @@ func TestDockerRuntimeProvidesWritableAbsoluteProgramDataForNonrootProcess(t *te
 	}
 
 	for _, want := range [][]byte{
-		[]byte("ENV DEADFIN_DATA_DIR=/var/lib/deadfin"),
+		[]byte("ENV JELLYFIN_DATA_DIR=/var/lib/deadfin"),
 		[]byte("mkdir -p /var/lib/deadfin"),
 		[]byte("chown -R 65532:65532 /var/lib/deadfin"),
 		[]byte("USER 65532:65532"),
@@ -451,8 +451,21 @@ func TestDockerRuntimeProvidesWritableAbsoluteProgramDataForNonrootProcess(t *te
 			t.Fatalf("Dockerfile does not establish nonroot writable program-data contract %q", want)
 		}
 	}
-	if got := resolveProgramData("", fakeEnv(map[string]string{"DEADFIN_DATA_DIR": "/var/lib/deadfin"})); got != "/var/lib/deadfin" {
+	if bytes.Contains(dockerfile, []byte("ENV DEADFIN_DATA_DIR")) {
+		t.Fatal("Dockerfile sets DEADFIN_DATA_DIR, which would outrank a deployment's JELLYFIN_DATA_DIR")
+	}
+	image := map[string]string{"JELLYFIN_DATA_DIR": "/var/lib/deadfin"}
+	if got := resolveProgramData("", fakeEnv(image)); got != "/var/lib/deadfin" {
 		t.Fatalf("container program-data environment resolves to %q, want /var/lib/deadfin", got)
+	}
+	// A deployment that overrides the image's JELLYFIN_DATA_DIR keeps its root.
+	deployed := map[string]string{"JELLYFIN_DATA_DIR": "/var/lib/deadfin/data-old"}
+	if got := resolveProgramData("", fakeEnv(deployed)); got != "/var/lib/deadfin/data-old" {
+		t.Fatalf("deployment JELLYFIN_DATA_DIR resolves to %q, want /var/lib/deadfin/data-old", got)
+	}
+	deployed["DEADFIN_DATA_DIR"] = "/srv/deadfin"
+	if got := resolveProgramData("", fakeEnv(deployed)); got != "/srv/deadfin" {
+		t.Fatalf("deployment DEADFIN_DATA_DIR resolves to %q, want /srv/deadfin", got)
 	}
 }
 

@@ -75,7 +75,9 @@ RUN case "$TARGETARCH" in amd64) opencl=intel-opencl-icd ;; *) opencl= ;; esac &
 # Keep the ffmpeg and ffprobe command names the server already uses.
 ENV PATH=/usr/lib/jellyfin-ffmpeg:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN groupadd --gid 65532 deadfin && useradd --uid 65532 --gid 65532 --create-home --home-dir /var/lib/deadfin --shell /usr/sbin/nologin deadfin && mkdir -p /var/lib/deadfin && chown -R 65532:65532 /var/lib/deadfin
-ENV DEADFIN_DATA_DIR=/var/lib/deadfin
+# The image default sits in the lowest-precedence variable, so a deployment
+# that sets either DEADFIN_DATA_DIR or JELLYFIN_DATA_DIR overrides it.
+ENV JELLYFIN_DATA_DIR=/var/lib/deadfin
 
 COPY --from=skiasharp /out/libSkiaSharp.so /usr/local/lib/deadfin/libSkiaSharp.so
 COPY third_party/skia-sharp/3.119.4/ /usr/share/licenses/skia-sharp/3.119.4/

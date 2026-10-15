@@ -58,7 +58,7 @@ Set only what you need. All are optional.
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `DEADFIN_DATA_DIR` | `/var/lib/deadfin` (image) | Data root. Leave it at the default in the container. `JELLYFIN_DATA_DIR` is the accepted fallback when `DEADFIN_DATA_DIR` is not set. `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`, `JELLYFIN_LOG_DIR` and `JELLYFIN_WEB_DIR` have no effect; Deadfin logs a warning for each one that is set. |
+| `DEADFIN_DATA_DIR` | unset (the image sets `JELLYFIN_DATA_DIR=/var/lib/deadfin`) | Data root. Leave it unset in the container to use `/var/lib/deadfin`. `JELLYFIN_DATA_DIR` is the accepted fallback when `DEADFIN_DATA_DIR` is not set. `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`, `JELLYFIN_LOG_DIR` and `JELLYFIN_WEB_DIR` have no effect; Deadfin logs a warning for each one that is set. |
 | `DEADFIN_DATABASE_URL` | empty: SQLite | A `postgres://` or `postgresql://` URL selects PostgreSQL (see [Database](#database)). The `--database-url` flag overrides it. |
 | `TMDB_API_KEY` | unset | TMDb v3 key. Without it, movies and series keep their file and folder names and get no remote art. |
 | `AUDIODB_API_KEY` | unset | TheAudioDB key for music artwork and bios. |

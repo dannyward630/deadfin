@@ -41,7 +41,8 @@ v0.3.0 is the first public alpha of Deadfin.
 
 - The quick start and the install guide put TMDb API key setup first.
 - `DEADFIN_DATA_DIR` sets the data root. `JELLYFIN_DATA_DIR` stays as the
-  fallback, and the image sets `DEADFIN_DATA_DIR=/var/lib/deadfin`. Deadfin
+  fallback. The image sets its default, `/var/lib/deadfin`, in `JELLYFIN_DATA_DIR`,
+  so a deployment that sets either variable overrides it. Deadfin
   logs a warning for each set `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`,
   `JELLYFIN_LOG_DIR` or `JELLYFIN_WEB_DIR`.
 

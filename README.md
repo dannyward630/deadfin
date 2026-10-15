@@ -206,7 +206,7 @@ takes a few flags and environment variables, all optional.
 |---|---|---|
 | `--listen` | `:8096` | TCP address for the HTTP server. |
 | `--program-data` | `DEADFIN_DATA_DIR`, then `JELLYFIN_DATA_DIR`, then `./data` | Data root: config, database, metadata, cache, logs. |
-| `DEADFIN_DATA_DIR` | `/var/lib/deadfin` in the image | Data root when `--program-data` is not set. Deadfin serves `/web` from `<data root>/web` when it exists. `JELLYFIN_DATA_DIR` is the accepted fallback when `DEADFIN_DATA_DIR` is not set. Deadfin logs a warning for each set `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`, `JELLYFIN_LOG_DIR` or `JELLYFIN_WEB_DIR` and uses `<data root>/config`, `cache`, `log` and `web`. |
+| `DEADFIN_DATA_DIR` | unset; the image sets `JELLYFIN_DATA_DIR=/var/lib/deadfin` | Data root when `--program-data` is not set. Deadfin serves `/web` from `<data root>/web` when it exists. `JELLYFIN_DATA_DIR` is the accepted fallback when `DEADFIN_DATA_DIR` is not set. Deadfin logs a warning for each set `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`, `JELLYFIN_LOG_DIR` or `JELLYFIN_WEB_DIR` and uses `<data root>/config`, `cache`, `log` and `web`. |
 | `--database-url`, `DEADFIN_DATABASE_URL` | empty: SQLite in `<data root>/data/deadfin.db` | A `postgres://user:password@host:5432/dbname` URL selects PostgreSQL. The flag wins over the variable. The maintenance commands read the same setting. |
 | `TMDB_API_KEY` | unset | TMDb v3 key for movie and TV metadata and artwork. |
 | `AUDIODB_API_KEY` | unset | TheAudioDB key for music artwork and bios. |
