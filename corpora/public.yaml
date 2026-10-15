@@ -1,0 +1,283 @@
+format: goldenrec-scenario/v1
+name: public discovery and users
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: public system information Pascal response
+    method: GET
+    path: /System/Info/Public
+    headers:
+      Accept: application/json
+    normalizers:
+      - server-id
+      - server-environment-fields
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPublicSystemInfo
+  - name: public system information CamelCase response
+    method: GET
+    path: /System/Info/Public
+    headers:
+      Accept: application/json; profile="CamelCase"
+    normalizers:
+      - server-id
+      - server-environment-fields
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPublicSystemInfo
+  - name: public users Pascal response
+    method: GET
+    path: /Users/Public
+    headers:
+      Accept: application/json
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPublicUsers
+  - name: public users CamelCase response
+    method: GET
+    path: /Users/Public
+    headers:
+      Accept: application/json; profile="CamelCase"
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPublicUsers
+  - name: authenticated public system information Pascal response
+    method: GET
+    path: /System/Info/Public
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - server-id
+      - server-environment-fields
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPublicSystemInfo
+  - name: authenticated public system information CamelCase response
+    method: GET
+    path: /System/Info/Public
+    headers:
+      Accept: application/json; profile="CamelCase"
+    auth_role: admin
+    normalizers:
+      - server-id
+      - server-environment-fields
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPublicSystemInfo
+  - name: public system ping GET Pascal response
+    method: GET
+    path: /System/Ping
+    headers:
+      Accept: application/json
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPingSystem
+  - name: public system ping GET CamelCase response
+    method: GET
+    path: /System/Ping
+    headers:
+      Accept: application/json; profile="CamelCase"
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPingSystem
+  - name: authenticated system ping GET Pascal response
+    method: GET
+    path: /System/Ping
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPingSystem
+  - name: authenticated system ping GET CamelCase response
+    method: GET
+    path: /System/Ping
+    headers:
+      Accept: application/json; profile="CamelCase"
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPingSystem
+  - name: public system ping POST Pascal response
+    method: POST
+    path: /System/Ping
+    headers:
+      Accept: application/json
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: PostPingSystem
+  - name: public system ping POST CamelCase response
+    method: POST
+    path: /System/Ping
+    headers:
+      Accept: application/json; profile="CamelCase"
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: PostPingSystem
+  - name: authenticated system ping POST Pascal response
+    method: POST
+    path: /System/Ping
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: PostPingSystem
+  - name: authenticated system ping POST CamelCase response
+    method: POST
+    path: /System/Ping
+    headers:
+      Accept: application/json; profile="CamelCase"
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: PostPingSystem
+  - name: authenticated full system information Pascal response
+    method: GET
+    path: /System/Info
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - server-id
+      - server-environment-fields
+      - full-system-runtime-capabilities
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetSystemInfo
+  - name: authenticated full system information CamelCase response
+    method: GET
+    path: /System/Info
+    headers:
+      Accept: application/json; profile="CamelCase"
+    auth_role: admin
+    normalizers:
+      - server-id
+      - server-environment-fields
+      - full-system-runtime-capabilities
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetSystemInfo
+  - name: public root redirect
+    method: GET
+    path: /
+    headers:
+      Accept: application/json
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:RootRedirect
+    expect:
+      status: 302

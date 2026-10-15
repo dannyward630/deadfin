@@ -1,0 +1,24 @@
+# Stock reference only. The OCI index digest was resolved from registry-1.docker.io
+# for jellyfin/jellyfin:12.0-rc2 on 2026-07-26; do not replace it with a mutable tag.
+# Docker Hub has no 12.0.0 tag (HTTP 404); this is the pinned stock RC2 baseline.
+# Its API parity source is vendored Jellyfin commit b04614e (2026-07-25), which reports 12.0.0.
+name: goldenrec
+services:
+  jellyfin:
+    image: jellyfin/jellyfin@sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a
+    ports:
+      - "127.0.0.1:${GOLDENREC_PORT:-8096}:8096"
+    environment:
+      JELLYFIN_CONFIG_DIR: /config/config
+      JELLYFIN_DATA_DIR: /config/data
+      JELLYFIN_CACHE_DIR: /config/cache
+      JELLYFIN_LOG_DIR: /config/log
+      JELLYFIN_PublishedServerUrl: ${GOLDENREC_PUBLISHED_URL:-http://127.0.0.1:${GOLDENREC_PORT:-8096}}
+    volumes:
+      # Colima-compatible mutable stock state; extract snapshots with `docker compose cp`.
+      - goldenrec-config:/config
+      # This tree is generated locally by fixtures/gen.sh and is never writable by stock.
+      - ./fixtures/out:/media:ro
+    restart: "no"
+volumes:
+  goldenrec-config:

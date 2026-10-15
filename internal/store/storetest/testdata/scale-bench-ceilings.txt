@@ -1,0 +1,54 @@
+# Absolute ceilings for the library-scale store benchmarks. The nightly
+# extended workflow runs the benchmarks on SQLite and PostgreSQL and checks
+# them with tools/benchceiling. A ceiling is about 10 times the slower of two
+# results measured on 2026-10-11 with -benchtime 20x: the x86_64 CI
+# runner (extended run 7117) and an Apple M4 Max with PostgreSQL 17 in a
+# local container (about 0.27ms a round trip). SQLite is about 3-8 times
+# slower on the CI runner; PostgreSQL is faster there. The ceilings catch
+# a lost index or a whole-library scan, not small drifts. Lower one only with
+# new measurements; raise one only with the reason in the change.
+
+BenchmarkReconcileAtLibraryScale/sqlite/movie_folder 340ms
+BenchmarkReconcileAtLibraryScale/sqlite/season_folder 400ms
+BenchmarkReconcileAtLibraryScale/postgres/movie_folder 400ms
+BenchmarkReconcileAtLibraryScale/postgres/season_folder 850ms
+
+BenchmarkItemQueryAtLibraryScale/sqlite/one-item_library_page 28ms
+BenchmarkItemQueryAtLibraryScale/sqlite/empty_page 16ms
+BenchmarkItemQueryAtLibraryScale/sqlite/small_library_latest 70ms
+BenchmarkItemQueryAtLibraryScale/sqlite/large_library_page 420ms
+BenchmarkItemQueryAtLibraryScale/sqlite/small_library_grouped_latest 15ms
+
+BenchmarkItemQueryAtLibraryScale/postgres/one-item_library_page 60ms
+BenchmarkItemQueryAtLibraryScale/postgres/empty_page 16ms
+BenchmarkItemQueryAtLibraryScale/postgres/small_library_latest 18ms
+BenchmarkItemQueryAtLibraryScale/postgres/large_library_page 240ms
+BenchmarkItemQueryAtLibraryScale/postgres/small_library_grouped_latest 16ms
+
+# The Filters2 scenarios were measured only on the Apple M4 Max (2026-10-12,
+# -benchtime 20x). The SQLite ceilings allow for the CI runner's slowdown.
+BenchmarkItemQueryAtLibraryScale/sqlite/small_library_filters 20ms
+BenchmarkItemQueryAtLibraryScale/sqlite/tvshows_library_filters 2000ms
+BenchmarkItemQueryAtLibraryScale/sqlite/large_library_filters 500ms
+BenchmarkItemQueryAtLibraryScale/postgres/small_library_filters 90ms
+BenchmarkItemQueryAtLibraryScale/postgres/tvshows_library_filters 450ms
+BenchmarkItemQueryAtLibraryScale/postgres/large_library_filters 140ms
+
+# The grouped Latest, user views and NextUp scenarios, measured on
+# 2026-10-13 with -benchtime 20x: the x86_64 CI runner (extended runs
+# 7534 and 7668; the slower result where both apply) and the Apple M4 Max.
+# The large-library scenario gives movies a presentation key, so
+# it groups and reads alternate versions; the earlier 12ms and 16ms
+# ceilings were measured when it grouped nothing.
+BenchmarkItemQueryAtLibraryScale/sqlite/user_views 5ms
+BenchmarkItemQueryAtLibraryScale/sqlite/large_library_grouped_latest 260ms
+BenchmarkItemQueryAtLibraryScale/sqlite/large_library_grouped_latest,_played_hidden 290ms
+BenchmarkItemQueryAtLibraryScale/sqlite/tvshows_library_grouped_latest 2700ms
+BenchmarkItemQueryAtLibraryScale/sqlite/music_library_grouped_latest,_played_hidden 650ms
+BenchmarkItemQueryAtLibraryScale/sqlite/next_up 6700ms
+BenchmarkItemQueryAtLibraryScale/postgres/user_views 5ms
+BenchmarkItemQueryAtLibraryScale/postgres/large_library_grouped_latest 160ms
+BenchmarkItemQueryAtLibraryScale/postgres/large_library_grouped_latest,_played_hidden 160ms
+BenchmarkItemQueryAtLibraryScale/postgres/tvshows_library_grouped_latest 900ms
+BenchmarkItemQueryAtLibraryScale/postgres/music_library_grouped_latest,_played_hidden 470ms
+BenchmarkItemQueryAtLibraryScale/postgres/next_up 3700ms

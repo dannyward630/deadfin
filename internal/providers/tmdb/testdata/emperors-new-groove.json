@@ -1,0 +1,53 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/configuration",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "images": {
+        "secure_base_url": "https://image.tmdb.org/t/p/",
+        "poster_sizes": ["w92", "w500", "original"],
+        "backdrop_sizes": ["w300", "original"]
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/search/movie?query=The+Emperors+New+Groove&year=2000&language=en&include_adult=false",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "results": [
+        {"id": 11688, "title": "The Emperor's New Groove", "original_title": "The Emperor's New Groove", "overview": "Kuzco is a self-centered emperor.", "poster_path": "/search-poster.jpg", "release_date": "2000-12-15"}
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/movie/11688?language=en&include_image_language=en,null&append_to_response=credits,release_dates,images,videos,keywords",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "id": 11688,
+      "title": "The Emperor's New Groove",
+      "original_title": "The Emperor's New Groove",
+      "original_language": "en",
+      "overview": "Emperor Kuzco is turned into a llama by his ex-administrator Yzma.",
+      "poster_path": "/emperor-poster.jpg",
+      "release_date": "2000-12-15",
+      "imdb_id": "tt0120917",
+      "vote_average": 7.5,
+      "genres": [{"name": "Animation"}, {"name": "Comedy"}],
+      "production_countries": [{"iso_3166_1": "US", "name": "United States of America"}],
+      "release_dates": {
+        "results": [
+          {"iso_3166_1": "US", "release_dates": [{"certification": "G"}]}
+        ]
+      },
+      "images": {
+        "posters": [{"file_path": "/best-poster.jpg", "iso_639_1": "en", "width": 500, "height": 750}]
+      }
+    }
+  }
+]

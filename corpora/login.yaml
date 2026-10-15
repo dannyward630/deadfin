@@ -1,0 +1,232 @@
+format: goldenrec-scenario/v1
+name: seeded login and session flows
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: password login Pascal response
+    method: POST
+    path: /Users/AuthenticateByName
+    headers:
+      Accept: application/json
+      Authorization: MediaBrowser Client="Goldenrec login corpus", Device="Goldenrec login corpus", DeviceId="goldenrec-login-corpus", Version="1.0.0"
+    body:
+      Username: ${auth_username}
+      Pw: ${auth_password}
+    capture:
+      user_id: User.Id
+      username: User.Name
+      session_id: SessionInfo.Id
+    normalizers:
+      - server-id
+      - auth-tokens
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: AuthenticateUserByName
+  - name: password login CamelCase response
+    method: POST
+    path: /Users/AuthenticateByName
+    headers:
+      Accept: application/json; profile="CamelCase"
+      Authorization: MediaBrowser Client="Goldenrec login corpus", Device="Goldenrec login corpus", DeviceId="goldenrec-login-corpus", Version="1.0.0"
+    body:
+      Username: ${auth_username}
+      Pw: ${auth_password}
+    normalizers:
+      - server-id
+      - auth-tokens
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: AuthenticateUserByName
+  - name: password login rejects disabled user
+    method: POST
+    path: /Users/AuthenticateByName
+    headers:
+      Accept: application/json
+      Authorization: MediaBrowser Client="Goldenrec login corpus", Device="Goldenrec login corpus", DeviceId="goldenrec-login-corpus", Version="1.0.0"
+    body:
+      Username: ${disabled_username}
+      Pw: ${disabled_password}
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: AuthenticateUserByName
+  - name: legacy user-id authentication
+    method: POST
+    path: /Users/${user_id}/Authenticate
+    params:
+      pw: ${auth_password}
+    headers:
+      Accept: application/json; profile="CamelCase"
+      Authorization: MediaBrowser Client="Goldenrec login corpus", Device="Goldenrec login corpus", DeviceId="goldenrec-login-corpus", Version="1.0.0"
+    normalizers:
+      - server-id
+      - auth-tokens
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:AuthenticateUser
+  - name: current user Pascal response
+    method: GET
+    path: /Users/Me
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - server-id
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetCurrentUser
+  - name: current user CamelCase response
+    method: GET
+    path: /Users/Me
+    headers:
+      Accept: application/json; profile="CamelCase"
+    auth_role: admin
+    normalizers:
+      - server-id
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetCurrentUser
+  - name: display preferences write
+    method: POST
+    path: /DisplayPreferences/usersettings
+    params:
+      client: P0-05-AuthReplay
+    headers:
+      Accept: application/json; profile="CamelCase"
+    body:
+      SortBy: DateCreated
+      RememberSorting: true
+      CustomPrefs:
+        replay: login
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: UpdateDisplayPreferences
+  - name: display preferences roundtrip read
+    method: GET
+    path: /DisplayPreferences/usersettings
+    params:
+      client: P0-05-AuthReplay
+    headers:
+      Accept: application/json; profile="CamelCase"
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetDisplayPreferences
+  - name: report session capabilities
+    method: POST
+    path: /Sessions/Capabilities/Full
+    params:
+      id: ${session_id}
+    headers:
+      Accept: application/json
+    body:
+      PlayableMediaTypes:
+        - Audio
+        - Video
+      SupportedCommands:
+        - Play
+        - MoveUp
+      SupportsMediaControl: true
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: PostFullCapabilities
+  - name: sessions listing
+    method: GET
+    path: /Sessions
+    headers:
+      Accept: application/json; profile="CamelCase"
+    auth_role: admin
+    normalizers:
+      - server-id
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetSessions
+  - name: password login rejects invalid password
+    method: POST
+    path: /Users/AuthenticateByName
+    headers:
+      Accept: application/json
+      Authorization: MediaBrowser Client="Goldenrec login corpus", Device="Goldenrec login corpus", DeviceId="goldenrec-login-corpus", Version="1.0.0"
+    body:
+      Username: ${username}
+      Pw: difftool-deliberately-invalid-password
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: AuthenticateUserByName

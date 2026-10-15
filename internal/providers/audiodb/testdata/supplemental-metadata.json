@@ -1,0 +1,58 @@
+[
+  {
+    "method": "GET",
+    "url": "https://www.theaudiodb.com/api/v1/json/test-key/artist-mb.php?i=aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+    "status": 200,
+    "header": {
+      "Cache-Control": ["public, max-age=172800"],
+      "Content-Type": ["application/json"]
+    },
+    "body": {
+      "artists": [
+        {
+          "idArtist": "1001",
+          "strArtist": "Fixture Artist",
+          "strGenre": "Art Rock",
+          "strBiography": "Fallback biography.",
+          "strBiographyEN": "English biography.",
+          "strBiographyFR": "<p>Biographie &amp; détails.</p>",
+          "strMusicBrainzID": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+          "strArtistThumb": "https://images.example/artist-thumb.jpg",
+          "strArtistLogo": "https://images.example/artist-logo.png",
+          "strArtistBanner": "https://images.example/artist-banner.jpg",
+          "strArtistFanart": "https://images.example/artist-fanart-1.jpg",
+          "strArtistFanart2": "https://images.example/artist-fanart-2.jpg",
+          "strArtistFanart3": "https://images.example/artist-fanart-3.jpg"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://www.theaudiodb.com/api/v1/json/test-key/album-mb.php?i=cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+    "status": 200,
+    "header": {
+      "Cache-Control": ["public, max-age=172800"],
+      "Content-Type": ["application/json"]
+    },
+    "body": {
+      "album": [
+        {
+          "idAlbum": "2002",
+          "idArtist": "1001",
+          "strAlbum": "Fixture Album (AudioDb)",
+          "strArtist": "Fixture Artist",
+          "intYearReleased": "2024",
+          "strGenre": "Progressive Rock",
+          "strDescription": "Fallback album description.",
+          "strDescriptionEN": "English album description.",
+          "strDescriptionFR": "<div>Description française &amp; notes.</div>",
+          "strMusicBrainzID": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+          "strMusicBrainzArtistID": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+          "strAlbumThumb": "https://images.example/album-thumb.jpg",
+          "strAlbumCDart": "https://images.example/album-disc.png"
+        }
+      ]
+    }
+  }
+]

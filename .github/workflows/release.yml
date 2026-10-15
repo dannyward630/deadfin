@@ -1,0 +1,338 @@
+# Release images for ghcr.io/deadfin-org/deadfin.
+#
+# A vX.Y.Z or vX.Y.Z-rc.N tag on a master commit builds one image per architecture on a
+# native GitHub-hosted runner, pushes each by digest, smoke-tests each digest,
+# then publishes the multi-arch index under the release tag.
+# tools/image-publication maps the tag to the build identity.
+# tools/release-tags.sh decides whether the index also moves :alpha (newest
+# release or rc) and :latest (newest release). The publish job attests build
+# provenance for the index; each build job makes an SPDX SBOM for its digest.
+# The GitHub Release body is the CHANGELOG.md section of the tag
+# (tools/release-notes.sh).
+#
+# Keep the trigger to tags: these jobs hold the packages: write token.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/deadfin-org/deadfin
+
+jobs:
+  prepare:
+    name: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      publication_tag: ${{ steps.publication.outputs.publication_tag }}
+      commit_sha: ${{ steps.publication.outputs.commit_sha }}
+      version: ${{ steps.publication.outputs.version }}
+      channel: ${{ steps.publication.outputs.channel }}
+      floating_tags: ${{ steps.floating.outputs.floating_tags }}
+      source_date_epoch: ${{ steps.epoch.outputs.source_date_epoch }}
+    steps:
+      # actions/checkout v4.2.2. Full history: image-publication checks that
+      # the tagged commit is on origin/master.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Derive and validate the release identity
+        id: publication
+        env:
+          REQUESTED_REF: ${{ github.ref }}
+        run: |
+          set -eu
+          tools/image-publication "$REQUESTED_REF" | tee -a "$GITHUB_OUTPUT"
+          grep -qx -e 'channel=release' -e 'channel=rc' "$GITHUB_OUTPUT" || { echo "::error::$REQUESTED_REF is not a release or rc tag"; exit 1; }
+
+      - name: Select the floating image tags
+        id: floating
+        env:
+          TAG: ${{ steps.publication.outputs.publication_tag }}
+        run: git tag --list | tools/release-tags.sh "$TAG" | tee -a "$GITHUB_OUTPUT"
+
+      # Fail before the build when the tag has no release notes.
+      - name: Check the release notes
+        env:
+          TAG: ${{ github.ref_name }}
+        run: tools/release-notes.sh "$TAG" > /dev/null
+
+      - name: Resolve source date epoch
+        id: epoch
+        env:
+          COMMIT_SHA: ${{ steps.publication.outputs.commit_sha }}
+        run: echo "source_date_epoch=$(git show -s --format=%ct "$COMMIT_SHA")" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: build (${{ matrix.arch }})
+    needs: prepare
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      # actions/checkout v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ needs.prepare.outputs.commit_sha }}
+          persist-credentials: false
+
+      # docker/setup-buildx-action v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+
+      # docker/login-action v3
+      - name: Log in to ghcr.io
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # docker/build-push-action v6. The publish job tags the index after both
+      # smoke tests pass.
+      - name: Build and push ${{ matrix.arch }} by digest
+        id: push
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          platforms: linux/${{ matrix.arch }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          build-args: |
+            REVISION=${{ needs.prepare.outputs.commit_sha }}
+            VERSION=${{ needs.prepare.outputs.version }}
+            CHANNEL=${{ needs.prepare.outputs.channel }}
+            DIRTY=false
+            SOURCE_DATE_EPOCH=${{ needs.prepare.outputs.source_date_epoch }}
+          cache-from: type=gha,scope=release-${{ matrix.arch }}
+          cache-to: type=gha,scope=release-${{ matrix.arch }},mode=max
+
+      - name: Smoke-test the ${{ matrix.arch }} digest
+        env:
+          IMAGE_DIGEST_REF: ${{ env.IMAGE }}@${{ steps.push.outputs.digest }}
+          COMMIT_SHA: ${{ needs.prepare.outputs.commit_sha }}
+          BUILD_VERSION: ${{ needs.prepare.outputs.version }}
+          BUILD_CHANNEL: ${{ needs.prepare.outputs.channel }}
+        run: tools/image-smoke "$IMAGE_DIGEST_REF" "$COMMIT_SHA" "$BUILD_VERSION" "$BUILD_CHANNEL" false
+
+      # anchore/sbom-action v0.24.2. SPDX SBOM of the smoke-tested digest. The
+      # publish job attests it and the release job attaches it.
+      - name: SBOM for the ${{ matrix.arch }} digest
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26
+        with:
+          image: ${{ env.IMAGE }}@${{ steps.push.outputs.digest }}
+          registry-username: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          format: spdx-json
+          output-file: ${{ runner.temp }}/sbom/deadfin-${{ needs.prepare.outputs.publication_tag }}-linux-${{ matrix.arch }}.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+          dependency-snapshot: false
+
+      - name: Record the digest
+        env:
+          DIGEST: ${{ steps.push.outputs.digest }}
+        run: |
+          mkdir -p "${RUNNER_TEMP}/digests"
+          printf '%s\n' "$DIGEST" > "${RUNNER_TEMP}/digests/${{ matrix.arch }}"
+
+      # actions/upload-artifact v4.6.2
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: digest-${{ matrix.arch }}
+          path: ${{ runner.temp }}/digests/${{ matrix.arch }}
+          retention-days: 1
+
+      # actions/upload-artifact v4.6.2
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sbom-${{ matrix.arch }}
+          path: ${{ runner.temp }}/sbom/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: publish
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # id-token and attestations: write sign and store the attestations.
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    outputs:
+      index_digest: ${{ steps.index.outputs.digest }}
+    steps:
+      # actions/download-artifact v4.3.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: digest-*
+          path: ${{ runner.temp }}/digests
+          merge-multiple: true
+
+      # actions/download-artifact v4.3.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: sbom-*
+          path: ${{ runner.temp }}/sbom
+          merge-multiple: true
+
+      # docker/setup-buildx-action v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+
+      # docker/login-action v3
+      - name: Log in to ghcr.io
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish the multi-arch index
+        id: index
+        env:
+          TAG: ${{ needs.prepare.outputs.publication_tag }}
+          FLOATING_TAGS: ${{ needs.prepare.outputs.floating_tags }}
+        run: |
+          set -eu
+          amd64=$(cat "${RUNNER_TEMP}/digests/amd64")
+          arm64=$(cat "${RUNNER_TEMP}/digests/arm64")
+          docker buildx imagetools create --tag "${IMAGE}:${TAG}" "${IMAGE}@${amd64}" "${IMAGE}@${arm64}"
+          docker buildx imagetools inspect "${IMAGE}:${TAG}"
+          digest=$(docker buildx imagetools inspect "${IMAGE}:${TAG}" --format '{{json .Manifest}}' | jq -r .digest)
+          echo "digest=${digest}" >> "$GITHUB_OUTPUT"
+          # The floating tags point at the same index digest as the exact tag.
+          for floating in $FLOATING_TAGS; do
+            docker buildx imagetools create --tag "${IMAGE}:${floating}" "${IMAGE}@${digest}"
+          done
+          {
+            echo "### ${IMAGE}:${TAG}"
+            echo
+            echo "Also tagged: ${FLOATING_TAGS:-none}"
+            echo
+            echo '```'
+            docker buildx imagetools inspect "${IMAGE}:${TAG}" --format '{{json .Manifest}}' | head -c 4000
+            echo
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Record the per-architecture digests
+        id: arch
+        run: |
+          set -eu
+          echo "amd64=$(cat "${RUNNER_TEMP}/digests/amd64")" >> "$GITHUB_OUTPUT"
+          echo "arm64=$(cat "${RUNNER_TEMP}/digests/arm64")" >> "$GITHUB_OUTPUT"
+
+      # actions/attest-build-provenance v4.2.2. SLSA build provenance for the
+      # multi-arch index, stored on GitHub and pushed to ghcr.io.
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.index.outputs.digest }}
+          push-to-registry: true
+
+      # actions/attest-build-provenance v4.2.2 with an SPDX predicate: one
+      # SBOM attestation per architecture digest.
+      - name: Attest the amd64 SBOM
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.arch.outputs.amd64 }}
+          predicate-type: https://spdx.dev/Document/v2.3
+          predicate-path: ${{ runner.temp }}/sbom/deadfin-${{ needs.prepare.outputs.publication_tag }}-linux-amd64.spdx.json
+          push-to-registry: true
+
+      - name: Attest the arm64 SBOM
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.arch.outputs.arm64 }}
+          predicate-type: https://spdx.dev/Document/v2.3
+          predicate-path: ${{ runner.temp }}/sbom/deadfin-${{ needs.prepare.outputs.publication_tag }}-linux-arm64.spdx.json
+          push-to-registry: true
+
+  # The GitHub Release for the tag, after the image is published. An rc tag
+  # makes a prerelease. The body is the CHANGELOG.md section of the tag and
+  # names the multi-arch index by digest. The SBOMs are release assets.
+  release:
+    name: release
+    needs: [prepare, publish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      # actions/checkout v4.2.2. CHANGELOG.md and tools/release-notes.sh.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ needs.prepare.outputs.commit_sha }}
+          persist-credentials: false
+
+      # actions/download-artifact v4.3.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: sbom-*
+          path: ${{ runner.temp }}/sbom
+          merge-multiple: true
+
+      - name: Create the GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+          CHANNEL: ${{ needs.prepare.outputs.channel }}
+          PUBLICATION_TAG: ${{ needs.prepare.outputs.publication_tag }}
+          DIGEST: ${{ needs.publish.outputs.index_digest }}
+        run: |
+          set -eu
+          notes="${RUNNER_TEMP}/notes.md"
+          {
+            tools/release-notes.sh "$TAG"
+            echo
+            echo "## Image"
+            echo
+            echo '```sh'
+            echo "docker pull ${IMAGE}:${PUBLICATION_TAG}"
+            echo "docker pull ${IMAGE}@${DIGEST}"
+            echo '```'
+            echo
+            echo "Platforms: linux/amd64, linux/arm64. See [docs/alpha](https://github.com/${GH_REPO}/tree/${TAG}/docs/alpha) to install."
+            echo
+            echo "## Verify"
+            echo
+            echo "The image carries a build provenance attestation and an SPDX SBOM attestation for each architecture. The SBOMs are attached to this release."
+            echo
+            echo '```sh'
+            echo "gh attestation verify oci://${IMAGE}@${DIGEST} --repo ${GH_REPO}"
+            echo '```'
+          } > "$notes"
+          prerelease=""
+          [ "$CHANNEL" = rc ] && prerelease="--prerelease"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release edit "$TAG" --notes-file "$notes" $prerelease
+          else
+            gh release create "$TAG" --verify-tag --title "$TAG" --notes-file "$notes" $prerelease
+          fi
+          gh release upload "$TAG" --clobber "${RUNNER_TEMP}"/sbom/*.spdx.json

@@ -1,0 +1,8 @@
+<Project>
+  <!-- The pinned Jellyfin project filters MimeTypes contentFiles even though its
+       source references MediaBrowser.Model.MimeTypes. regenerate.py materializes
+       the exact pinned template with its documented root namespace token. -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'MediaBrowser.Model'">
+    <Compile Include="$(MSBuildThisFileDirectory)MimeTypes.Nullable.cs" Link="Generated/MimeTypes.Nullable.cs" />
+  </ItemGroup>
+</Project>

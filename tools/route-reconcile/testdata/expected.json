@@ -1,0 +1,11 @@
+[
+  {
+    "operationId": "GetAudioStreamByContainer",
+    "method": "GET",
+    "path": "/Audio/{itemId}/stream.{container}",
+    "observed": {
+      "evidence": "synthetic capture 2026-08-15",
+      "issue": ""
+    }
+  }
+]

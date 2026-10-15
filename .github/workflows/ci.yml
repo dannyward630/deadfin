@@ -1,0 +1,150 @@
+# Convention checks, the test suite on amd64, and govulncheck.
+#
+# Pull requests, including forks, run on GitHub-hosted runners with a
+# read-only token. A PostgreSQL service container runs the store tests.
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  conventions:
+    name: conventions
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # actions/checkout v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      # actions/setup-go v6.3.0
+      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417
+        with:
+          go-version-file: go.mod
+          cache: false
+      - name: Verify convention gates
+        run: make verify-convention-gates
+
+  test:
+    name: test (amd64)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:17-bookworm
+        env:
+          POSTGRES_USER: deadfin
+          POSTGRES_PASSWORD: deadfin
+          POSTGRES_DB: deadfin
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U deadfin -d deadfin"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 30
+    steps:
+      # actions/checkout v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      # actions/setup-go v6.3.0
+      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417
+        with:
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+
+      - name: Build and runtime prerequisites
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq build-essential ffmpeg libvips-dev pkg-config python3
+
+      - name: Committed SkiaSharp runtime (arch-matched, image-parity placement)
+        run: sudo install -D -m 0755 "internal/images/native/skia/3.119.4/linux-$(go env GOARCH)/libSkiaSharp.so" /usr/local/lib/deadfin/libSkiaSharp.so
+
+      # The scanned-fixture integration tests in cmd/deadfin read the
+      # synthetic goldenrec media from GOLDENREC_FIXTURES_DIR.
+      - name: Generate goldenrec fixtures
+        run: |
+          set -eu
+          dir="${RUNNER_TEMP}/goldenrec-fixtures"
+          GOLDENREC_FIXTURES_DIR="$dir" bash tools/goldenrec/fixtures/gen.sh
+          echo "GOLDENREC_FIXTURES_DIR=$dir" >> "$GITHUB_ENV"
+
+      - name: Build
+        run: go build ./...
+
+      # gofmt every tracked Go file outside tools/difftool/vendor.
+      - name: Format
+        run: |
+          set -eu
+          unformatted="$(git ls-files -z -- '*.go' ':!tools/difftool/vendor' | xargs -0 gofmt -l)"
+          if [ -n "$unformatted" ]; then
+            printf 'gofmt required:\n%s\n' "$unformatted"
+            exit 1
+          fi
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Architecture probe
+        run: |
+          go env GOARCH GOOS
+          uname -m
+
+      - name: Targeted arch-sensitive tests
+        run: go test ./internal/store/... ./internal/images/... -count=1
+
+      # The process-reaping tests need a parent that collects zombies. The
+      # subreaper provides one on any runner.
+      - name: Build the CI subreaper
+        run: go build -o "${RUNNER_TEMP}/subreaper" ./tools/ci/subreaper
+
+      - name: Buildx digest extraction
+        run: ./tools/extract-buildx-digest_test.sh
+
+      - name: Release scripts
+        run: ./tools/release-notes_test.sh && ./tools/release-tags_test.sh && ./tools/image-publication_test.sh
+
+      # unreadable_file cannot prove unreadability when the job runs as root.
+      - name: Test
+        env:
+          DEADFIN_TEST_POSTGRES_DSN: postgres://deadfin:deadfin@localhost:5432/deadfin?sslmode=disable
+        run: |
+          SUBTESTS='^TestGoldenrecSeedUserRejectsInvalidCredentialFilesWithoutEchoingCredentials$/^unreadable_file$'
+          "${RUNNER_TEMP}/subreaper" go test ./... -skip "${SUBTESTS}"
+
+  # Known vulnerabilities in the Go modules and the standard library that our
+  # code reaches. govulncheck exits non-zero on a reachable finding; a finding
+  # in code that is not called is listed but does not fail the job.
+  govulncheck:
+    name: govulncheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # actions/checkout v4.2.2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      # actions/setup-go v6.3.0
+      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417
+        with:
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+
+      # The cgo packages need libvips and pkg-config to type-check.
+      - name: Build prerequisites
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq build-essential libvips-dev pkg-config
+
+      - name: Install govulncheck v1.8.0
+        run: go install golang.org/x/vuln/cmd/govulncheck@v1.8.0
+
+      - name: govulncheck
+        run: "$(go env GOPATH)/bin/govulncheck ./..."

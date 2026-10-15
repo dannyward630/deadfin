@@ -1,0 +1,63 @@
+[
+  {
+    "method": "GET",
+    "url": "https://musicbrainz.org/ws/2/artist/?fmt=json&query=%22Fixture+Artist%22",
+    "status": 200,
+    "header": {
+      "Cache-Control": ["public, max-age=3600"],
+      "Content-Type": ["application/json"]
+    },
+    "body": {
+      "count": 2,
+      "artists": [
+        {
+          "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+          "name": "Fixture Artist (canonical)",
+          "life-span": {
+            "begin": "1984-02-03"
+          }
+        },
+        {
+          "id": "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+          "name": "Second Result"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://musicbrainz.org/ws/2/release/?fmt=json&query=%22Fixture+Album%22+AND+artist%3A%22Fixture+Artist%22",
+    "status": 200,
+    "header": {
+      "Cache-Control": ["public, max-age=3600"],
+      "Content-Type": ["application/json"]
+    },
+    "body": {
+      "count": 2,
+      "releases": [
+        {
+          "id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+          "title": "Fixture Album",
+          "date": "2024-03-02",
+          "annotation": "MusicBrainz album annotation.",
+          "release-group": {
+            "id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+          },
+          "artist-credit": [
+            {
+              "name": "Fixture Artist",
+              "artist": {
+                "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+                "name": "Fixture Artist (canonical)"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+          "title": "Second Result"
+        }
+      ]
+    }
+  }
+]

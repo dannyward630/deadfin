@@ -1,0 +1,18 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    schema: "internal/store/migrate/migrations/sqlite"
+    queries: "internal/store/sqlc/sqlite"
+    gen:
+      go:
+        package: "sqlitesqlc"
+        out: "internal/store/sqlc/sqlitegen"
+        sql_package: "database/sql"
+  - engine: "postgresql"
+    schema: "internal/store/migrate/migrations/postgres"
+    queries: "internal/store/sqlc/postgres"
+    gen:
+      go:
+        package: "postgressqlc"
+        out: "internal/store/sqlc/postgresgen"
+        sql_package: "database/sql"

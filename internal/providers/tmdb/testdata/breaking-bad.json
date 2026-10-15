@@ -1,0 +1,88 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/configuration",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {"images": {"secure_base_url": "https://image.tmdb.org/t/p/"}}
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/search/tv?query=Breaking+Bad&first_air_date_year=2008&language=en&include_adult=false",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "results": [
+        {"id": 1396, "name": "Breaking Bad", "original_name": "Breaking Bad", "overview": "A chemistry teacher.", "poster_path": "/search-bb.jpg", "first_air_date": "2008-01-20"}
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396?language=en&include_image_language=en,null&append_to_response=credits,external_ids,content_ratings,keywords,videos,images",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "id": 1396,
+      "name": "Breaking Bad",
+      "original_name": "Breaking Bad",
+      "original_language": "en",
+      "overview": "A high school chemistry teacher turned meth producer.",
+      "poster_path": "/bb-poster.jpg",
+      "homepage": "https://www.amc.com/shows/breaking-bad",
+      "status": "Ended",
+      "first_air_date": "2008-01-20",
+      "last_air_date": "2013-09-29",
+      "vote_average": 8.9,
+      "episode_run_time": [45, 47],
+      "genres": [{"name": "Drama"}, {"name": "Crime"}],
+      "networks": [{"name": "AMC"}],
+      "production_companies": [{"name": "Sony Pictures Television"}],
+      "created_by": [{"id": 66633, "name": "Vince Gilligan", "profile_path": "/vince.jpg"}],
+      "credits": {
+        "cast": [
+          {"id": 17419, "name": "Bryan Cranston", "character": "Walter White", "order": 0, "profile_path": "/bryan.jpg"},
+          {"id": 84497, "name": "Aaron Paul", "character": "Jesse Pinkman", "order": 1, "profile_path": "/aaron.jpg"}
+        ],
+        "crew": [
+          {"id": 66633, "name": "Vince Gilligan", "job": "Writer", "department": "Writing", "profile_path": "/vince.jpg"}
+        ]
+      },
+      "external_ids": {"imdb_id": "tt0903747", "tvdb_id": 81189, "tvrage_id": 18164},
+      "content_ratings": {"results": [{"iso_3166_1": "US", "rating": "TV-MA"}, {"iso_3166_1": "GB", "rating": "18"}]},
+      "keywords": {"results": [{"name": "new mexico"}, {"name": "drug dealer"}]},
+      "videos": {"results": [{"key": "HhesaQXLuRY", "name": "Trailer", "site": "YouTube", "type": "Trailer"}]},
+      "images": {
+        "posters": [{"file_path": "/bb-best-poster.jpg", "iso_639_1": "en", "width": 500, "height": 750}],
+        "backdrops": [
+          {"file_path": "/bb-backdrop.jpg", "iso_639_1": null, "width": 1280, "height": 720},
+          {"file_path": "/bb-text-backdrop.jpg", "iso_639_1": "en", "width": 1920, "height": 1080}
+        ],
+        "logos": [{"file_path": "/bb-logo.png", "iso_639_1": "en", "width": 1000, "height": 400}]
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396?append_to_response=credits,external_ids,content_ratings,keywords,videos,images",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "id": 1396,
+      "name": "Breaking Bad",
+      "original_name": "Breaking Bad",
+      "original_language": "en",
+      "overview": "A high school chemistry teacher turned meth producer.",
+      "poster_path": "/bb-poster.jpg",
+      "first_air_date": "2008-01-20",
+      "images": {
+        "posters": [{"file_path": "/bb-best-poster.jpg", "iso_639_1": "en", "width": 500, "height": 750}],
+        "backdrops": [
+          {"file_path": "/bb-backdrop.jpg", "iso_639_1": null, "width": 1280, "height": 720},
+          {"file_path": "/bb-text-backdrop.jpg", "iso_639_1": "en", "width": 1920, "height": 1080}
+        ],
+        "logos": [{"file_path": "/bb-logo.png", "iso_639_1": "en", "width": 1000, "height": 400}]
+      }
+    }
+  }
+]

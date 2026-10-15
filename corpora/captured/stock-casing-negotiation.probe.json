@@ -1,0 +1,205 @@
+{
+  "format": "deadfin.stock-casing-probe/v1",
+  "provenance": {
+    "credential_free": true,
+    "request_method": "GET",
+    "endpoint": "/System/Info/Public",
+    "stock_oci_image": "jellyfin/jellyfin@sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+    "api_source": {
+      "repository": "jellyfin/jellyfin",
+      "commit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+    },
+    "recorder": "credential-free curl probe against the digest-pinned stock container"
+  },
+  "cases": [
+    {
+      "id": "accept-repeated-fields-first-plain-json-wins-tie",
+      "request": {"headers": {"Accept": ["application/json", "application/json; profile=CamelCase"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-repeated-fields-later-higher-q-camel-wins",
+      "request": {"headers": {"Accept": ["application/json; profile=PascalCase; q=.1", "application/json; profile=CamelCase; q=.9"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-last-q-wins-camel",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.1; q=.9, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-last-q-wins-pascal",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; q=.1, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-empty-last-q-rejects-candidate",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; q=, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-nonnumeric-last-q-rejects-candidate",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; q=bad, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-signed-q-is-rejected",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=+.9, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-negative-q-is-rejected",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=-.9, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-exponent-q-is-rejected",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=9e-1, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-nan-q-is-rejected",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=NaN, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-double-decimal-q-is-rejected",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=0.9.1, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-leading-decimal-q-is-valid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-trailing-decimal-q-is-valid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=1., application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-recovers-later-camel-after-unterminated-quote",
+      "request": {"headers": {"Accept": ["application/json; profile=\"broken, application/json; profile=CamelCase"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-recovered-candidates-retain-order",
+      "request": {"headers": {"Accept": ["application/json; profile=\"broken, application/json; profile=PascalCase, application/json; profile=CamelCase"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-inf-q-is-rejected",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=Inf, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-infinity-q-selects-camel",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=Infinity, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-negative-infinity-q-is-rejected",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=-Infinity, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-upper-infinity-q-selects-camel",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=INFINITY, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-lower-infinity-q-selects-camel",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=infinity, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-positive-infinity-q-selects-camel",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=+Infinity, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-valid-earlier-camel-survives-unterminated-quote",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase, application/json; profile=\"broken"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-quoted-comma-extension-is-valid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; ext=\"one,two\", application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-quoted-semicolon-extension-is-valid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; ext=\"one;two\", application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-token-extension-is-valid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; ext=token, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "CamelCase", "required_json_keys": ["version", "id"], "absent_json_keys": ["Version", "Id"]}
+    },
+    {
+      "id": "accept-trailing-quote-extension-is-invalid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; ext=token\", application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-unquoted-space-extension-is-invalid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; ext=bad token, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-unquoted-symbol-extension-is-invalid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; ext=@, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+    {
+      "id": "accept-quoted-extension-suffix-is-invalid",
+      "request": {"headers": {"Accept": ["application/json; profile=CamelCase; q=.9; ext=\"token\"junk, application/json; profile=PascalCase; q=.5"]}},
+      "observed": {"status": 200, "casing": "PascalCase", "required_json_keys": ["Version", "Id"], "absent_json_keys": ["version", "id"]}
+    },
+{
+  "id": "accept-overflow-decimal-q-selects-camel",
+  "request": {
+    "headers": {
+      "Accept": [
+        "application/json; profile=CamelCase; q=9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999, application/json; profile=PascalCase; q=.5"
+      ]
+    }
+  },
+  "observed": {
+    "status": 200,
+    "casing": "CamelCase",
+    "required_json_keys": [
+      "version",
+      "id"
+    ],
+    "absent_json_keys": [
+      "Version",
+      "Id"
+    ]
+  }
+},
+{
+  "id": "accept-underflow-decimal-q-selects-pascal",
+  "request": {
+    "headers": {
+      "Accept": [
+        "application/json; profile=CamelCase; q=0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001, application/json; profile=PascalCase; q=.5"
+      ]
+    }
+  },
+  "observed": {
+    "status": 200,
+    "casing": "PascalCase",
+    "required_json_keys": [
+      "Version",
+      "Id"
+    ],
+    "absent_json_keys": [
+      "version",
+      "id"
+    ]
+  }
+}
+  ]
+}

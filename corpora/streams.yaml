@@ -1,0 +1,282 @@
+format: goldenrec-scenario/v1
+name: static direct video stream HTTP contract
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: static stream full GET
+    method: GET
+    path: /Videos/7e897749137a8161f7a084cfad246bd3/stream
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetVideoStream
+    expect:
+      status: 200
+  - name: static stream full HEAD by container
+    method: HEAD
+    path: /Videos/7e897749137a8161f7a084cfad246bd3/stream.mkv
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: HeadVideoStreamByContainer
+    expect:
+      status: 200
+  - name: static stream prefix range
+    method: GET
+    path: /Videos/7e897749137a8161f7a084cfad246bd3/stream
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+    headers:
+      Range: bytes=0-9
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetVideoStream
+    expect:
+      status: 206
+  - name: static stream suffix range by container
+    method: GET
+    path: /Videos/7e897749137a8161f7a084cfad246bd3/stream.mkv
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+    headers:
+      Range: bytes=-10
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetVideoStreamByContainer
+    expect:
+      status: 206
+  - name: static stream malformed range
+    method: GET
+    path: /Videos/7e897749137a8161f7a084cfad246bd3/stream
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+    headers:
+      Range: bytes=not-a-range
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetVideoStream
+    expect:
+      status: 200
+  - name: static stream unsatisfiable range by container
+    method: GET
+    path: /Videos/7e897749137a8161f7a084cfad246bd3/stream.mkv
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+    headers:
+      Range: bytes=999999999-
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetVideoStreamByContainer
+    expect:
+      status: 416
+  - name: audio static stream full GET
+    method: GET
+    path: /Audio/7d876c24abd39daf70475c9430cc55fb/stream
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7d876c24abd39daf70475c9430cc55fb
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetAudioStream
+    expect:
+      status: 200
+  - name: audio static stream full HEAD
+    method: HEAD
+    path: /Audio/7d876c24abd39daf70475c9430cc55fb/stream
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7d876c24abd39daf70475c9430cc55fb
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: HeadAudioStream
+    expect:
+      status: 200
+  - name: audio static stream full GET by container
+    method: GET
+    path: /Audio/7d876c24abd39daf70475c9430cc55fb/stream.mp3
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7d876c24abd39daf70475c9430cc55fb
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetAudioStreamByContainer
+    expect:
+      status: 200
+  - name: audio static stream full HEAD by container
+    method: HEAD
+    path: /Audio/7d876c24abd39daf70475c9430cc55fb/stream.mp3
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7d876c24abd39daf70475c9430cc55fb
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: HeadAudioStreamByContainer
+    expect:
+      status: 200
+  - name: audio static stream prefix range
+    method: GET
+    path: /Audio/7d876c24abd39daf70475c9430cc55fb/stream
+    auth_role: fixture
+    params:
+      Static: true
+      MediaSourceId: 7d876c24abd39daf70475c9430cc55fb
+    headers:
+      Range: bytes=0-9
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetAudioStream
+    expect:
+      status: 206
+  - name: universal audio direct stream GET
+    method: GET
+    path: /Audio/7d876c24abd39daf70475c9430cc55fb/universal
+    params:
+      Container:
+        - mp3
+      MediaSourceId: 7d876c24abd39daf70475c9430cc55fb
+    auth_role: fixture
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetUniversalAudioStream
+    expect:
+      status: 200
+  - name: universal audio direct stream HEAD
+    method: HEAD
+    path: /Audio/7d876c24abd39daf70475c9430cc55fb/universal
+    params:
+      Container:
+        - mp3
+      MediaSourceId: 7d876c24abd39daf70475c9430cc55fb
+    auth_role: fixture
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: HeadUniversalAudioStream
+    expect:
+      status: 200
+  - name: audio download with attachment filename
+    method: GET
+    path: /Items/7d876c24abd39daf70475c9430cc55fb/Download
+    auth_role: fixture
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetDownload
+    expect:
+      status: 200
+  - name: audio download prefix range with attachment filename
+    method: GET
+    path: /Items/7d876c24abd39daf70475c9430cc55fb/Download
+    headers:
+      Range: bytes=0-9
+    auth_role: fixture
+    normalizers:
+      - json-key-order
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: GetDownload
+    expect:
+      status: 206

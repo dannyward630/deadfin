@@ -1,0 +1,569 @@
+{
+  "format": "jellyfin-item-normalization-oracle/v1",
+  "provenance": {
+    "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+    "upstreamTreeHead": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+    "diacriticsVersion": "4.1.8",
+    "icu4NTransliteratorVersion": "60.1.0-alpha.356",
+    "sourceHashes": {
+      "archive-diacritics-4.1.8": "2f2b17644a1e7b526edc71a2bdf5784ef7456334d8f9fd1cbbf214fc5a4e9f37",
+      "archive-icu4n-60.1.0-alpha.356": "d50c8e80eee934c7a812006d97aa3c206e28f75c03da11548112348ccd25b716",
+      "archive-icu4n-transliterator-60.1.0-alpha.356": "44b37040d56a373f0e99f6ff982febcd0595abc73bb829cd746daa8b8c4999db",
+      "loaded-diacritics-4.1.8": "893640462f6bfaa8cf5c18698ee655a1777b05d359963c129e95c2ffb94307b0",
+      "loaded-icu4n-60.1.0-alpha.356": "ba54b8bb8e9785b7a7e83b03c8b9b8407582e07b11c95bb805e930e6c0b0e6af",
+      "loaded-icu4n-transliterator-60.1.0-alpha.356": "5a0935d0ddc51d755a32921ea53dbd76c5350f7d0322844bab05f0cd456b2793",
+      "loaded-jellyfin-extensions": "ad4c52bc6392e5150545057c1e8f2c7768c0071f7d50f4438ff7752cf65aaa6e",
+      "loaded-mediabrowser-controller": "345da6b4996383bc2c25bbc45ae42d82da1106d08a94c00605573ad4f9cac993",
+      "loaded-mediabrowser-model": "d464af24f5c5929270e7f8716e9cc65ef6031c9ccb3b5a3d1ac07d0cab52e29e",
+      "loaded-system-io-compression": "7d5527c2729c63054d1a80151f2b8ae79662ecd9a28955af19dfa1141a1f3e4d",
+      "loaded-system-private-corelib": "8ff1aaed362a39cb175c07d32b7ebf43574eeef5c795b733ac4a019bbb22a91a",
+      "loaded-system-security-cryptography": "fe091f043a85e1b468b64961297c1f8088ce60d2c402e6cbeccd8670049ff6a9",
+      "loaded-system-text-encodings-web": "646e6d8e9aa910001bc0e88b777db5b10eca52542a380177da56bfa97450b69b",
+      "loaded-system-text-json": "9fbe44abb2c9c28f8a23b88899aba85f3e016ce94561faf2ec2b3f96ca97f109",
+      "loaded-system-text-regular-expressions": "f5b8faf6b9b9d5ee8d95d7591539c99d63cd326822270d9136caad0c542ad616",
+      "oracle-assembly": "9977f09276e8732bd44c63d4202ef39a1a8ce46e83987ce32c27df45af6d0e07",
+      "project": "674b67a937d4cfd44f37861f093a062d77b8d0aa9874209e142d4e409cd83a14",
+      "tool": "72a7777627d064be41f3d59a747caca9fa8d4d1d0c3e4bc380dc600dbcca4152",
+      "upstream-base-item": "8ba628f664c732bd926694f2bdbe561250a1233a102a19049f1496a2b50e8845",
+      "upstream-base-item-tests": "225f072a5c3cde397f808fa3a06b33fc19c8c6537d49da3c14100b5c8ab93fe4",
+      "upstream-directory-packages": "4c0f35e5eb8588c285ff272c417892fc2ec38197155774d86ceb63bc805c0519",
+      "upstream-server-configuration": "9639d51fb6934c87a32b74f68d33d38369d4029bcfcebd100673334ef68785a3",
+      "upstream-string-extension-tests": "8dde405a94a754ae52f5323e95a625ec011dcc5452ecb925b882827dcacb6e91",
+      "upstream-string-extensions": "d827549f6f217bf0b6d313f401c16f50c2b44cb7ab1ca4bc787eb9a59065b239",
+      "vectors": "c423ea39ad6946ebb2b814125665ef75954266096fdcfc0c9ae3cbf390ccd8be"
+    }
+  },
+  "cases": [
+    {
+      "id": "remove-empty",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": ""
+      },
+      "output": "",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:9"
+    },
+    {
+      "id": "remove-upstream-invalid-high-surrogate",
+      "operation": "remove-diacritics",
+      "input": {
+        "utf16": [
+          97,
+          55296,
+          98
+        ]
+      },
+      "output": "ab",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:11"
+    },
+    {
+      "id": "remove-upstream-nordic",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "\u00E5\u00E4\u00F6"
+      },
+      "output": "aao",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:12"
+    },
+    {
+      "id": "remove-upstream-polish",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "Kie\u015Blowski"
+      },
+      "output": "Kieslowski",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:15"
+    },
+    {
+      "id": "remove-upstream-portuguese",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "Cidad\u00E3o Kane"
+      },
+      "output": "Cidadao Kane",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:16"
+    },
+    {
+      "id": "remove-upstream-korean",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "\uC6B4\uBA85\uCC98\uB7FC \uB110 \uC0AC\uB791\uD574"
+      },
+      "output": "\uC6B4\uBA85\uCC98\uB7FC \uB110 \uC0AC\uB791\uD574",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:17"
+    },
+    {
+      "id": "remove-upstream-ligature",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "Le c\u0153ur a ses raisons"
+      },
+      "output": "Le coeur a ses raisons",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:19"
+    },
+    {
+      "id": "remove-upstream-accent",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "B\u00E9la Tarr"
+      },
+      "output": "Bela Tarr",
+      "supported": true,
+      "source": "tests/Jellyfin.Extensions.Tests/StringExtensionsTests.cs:20"
+    },
+    {
+      "id": "remove-ligatures-and-strokes",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "\u00C6sir, \u0153uf, \u00F8l, \u0141\u00F3d\u017A, \u00DFeta"
+      },
+      "output": "\u00C6sir, oeuf, ol, Lodz, \u00DFeta",
+      "supported": true,
+      "source": "Diacritics 4.1.8 mapping"
+    },
+    {
+      "id": "remove-decomposed-mark",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "Cafe\u0301 noir"
+      },
+      "output": "Cafe\u0301 noir",
+      "supported": true,
+      "source": "Diacritics 4.1.8 mapping"
+    },
+    {
+      "id": "remove-whitespace-categories",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "A\u00A0B\u2003C\tD\nE"
+      },
+      "output": "A\u00A0B\u2003C\tD\nE",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:41-43"
+    },
+    {
+      "id": "remove-replacement-character",
+      "operation": "remove-diacritics",
+      "input": {
+        "text": "a\uFFFDb"
+      },
+      "output": "ab",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:30-43"
+    },
+    {
+      "id": "remove-unpaired-low-surrogate",
+      "operation": "remove-diacritics",
+      "input": {
+        "utf16": [
+          97,
+          56320,
+          98
+        ]
+      },
+      "output": "ab",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:30-43"
+    },
+    {
+      "id": "clean-whitespace-preserved",
+      "operation": "clean-name",
+      "input": {
+        "text": "\u00A0\t\u2003"
+      },
+      "output": "\u00A0\t\u2003",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:158-174"
+    },
+    {
+      "id": "clean-punctuation-spider-man",
+      "operation": "clean-name",
+      "input": {
+        "text": "Spider-Man: Homecoming!"
+      },
+      "output": "spider man homecoming",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:165-172"
+    },
+    {
+      "id": "clean-ligatures",
+      "operation": "clean-name",
+      "input": {
+        "text": "\u0152UVRE \u0026 \u00C6sir"
+      },
+      "output": "\u0153uvre \u00E6sir",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:165-172"
+    },
+    {
+      "id": "clean-decomposed-mark",
+      "operation": "clean-name",
+      "input": {
+        "text": "Cafe\u0301 noir"
+      },
+      "output": "cafe noir",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:165-172"
+    },
+    {
+      "id": "clean-whitespace-categories",
+      "operation": "clean-name",
+      "input": {
+        "text": "A\u00A0B\u2003C\tD\nE"
+      },
+      "output": "a b c d e",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:168-172"
+    },
+    {
+      "id": "clean-replacement-character",
+      "operation": "clean-name",
+      "input": {
+        "text": "a\uFFFDb"
+      },
+      "output": "ab",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:30-43"
+    },
+    {
+      "id": "clean-unpaired-high-surrogate",
+      "operation": "clean-name",
+      "input": {
+        "utf16": [
+          97,
+          55296,
+          98
+        ]
+      },
+      "output": "ab",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:30-43"
+    },
+    {
+      "id": "clean-invariant-casing",
+      "operation": "clean-name",
+      "input": {
+        "text": "\u0130STANBUL \u03A3\u03AF\u03C3\u03C5\u03C6\u03BF\u03C2"
+      },
+      "output": "istanbul \u03C3\u03B9\u03C3\u03C5\u03C6\u03BF\u03C2",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:165-172"
+    },
+    {
+      "id": "clean-residual-non-ascii",
+      "operation": "clean-name",
+      "input": {
+        "text": "\u6771\u4EAC 2"
+      },
+      "output": "\u6771\u4EAC 2",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:168-172"
+    },
+    {
+      "id": "clean-supplementary-deseret-removed-by-utf16-regex",
+      "operation": "clean-name",
+      "input": {
+        "text": "A\uD801\uDC00B"
+      },
+      "output": "a b",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:165-172; .NET 10 Regex UTF-16 category semantics"
+    },
+    {
+      "id": "clean-unicode-16-cyrillic-tje",
+      "operation": "clean-name",
+      "input": {
+        "text": "A\u1C89B"
+      },
+      "output": "a\u1C8Ab",
+      "supported": true,
+      "source": ".NET 10 / Unicode 16 invariant casing and category semantics"
+    },
+    {
+      "id": "clean-other-number-preserved",
+      "operation": "clean-name",
+      "input": {
+        "text": "A\u00B2!"
+      },
+      "output": "a\u00B2",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:165-172; .NET 10 Regex \\p{N} OtherNumber semantics"
+    },
+    {
+      "id": "clean-letter-number-invariant-lowercase",
+      "operation": "clean-name",
+      "input": {
+        "text": "A\u2167!"
+      },
+      "output": "a\u2177",
+      "supported": true,
+      "source": "Jellyfin.Extensions/StringExtensions.cs:165-172; .NET 10 Regex \\p{L} LetterNumber and invariant lowercase semantics"
+    },
+    {
+      "id": "sort-upstream-empty",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": ""
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:25"
+    },
+    {
+      "id": "sort-upstream-single-digit",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "1"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "0000000001",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:26"
+    },
+    {
+      "id": "sort-upstream-mixed-digit-chunks",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "1test 2"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "0000000001test 0000000002",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:30"
+    },
+    {
+      "id": "sort-upstream-article",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "The Matrix"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "matrix",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:35"
+    },
+    {
+      "id": "sort-upstream-remove-character",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "Spider-Man"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "spiderman",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:36"
+    },
+    {
+      "id": "sort-upstream-replace-and-chunk",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "A Movie: Part 2"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "movie: part 0000000002",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:37"
+    },
+    {
+      "id": "sort-alpha-disabled",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Person",
+          "name": "  The Matrix"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "The Matrix",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:42-43"
+    },
+    {
+      "id": "sort-forced-name-cleaning",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "zzz unrelated name",
+          "forcedSortName": "The Spider-Man: Homecoming"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "spiderman: homecoming",
+        "present": true
+      },
+      "supported": true,
+      "source": "tests/Jellyfin.Controller.Tests/Entities/BaseItemTests.cs:46-60"
+    },
+    {
+      "id": "sort-explicit-name-verbatim",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "The Matrix",
+          "sortName": "Zebra: 2"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "Zebra: 2",
+        "present": true
+      },
+      "supported": true,
+      "source": "MediaBrowser.Controller/Entities/BaseItem.cs:536-556"
+    },
+    {
+      "id": "sort-custom-rules",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "Le \u002B C\u0153ur 12"
+        },
+        "options": {
+          "removeWords": [
+            "le"
+          ],
+          "removeCharacters": [
+            "\u002B"
+          ],
+          "replaceCharacters": [
+            "\u0153"
+          ]
+        }
+      },
+      "output": {
+        "value": " c ur 0000000012",
+        "present": true
+      },
+      "supported": true,
+      "source": "MediaBrowser.Controller/Entities/BaseItem.cs:952-982"
+    },
+    {
+      "id": "sort-diacritics",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "\u00C5ngstr\u00F6m 2"
+        },
+        "options": {}
+      },
+      "output": {
+        "value": "angstrom 0000000002",
+        "present": true
+      },
+      "supported": true,
+      "source": "MediaBrowser.Controller/Entities/BaseItem.cs:1019-1024"
+    },
+    {
+      "id": "sort-supplementary-deseret-invariant-lowercase",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "\uD801\uDC00"
+        },
+        "options": {
+          "removeWords": [],
+          "removeCharacters": [],
+          "replaceCharacters": []
+        }
+      },
+      "output": {
+        "value": "\uD801\uDC28",
+        "present": true
+      },
+      "supported": true,
+      "source": "MediaBrowser.Controller/Entities/BaseItem.cs:957-1024; .NET 10 string.ToLowerInvariant supplementary scalar semantics"
+    },
+    {
+      "id": "sort-residual-korean-icu",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "\uC6B4\uBA85\uCC98\uB7FC 2"
+        },
+        "options": {
+          "requiresIcu": true
+        }
+      },
+      "output": {
+        "value": "unmyeongcheoleom 0000000002",
+        "present": true
+      },
+      "supported": false,
+      "source": "MediaBrowser.Controller/Entities/BaseItem.cs:1020-1024"
+    },
+    {
+      "id": "sort-residual-cjk-icu",
+      "operation": "sort-name",
+      "input": {
+        "item": {
+          "kind": "Video",
+          "name": "\u6771\u4EAC 2"
+        },
+        "options": {
+          "requiresIcu": true
+        }
+      },
+      "output": {
+        "value": "dong jing 0000000002",
+        "present": true
+      },
+      "supported": false,
+      "source": "MediaBrowser.Controller/Entities/BaseItem.cs:1020-1024"
+    }
+  ],
+  "sha256": "352a3d8e828400befbed0229191c964bb3410819c095717693933c4bdc80fc5b"
+}

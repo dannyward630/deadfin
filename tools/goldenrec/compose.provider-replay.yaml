@@ -1,0 +1,33 @@
+# Provider replay proxy override. Applied on top of compose.yaml to route
+# provider traffic through a mitmproxy replay proxy in forward-proxy mode.
+# The replay proxy serves committed cassettes from corpora/provider-cassettes/
+# and kills every unmatched request with 502 before any upstream connection.
+#
+# Do not use in production. This override exists only for the goldenrec
+# differential gate (verify-p8-itemlookup-diff).
+name: goldenrec
+services:
+  jellyfin:
+    environment:
+      HTTPS_PROXY: http://replay-proxy:8080
+      SSL_CERT_FILE: /usr/local/share/ca-certificates/mitmproxy-ca.crt
+    volumes:
+      - ./mitmproxy/mitmproxy-ca.crt:/usr/local/share/ca-certificates/mitmproxy-ca.crt:ro
+  replay-proxy:
+    image: mitmproxy/mitmproxy:11.1.3
+    command: >
+      mitmdump
+      --mode regular
+      --set provider_replay_mode=replay
+      --set provider_replay_cassette=/cassettes/itemlookup.jsonl
+      --set provider_replay_unmatched_report=/results/itemlookup-unmatched-flows.txt
+      -s /addons/provider_replay.py
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./mitmproxy:/addons:ro
+      - ../../corpora/provider-cassettes:/cassettes:ro
+      - ../../results:/results
+      - replay-proxy-ca:/home/mitmproxy/.mitmproxy
+volumes:
+  replay-proxy-ca:

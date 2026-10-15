@@ -1,0 +1,41 @@
+name: Client compatibility report
+description: Report how a Jellyfin client works against Deadfin, good or bad.
+labels: [client-compat]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This fills a cell in docs/alpha/client-matrix.md. Passes are useful too.
+  - type: textarea
+    id: build
+    attributes:
+      label: Deadfin build
+      description: The output of `curl -s http://<host>:8096/deadfin/v1/build`.
+      render: json
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: Client
+      placeholder: Jellyfin Android TV 0.19 on Android TV 12
+    validations:
+      required: true
+  - type: checkboxes
+    id: areas
+    attributes:
+      label: What did you test?
+      options:
+        - label: Login and QuickConnect
+        - label: Browse
+        - label: Direct play
+        - label: Transcode
+        - label: Subtitles
+        - label: Resume sync
+  - type: textarea
+    id: result
+    attributes:
+      label: Results
+      description: For each area, pass or fail, and what failed. Name the media (codecs) for playback results.
+    validations:
+      required: true

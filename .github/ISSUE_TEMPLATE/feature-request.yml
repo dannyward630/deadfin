@@ -1,0 +1,20 @@
+name: Feature request
+description: Something Jellyfin does that Deadfin does not, or a new idea.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: What should be true when this is done?
+      description: The outcome, not the implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: jellyfin
+    attributes:
+      label: Jellyfin behavior
+      description: If Jellyfin does this, say how (the screen, the API route, the setting). Deadfin follows Jellyfin unless a divergence says otherwise.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters to you

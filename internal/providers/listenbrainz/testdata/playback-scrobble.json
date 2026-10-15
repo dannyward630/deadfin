@@ -1,0 +1,84 @@
+[
+  {
+    "method": "POST",
+    "url": "https://api.listenbrainz.org/1/submit-listens",
+    "requestHeaders": {
+      "Accept": "application/json",
+      "Authorization": "Token cassette-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Deadfin cassette test"
+    },
+    "requestBody": {
+      "listen_type": "playing_now",
+      "payload": [
+        {
+          "track_metadata": {
+            "artist_name": "Fixture Artist",
+            "track_name": "Fixture Track",
+            "release_name": "Fixture Album",
+            "additional_info": {
+              "artist_mbids": [
+                "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+              ],
+              "release_group_mbid": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+              "release_mbid": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "recording_mbid": "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+              "track_mbid": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+              "tracknumber": "7",
+              "media_player": "Finamp",
+              "submission_client": "Deadfin",
+              "submission_client_version": "dev",
+              "duration_ms": 360000
+            }
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "responseBody": {
+      "status": "ok"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "https://api.listenbrainz.org/1/submit-listens",
+    "requestHeaders": {
+      "Accept": "application/json",
+      "Authorization": "Token cassette-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Deadfin cassette test"
+    },
+    "requestBody": {
+      "listen_type": "single",
+      "payload": [
+        {
+          "listened_at": 1767323045,
+          "track_metadata": {
+            "artist_name": "Fixture Artist",
+            "track_name": "Fixture Track",
+            "release_name": "Fixture Album",
+            "additional_info": {
+              "artist_mbids": [
+                "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+              ],
+              "release_group_mbid": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+              "release_mbid": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+              "recording_mbid": "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+              "track_mbid": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+              "tracknumber": "7",
+              "media_player": "Finamp",
+              "submission_client": "Deadfin",
+              "submission_client_version": "dev",
+              "duration_ms": 360000,
+              "duration_played": 180
+            }
+          }
+        }
+      ]
+    },
+    "status": 200,
+    "responseBody": {
+      "status": "ok"
+    }
+  }
+]

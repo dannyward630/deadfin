@@ -1,0 +1,1830 @@
+{
+  "header": {
+    "specVersion": "stable",
+    "source": "upstream/jellyfin-openapi-stable.json",
+    "sourceSha256": "897c42a2c5a9ba227467e8804f3042be7d1979db8dcae50060059379c7838003",
+    "generatedBy": "jq '[.paths | to_entries[] | .key as $p | .value | to_entries[] | select(.value | type == \"object\" and has(\"operationId\")) | {operationId: .value.operationId, method: (.key | ascii_upcase), path: $p}]' upstream/jellyfin-openapi-stable.json"
+  },
+  "operations": [
+    {
+      "operationId": "GetLogEntries",
+      "method": "GET",
+      "path": "/System/ActivityLog/Entries"
+    },
+    {
+      "operationId": "GetKeys",
+      "method": "GET",
+      "path": "/Auth/Keys"
+    },
+    {
+      "operationId": "CreateKey",
+      "method": "POST",
+      "path": "/Auth/Keys"
+    },
+    {
+      "operationId": "RevokeKey",
+      "method": "DELETE",
+      "path": "/Auth/Keys/{key}"
+    },
+    {
+      "operationId": "GetArtists",
+      "method": "GET",
+      "path": "/Artists"
+    },
+    {
+      "operationId": "GetArtistByName",
+      "method": "GET",
+      "path": "/Artists/{name}"
+    },
+    {
+      "operationId": "GetAlbumArtists",
+      "method": "GET",
+      "path": "/Artists/AlbumArtists"
+    },
+    {
+      "operationId": "GetAudioStream",
+      "method": "GET",
+      "path": "/Audio/{itemId}/stream"
+    },
+    {
+      "operationId": "HeadAudioStream",
+      "method": "HEAD",
+      "path": "/Audio/{itemId}/stream"
+    },
+    {
+      "operationId": "GetAudioStreamByContainer",
+      "method": "GET",
+      "path": "/Audio/{itemId}/stream.{container}"
+    },
+    {
+      "operationId": "HeadAudioStreamByContainer",
+      "method": "HEAD",
+      "path": "/Audio/{itemId}/stream.{container}"
+    },
+    {
+      "operationId": "ListBackups",
+      "method": "GET",
+      "path": "/Backup"
+    },
+    {
+      "operationId": "CreateBackup",
+      "method": "POST",
+      "path": "/Backup/Create"
+    },
+    {
+      "operationId": "GetBackup",
+      "method": "GET",
+      "path": "/Backup/Manifest"
+    },
+    {
+      "operationId": "StartRestoreBackup",
+      "method": "POST",
+      "path": "/Backup/Restore"
+    },
+    {
+      "operationId": "GetBrandingOptions",
+      "method": "GET",
+      "path": "/Branding/Configuration"
+    },
+    {
+      "operationId": "GetBrandingCss",
+      "method": "GET",
+      "path": "/Branding/Css"
+    },
+    {
+      "operationId": "GetBrandingCss_2",
+      "method": "GET",
+      "path": "/Branding/Css.css"
+    },
+    {
+      "operationId": "GetChannels",
+      "method": "GET",
+      "path": "/Channels"
+    },
+    {
+      "operationId": "GetChannelFeatures",
+      "method": "GET",
+      "path": "/Channels/{channelId}/Features"
+    },
+    {
+      "operationId": "GetChannelItems",
+      "method": "GET",
+      "path": "/Channels/{channelId}/Items"
+    },
+    {
+      "operationId": "GetAllChannelFeatures",
+      "method": "GET",
+      "path": "/Channels/Features"
+    },
+    {
+      "operationId": "GetLatestChannelItems",
+      "method": "GET",
+      "path": "/Channels/Items/Latest"
+    },
+    {
+      "operationId": "LogFile",
+      "method": "POST",
+      "path": "/ClientLog/Document"
+    },
+    {
+      "operationId": "CreateCollection",
+      "method": "POST",
+      "path": "/Collections"
+    },
+    {
+      "operationId": "AddToCollection",
+      "method": "POST",
+      "path": "/Collections/{collectionId}/Items"
+    },
+    {
+      "operationId": "RemoveFromCollection",
+      "method": "DELETE",
+      "path": "/Collections/{collectionId}/Items"
+    },
+    {
+      "operationId": "GetConfiguration",
+      "method": "GET",
+      "path": "/System/Configuration"
+    },
+    {
+      "operationId": "UpdateConfiguration",
+      "method": "POST",
+      "path": "/System/Configuration"
+    },
+    {
+      "operationId": "GetNamedConfiguration",
+      "method": "GET",
+      "path": "/System/Configuration/{key}"
+    },
+    {
+      "operationId": "UpdateNamedConfiguration",
+      "method": "POST",
+      "path": "/System/Configuration/{key}"
+    },
+    {
+      "operationId": "UpdateBrandingConfiguration",
+      "method": "POST",
+      "path": "/System/Configuration/Branding"
+    },
+    {
+      "operationId": "GetDefaultMetadataOptions",
+      "method": "GET",
+      "path": "/System/Configuration/MetadataOptions/Default"
+    },
+    {
+      "operationId": "GetDashboardConfigurationPage",
+      "method": "GET",
+      "path": "/web/ConfigurationPage"
+    },
+    {
+      "operationId": "GetConfigurationPages",
+      "method": "GET",
+      "path": "/web/ConfigurationPages"
+    },
+    {
+      "operationId": "GetDevices",
+      "method": "GET",
+      "path": "/Devices"
+    },
+    {
+      "operationId": "DeleteDevice",
+      "method": "DELETE",
+      "path": "/Devices"
+    },
+    {
+      "operationId": "GetDeviceInfo",
+      "method": "GET",
+      "path": "/Devices/Info"
+    },
+    {
+      "operationId": "GetDeviceOptions",
+      "method": "GET",
+      "path": "/Devices/Options"
+    },
+    {
+      "operationId": "UpdateDeviceOptions",
+      "method": "POST",
+      "path": "/Devices/Options"
+    },
+    {
+      "operationId": "GetDisplayPreferences",
+      "method": "GET",
+      "path": "/DisplayPreferences/{displayPreferencesId}"
+    },
+    {
+      "operationId": "UpdateDisplayPreferences",
+      "method": "POST",
+      "path": "/DisplayPreferences/{displayPreferencesId}"
+    },
+    {
+      "operationId": "GetDefaultDirectoryBrowser",
+      "method": "GET",
+      "path": "/Environment/DefaultDirectoryBrowser"
+    },
+    {
+      "operationId": "GetDirectoryContents",
+      "method": "GET",
+      "path": "/Environment/DirectoryContents"
+    },
+    {
+      "operationId": "GetDrives",
+      "method": "GET",
+      "path": "/Environment/Drives"
+    },
+    {
+      "operationId": "GetParentPath",
+      "method": "GET",
+      "path": "/Environment/ParentPath"
+    },
+    {
+      "operationId": "ValidatePath",
+      "method": "POST",
+      "path": "/Environment/ValidatePath"
+    },
+    {
+      "operationId": "GetQueryFiltersLegacy",
+      "method": "GET",
+      "path": "/Items/Filters"
+    },
+    {
+      "operationId": "GetQueryFilters",
+      "method": "GET",
+      "path": "/Items/Filters2"
+    },
+    {
+      "operationId": "GetGenres",
+      "method": "GET",
+      "path": "/Genres"
+    },
+    {
+      "operationId": "GetGenre",
+      "method": "GET",
+      "path": "/Genres/{genreName}"
+    },
+    {
+      "operationId": "GetArtistImage",
+      "method": "GET",
+      "path": "/Artists/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "HeadArtistImage",
+      "method": "HEAD",
+      "path": "/Artists/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "GetSplashscreen",
+      "method": "GET",
+      "path": "/Branding/Splashscreen"
+    },
+    {
+      "operationId": "UploadCustomSplashscreen",
+      "method": "POST",
+      "path": "/Branding/Splashscreen"
+    },
+    {
+      "operationId": "DeleteCustomSplashscreen",
+      "method": "DELETE",
+      "path": "/Branding/Splashscreen"
+    },
+    {
+      "operationId": "GetGenreImage",
+      "method": "GET",
+      "path": "/Genres/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "HeadGenreImage",
+      "method": "HEAD",
+      "path": "/Genres/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "GetGenreImageByIndex",
+      "method": "GET",
+      "path": "/Genres/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "HeadGenreImageByIndex",
+      "method": "HEAD",
+      "path": "/Genres/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "GetItemImageInfos",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images"
+    },
+    {
+      "operationId": "DeleteItemImage",
+      "method": "DELETE",
+      "path": "/Items/{itemId}/Images/{imageType}"
+    },
+    {
+      "operationId": "SetItemImage",
+      "method": "POST",
+      "path": "/Items/{itemId}/Images/{imageType}"
+    },
+    {
+      "operationId": "GetItemImage",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images/{imageType}"
+    },
+    {
+      "operationId": "HeadItemImage",
+      "method": "HEAD",
+      "path": "/Items/{itemId}/Images/{imageType}"
+    },
+    {
+      "operationId": "DeleteItemImageByIndex",
+      "method": "DELETE",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "SetItemImageByIndex",
+      "method": "POST",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "GetItemImageByIndex",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "HeadItemImageByIndex",
+      "method": "HEAD",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "GetItemImage2",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}/{tag}/{format}/{maxWidth}/{maxHeight}/{percentPlayed}/{unplayedCount}"
+    },
+    {
+      "operationId": "HeadItemImage2",
+      "method": "HEAD",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}/{tag}/{format}/{maxWidth}/{maxHeight}/{percentPlayed}/{unplayedCount}"
+    },
+    {
+      "operationId": "UpdateItemImageIndex",
+      "method": "POST",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}/Index"
+    },
+    {
+      "operationId": "GetMusicGenreImage",
+      "method": "GET",
+      "path": "/MusicGenres/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "HeadMusicGenreImage",
+      "method": "HEAD",
+      "path": "/MusicGenres/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "GetMusicGenreImageByIndex",
+      "method": "GET",
+      "path": "/MusicGenres/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "HeadMusicGenreImageByIndex",
+      "method": "HEAD",
+      "path": "/MusicGenres/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "GetPersonImage",
+      "method": "GET",
+      "path": "/Persons/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "HeadPersonImage",
+      "method": "HEAD",
+      "path": "/Persons/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "GetPersonImageByIndex",
+      "method": "GET",
+      "path": "/Persons/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "HeadPersonImageByIndex",
+      "method": "HEAD",
+      "path": "/Persons/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "GetStudioImage",
+      "method": "GET",
+      "path": "/Studios/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "HeadStudioImage",
+      "method": "HEAD",
+      "path": "/Studios/{name}/Images/{imageType}"
+    },
+    {
+      "operationId": "GetStudioImageByIndex",
+      "method": "GET",
+      "path": "/Studios/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "HeadStudioImageByIndex",
+      "method": "HEAD",
+      "path": "/Studios/{name}/Images/{imageType}/{imageIndex}"
+    },
+    {
+      "operationId": "PostUserImage",
+      "method": "POST",
+      "path": "/UserImage"
+    },
+    {
+      "operationId": "DeleteUserImage",
+      "method": "DELETE",
+      "path": "/UserImage"
+    },
+    {
+      "operationId": "GetUserImage",
+      "method": "GET",
+      "path": "/UserImage"
+    },
+    {
+      "operationId": "HeadUserImage",
+      "method": "HEAD",
+      "path": "/UserImage"
+    },
+    {
+      "operationId": "GetInstantMixFromAlbum",
+      "method": "GET",
+      "path": "/Albums/{itemId}/InstantMix"
+    },
+    {
+      "operationId": "GetInstantMixFromArtists",
+      "method": "GET",
+      "path": "/Artists/{itemId}/InstantMix"
+    },
+    {
+      "operationId": "GetInstantMixFromItem",
+      "method": "GET",
+      "path": "/Items/{itemId}/InstantMix"
+    },
+    {
+      "operationId": "GetInstantMixFromMusicGenreByName",
+      "method": "GET",
+      "path": "/MusicGenres/{name}/InstantMix"
+    },
+    {
+      "operationId": "GetInstantMixFromMusicGenreById",
+      "method": "GET",
+      "path": "/MusicGenres/InstantMix"
+    },
+    {
+      "operationId": "GetInstantMixFromPlaylist",
+      "method": "GET",
+      "path": "/Playlists/{itemId}/InstantMix"
+    },
+    {
+      "operationId": "GetInstantMixFromSong",
+      "method": "GET",
+      "path": "/Songs/{itemId}/InstantMix"
+    },
+    {
+      "operationId": "GetExternalIdInfos",
+      "method": "GET",
+      "path": "/Items/{itemId}/ExternalIdInfos"
+    },
+    {
+      "operationId": "ApplySearchCriteria",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Apply/{itemId}"
+    },
+    {
+      "operationId": "GetBookRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Book"
+    },
+    {
+      "operationId": "GetBoxSetRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/BoxSet"
+    },
+    {
+      "operationId": "GetMovieRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Movie"
+    },
+    {
+      "operationId": "GetMusicAlbumRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/MusicAlbum"
+    },
+    {
+      "operationId": "GetMusicArtistRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/MusicArtist"
+    },
+    {
+      "operationId": "GetMusicVideoRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/MusicVideo"
+    },
+    {
+      "operationId": "GetPersonRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Person"
+    },
+    {
+      "operationId": "GetSeriesRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Series"
+    },
+    {
+      "operationId": "GetTrailerRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Trailer"
+    },
+    {
+      "operationId": "RefreshItem",
+      "method": "POST",
+      "path": "/Items/{itemId}/Refresh"
+    },
+    {
+      "operationId": "GetItems",
+      "method": "GET",
+      "path": "/Items"
+    },
+    {
+      "operationId": "DeleteItems",
+      "method": "DELETE",
+      "path": "/Items"
+    },
+    {
+      "operationId": "GetItemUserData",
+      "method": "GET",
+      "path": "/UserItems/{itemId}/UserData"
+    },
+    {
+      "operationId": "UpdateItemUserData",
+      "method": "POST",
+      "path": "/UserItems/{itemId}/UserData"
+    },
+    {
+      "operationId": "GetResumeItems",
+      "method": "GET",
+      "path": "/UserItems/Resume"
+    },
+    {
+      "operationId": "UpdateItem",
+      "method": "POST",
+      "path": "/Items/{itemId}"
+    },
+    {
+      "operationId": "DeleteItem",
+      "method": "DELETE",
+      "path": "/Items/{itemId}"
+    },
+    {
+      "operationId": "GetItem",
+      "method": "GET",
+      "path": "/Items/{itemId}"
+    },
+    {
+      "operationId": "UpdateItemContentType",
+      "method": "POST",
+      "path": "/Items/{itemId}/ContentType"
+    },
+    {
+      "operationId": "GetMetadataEditorInfo",
+      "method": "GET",
+      "path": "/Items/{itemId}/MetadataEditor"
+    },
+    {
+      "operationId": "GetSimilarAlbums",
+      "method": "GET",
+      "path": "/Albums/{itemId}/Similar"
+    },
+    {
+      "operationId": "GetSimilarArtists",
+      "method": "GET",
+      "path": "/Artists/{itemId}/Similar"
+    },
+    {
+      "operationId": "GetAncestors",
+      "method": "GET",
+      "path": "/Items/{itemId}/Ancestors"
+    },
+    {
+      "operationId": "GetItemCollections",
+      "method": "GET",
+      "path": "/Items/{itemId}/Collections"
+    },
+    {
+      "operationId": "GetDownload",
+      "method": "GET",
+      "path": "/Items/{itemId}/Download"
+    },
+    {
+      "operationId": "GetFile",
+      "method": "GET",
+      "path": "/Items/{itemId}/File"
+    },
+    {
+      "operationId": "GetSimilarItems",
+      "method": "GET",
+      "path": "/Items/{itemId}/Similar"
+    },
+    {
+      "operationId": "GetThemeMedia",
+      "method": "GET",
+      "path": "/Items/{itemId}/ThemeMedia"
+    },
+    {
+      "operationId": "GetThemeSongs",
+      "method": "GET",
+      "path": "/Items/{itemId}/ThemeSongs"
+    },
+    {
+      "operationId": "GetThemeVideos",
+      "method": "GET",
+      "path": "/Items/{itemId}/ThemeVideos"
+    },
+    {
+      "operationId": "GetItemCounts",
+      "method": "GET",
+      "path": "/Items/Counts"
+    },
+    {
+      "operationId": "GetLibraryOptionsInfo",
+      "method": "GET",
+      "path": "/Libraries/AvailableOptions"
+    },
+    {
+      "operationId": "PostUpdatedMedia",
+      "method": "POST",
+      "path": "/Library/Media/Updated"
+    },
+    {
+      "operationId": "GetMediaFolders",
+      "method": "GET",
+      "path": "/Library/MediaFolders"
+    },
+    {
+      "operationId": "PostAddedMovies",
+      "method": "POST",
+      "path": "/Library/Movies/Added"
+    },
+    {
+      "operationId": "PostUpdatedMovies",
+      "method": "POST",
+      "path": "/Library/Movies/Updated"
+    },
+    {
+      "operationId": "GetPhysicalPaths",
+      "method": "GET",
+      "path": "/Library/PhysicalPaths"
+    },
+    {
+      "operationId": "RefreshLibrary",
+      "method": "POST",
+      "path": "/Library/Refresh"
+    },
+    {
+      "operationId": "PostAddedSeries",
+      "method": "POST",
+      "path": "/Library/Series/Added"
+    },
+    {
+      "operationId": "PostUpdatedSeries",
+      "method": "POST",
+      "path": "/Library/Series/Updated"
+    },
+    {
+      "operationId": "GetSimilarMovies",
+      "method": "GET",
+      "path": "/Movies/{itemId}/Similar"
+    },
+    {
+      "operationId": "GetSimilarShows",
+      "method": "GET",
+      "path": "/Shows/{itemId}/Similar"
+    },
+    {
+      "operationId": "GetSimilarTrailers",
+      "method": "GET",
+      "path": "/Trailers/{itemId}/Similar"
+    },
+    {
+      "operationId": "GetVirtualFolders",
+      "method": "GET",
+      "path": "/Library/VirtualFolders"
+    },
+    {
+      "operationId": "AddVirtualFolder",
+      "method": "POST",
+      "path": "/Library/VirtualFolders"
+    },
+    {
+      "operationId": "RemoveVirtualFolder",
+      "method": "DELETE",
+      "path": "/Library/VirtualFolders"
+    },
+    {
+      "operationId": "UpdateLibraryOptions",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/LibraryOptions"
+    },
+    {
+      "operationId": "RenameVirtualFolder",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/Name"
+    },
+    {
+      "operationId": "AddMediaPath",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/Paths"
+    },
+    {
+      "operationId": "RemoveMediaPath",
+      "method": "DELETE",
+      "path": "/Library/VirtualFolders/Paths"
+    },
+    {
+      "operationId": "UpdateMediaPath",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/Paths/Update"
+    },
+    {
+      "operationId": "GetChannelMappingOptions",
+      "method": "GET",
+      "path": "/LiveTv/ChannelMappingOptions"
+    },
+    {
+      "operationId": "SetChannelMapping",
+      "method": "POST",
+      "path": "/LiveTv/ChannelMappings"
+    },
+    {
+      "operationId": "GetLiveTvChannels",
+      "method": "GET",
+      "path": "/LiveTv/Channels"
+    },
+    {
+      "operationId": "GetChannel",
+      "method": "GET",
+      "path": "/LiveTv/Channels/{channelId}"
+    },
+    {
+      "operationId": "GetGuideInfo",
+      "method": "GET",
+      "path": "/LiveTv/GuideInfo"
+    },
+    {
+      "operationId": "GetLiveTvInfo",
+      "method": "GET",
+      "path": "/LiveTv/Info"
+    },
+    {
+      "operationId": "AddListingProvider",
+      "method": "POST",
+      "path": "/LiveTv/ListingProviders"
+    },
+    {
+      "operationId": "DeleteListingProvider",
+      "method": "DELETE",
+      "path": "/LiveTv/ListingProviders"
+    },
+    {
+      "operationId": "GetDefaultListingProvider",
+      "method": "GET",
+      "path": "/LiveTv/ListingProviders/Default"
+    },
+    {
+      "operationId": "GetLineups",
+      "method": "GET",
+      "path": "/LiveTv/ListingProviders/Lineups"
+    },
+    {
+      "operationId": "GetSchedulesDirectCountries",
+      "method": "GET",
+      "path": "/LiveTv/ListingProviders/SchedulesDirect/Countries"
+    },
+    {
+      "operationId": "GetLiveRecordingFile",
+      "method": "GET",
+      "path": "/LiveTv/LiveRecordings/{recordingId}/stream"
+    },
+    {
+      "operationId": "GetLiveStreamFile",
+      "method": "GET",
+      "path": "/LiveTv/LiveStreamFiles/{streamId}/stream.{container}"
+    },
+    {
+      "operationId": "GetLiveTvPrograms",
+      "method": "GET",
+      "path": "/LiveTv/Programs"
+    },
+    {
+      "operationId": "GetPrograms",
+      "method": "POST",
+      "path": "/LiveTv/Programs"
+    },
+    {
+      "operationId": "GetProgram",
+      "method": "GET",
+      "path": "/LiveTv/Programs/{programId}"
+    },
+    {
+      "operationId": "GetRecommendedPrograms",
+      "method": "GET",
+      "path": "/LiveTv/Programs/Recommended"
+    },
+    {
+      "operationId": "GetRecordings",
+      "method": "GET",
+      "path": "/LiveTv/Recordings"
+    },
+    {
+      "operationId": "GetRecording",
+      "method": "GET",
+      "path": "/LiveTv/Recordings/{recordingId}"
+    },
+    {
+      "operationId": "DeleteRecording",
+      "method": "DELETE",
+      "path": "/LiveTv/Recordings/{recordingId}"
+    },
+    {
+      "operationId": "GetRecordingFolders",
+      "method": "GET",
+      "path": "/LiveTv/Recordings/Folders"
+    },
+    {
+      "operationId": "GetSeriesTimers",
+      "method": "GET",
+      "path": "/LiveTv/SeriesTimers"
+    },
+    {
+      "operationId": "CreateSeriesTimer",
+      "method": "POST",
+      "path": "/LiveTv/SeriesTimers"
+    },
+    {
+      "operationId": "GetSeriesTimer",
+      "method": "GET",
+      "path": "/LiveTv/SeriesTimers/{timerId}"
+    },
+    {
+      "operationId": "CancelSeriesTimer",
+      "method": "DELETE",
+      "path": "/LiveTv/SeriesTimers/{timerId}"
+    },
+    {
+      "operationId": "UpdateSeriesTimer",
+      "method": "POST",
+      "path": "/LiveTv/SeriesTimers/{timerId}"
+    },
+    {
+      "operationId": "GetTimers",
+      "method": "GET",
+      "path": "/LiveTv/Timers"
+    },
+    {
+      "operationId": "CreateTimer",
+      "method": "POST",
+      "path": "/LiveTv/Timers"
+    },
+    {
+      "operationId": "GetTimer",
+      "method": "GET",
+      "path": "/LiveTv/Timers/{timerId}"
+    },
+    {
+      "operationId": "CancelTimer",
+      "method": "DELETE",
+      "path": "/LiveTv/Timers/{timerId}"
+    },
+    {
+      "operationId": "UpdateTimer",
+      "method": "POST",
+      "path": "/LiveTv/Timers/{timerId}"
+    },
+    {
+      "operationId": "GetDefaultTimer",
+      "method": "GET",
+      "path": "/LiveTv/Timers/Defaults"
+    },
+    {
+      "operationId": "AddTunerHost",
+      "method": "POST",
+      "path": "/LiveTv/TunerHosts"
+    },
+    {
+      "operationId": "DeleteTunerHost",
+      "method": "DELETE",
+      "path": "/LiveTv/TunerHosts"
+    },
+    {
+      "operationId": "GetTunerHostTypes",
+      "method": "GET",
+      "path": "/LiveTv/TunerHosts/Types"
+    },
+    {
+      "operationId": "ResetTuner",
+      "method": "POST",
+      "path": "/LiveTv/Tuners/{tunerId}/Reset"
+    },
+    {
+      "operationId": "DiscoverTuners",
+      "method": "GET",
+      "path": "/LiveTv/Tuners/Discover"
+    },
+    {
+      "operationId": "DiscvoverTuners",
+      "method": "GET",
+      "path": "/LiveTv/Tuners/Discvover"
+    },
+    {
+      "operationId": "GetCountries",
+      "method": "GET",
+      "path": "/Localization/Countries"
+    },
+    {
+      "operationId": "GetCultures",
+      "method": "GET",
+      "path": "/Localization/Cultures"
+    },
+    {
+      "operationId": "GetLocalizationOptions",
+      "method": "GET",
+      "path": "/Localization/Options"
+    },
+    {
+      "operationId": "GetParentalRatings",
+      "method": "GET",
+      "path": "/Localization/ParentalRatings"
+    },
+    {
+      "operationId": "GetLyrics",
+      "method": "GET",
+      "path": "/Audio/{itemId}/Lyrics"
+    },
+    {
+      "operationId": "UploadLyrics",
+      "method": "POST",
+      "path": "/Audio/{itemId}/Lyrics"
+    },
+    {
+      "operationId": "DeleteLyrics",
+      "method": "DELETE",
+      "path": "/Audio/{itemId}/Lyrics"
+    },
+    {
+      "operationId": "SearchRemoteLyrics",
+      "method": "GET",
+      "path": "/Audio/{itemId}/RemoteSearch/Lyrics"
+    },
+    {
+      "operationId": "DownloadRemoteLyrics",
+      "method": "POST",
+      "path": "/Audio/{itemId}/RemoteSearch/Lyrics/{lyricId}"
+    },
+    {
+      "operationId": "GetRemoteLyrics",
+      "method": "GET",
+      "path": "/Providers/Lyrics/{lyricId}"
+    },
+    {
+      "operationId": "GetPlaybackInfo",
+      "method": "GET",
+      "path": "/Items/{itemId}/PlaybackInfo"
+    },
+    {
+      "operationId": "GetPostedPlaybackInfo",
+      "method": "POST",
+      "path": "/Items/{itemId}/PlaybackInfo"
+    },
+    {
+      "operationId": "CloseLiveStream",
+      "method": "POST",
+      "path": "/LiveStreams/Close"
+    },
+    {
+      "operationId": "OpenLiveStream",
+      "method": "POST",
+      "path": "/LiveStreams/Open"
+    },
+    {
+      "operationId": "GetBitrateTestBytes",
+      "method": "GET",
+      "path": "/Playback/BitrateTest"
+    },
+    {
+      "operationId": "GetItemSegments",
+      "method": "GET",
+      "path": "/MediaSegments/{itemId}"
+    },
+    {
+      "operationId": "GetMovieRecommendations",
+      "method": "GET",
+      "path": "/Movies/Recommendations"
+    },
+    {
+      "operationId": "GetMusicGenre",
+      "method": "GET",
+      "path": "/MusicGenres/{genreName}"
+    },
+    {
+      "operationId": "GetPackages",
+      "method": "GET",
+      "path": "/Packages"
+    },
+    {
+      "operationId": "GetPackageInfo",
+      "method": "GET",
+      "path": "/Packages/{name}"
+    },
+    {
+      "operationId": "InstallPackage",
+      "method": "POST",
+      "path": "/Packages/Installed/{name}"
+    },
+    {
+      "operationId": "CancelPackageInstallation",
+      "method": "DELETE",
+      "path": "/Packages/Installing/{packageId}"
+    },
+    {
+      "operationId": "GetRepositories",
+      "method": "GET",
+      "path": "/Repositories"
+    },
+    {
+      "operationId": "SetRepositories",
+      "method": "POST",
+      "path": "/Repositories"
+    },
+    {
+      "operationId": "GetPersons",
+      "method": "GET",
+      "path": "/Persons"
+    },
+    {
+      "operationId": "GetPerson",
+      "method": "GET",
+      "path": "/Persons/{name}"
+    },
+    {
+      "operationId": "CreatePlaylist",
+      "method": "POST",
+      "path": "/Playlists"
+    },
+    {
+      "operationId": "UpdatePlaylist",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}"
+    },
+    {
+      "operationId": "GetPlaylist",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}"
+    },
+    {
+      "operationId": "AddItemToPlaylist",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}/Items"
+    },
+    {
+      "operationId": "RemoveItemFromPlaylist",
+      "method": "DELETE",
+      "path": "/Playlists/{playlistId}/Items"
+    },
+    {
+      "operationId": "GetPlaylistItems",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}/Items"
+    },
+    {
+      "operationId": "MoveItem",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}/Items/{itemId}/Move/{newIndex}"
+    },
+    {
+      "operationId": "GetPlaylistUsers",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}/Users"
+    },
+    {
+      "operationId": "GetPlaylistUser",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}/Users/{userId}"
+    },
+    {
+      "operationId": "UpdatePlaylistUser",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}/Users/{userId}"
+    },
+    {
+      "operationId": "RemoveUserFromPlaylist",
+      "method": "DELETE",
+      "path": "/Playlists/{playlistId}/Users/{userId}"
+    },
+    {
+      "operationId": "ReportPlaybackStart",
+      "method": "POST",
+      "path": "/Sessions/Playing"
+    },
+    {
+      "operationId": "PingPlaybackSession",
+      "method": "POST",
+      "path": "/Sessions/Playing/Ping"
+    },
+    {
+      "operationId": "ReportPlaybackProgress",
+      "method": "POST",
+      "path": "/Sessions/Playing/Progress"
+    },
+    {
+      "operationId": "ReportPlaybackStopped",
+      "method": "POST",
+      "path": "/Sessions/Playing/Stopped"
+    },
+    {
+      "operationId": "MarkPlayedItem",
+      "method": "POST",
+      "path": "/UserPlayedItems/{itemId}"
+    },
+    {
+      "operationId": "MarkUnplayedItem",
+      "method": "DELETE",
+      "path": "/UserPlayedItems/{itemId}"
+    },
+    {
+      "operationId": "GetPlugins",
+      "method": "GET",
+      "path": "/Plugins"
+    },
+    {
+      "operationId": "UninstallPlugin",
+      "method": "DELETE",
+      "path": "/Plugins/{pluginId}"
+    },
+    {
+      "operationId": "UninstallPluginByVersion",
+      "method": "DELETE",
+      "path": "/Plugins/{pluginId}/{version}"
+    },
+    {
+      "operationId": "DisablePlugin",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/{version}/Disable"
+    },
+    {
+      "operationId": "EnablePlugin",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/{version}/Enable"
+    },
+    {
+      "operationId": "GetPluginImage",
+      "method": "GET",
+      "path": "/Plugins/{pluginId}/{version}/Image"
+    },
+    {
+      "operationId": "GetPluginConfiguration",
+      "method": "GET",
+      "path": "/Plugins/{pluginId}/Configuration"
+    },
+    {
+      "operationId": "UpdatePluginConfiguration",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/Configuration"
+    },
+    {
+      "operationId": "GetPluginManifest",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/Manifest"
+    },
+    {
+      "operationId": "AuthorizeQuickConnect",
+      "method": "POST",
+      "path": "/QuickConnect/Authorize"
+    },
+    {
+      "operationId": "GetQuickConnectState",
+      "method": "GET",
+      "path": "/QuickConnect/Connect"
+    },
+    {
+      "operationId": "GetQuickConnectEnabled",
+      "method": "GET",
+      "path": "/QuickConnect/Enabled"
+    },
+    {
+      "operationId": "InitiateQuickConnect",
+      "method": "POST",
+      "path": "/QuickConnect/Initiate"
+    },
+    {
+      "operationId": "GetRemoteImages",
+      "method": "GET",
+      "path": "/Items/{itemId}/RemoteImages"
+    },
+    {
+      "operationId": "DownloadRemoteImage",
+      "method": "POST",
+      "path": "/Items/{itemId}/RemoteImages/Download"
+    },
+    {
+      "operationId": "GetRemoteImageProviders",
+      "method": "GET",
+      "path": "/Items/{itemId}/RemoteImages/Providers"
+    },
+    {
+      "operationId": "GetTasks",
+      "method": "GET",
+      "path": "/ScheduledTasks"
+    },
+    {
+      "operationId": "GetTask",
+      "method": "GET",
+      "path": "/ScheduledTasks/{taskId}"
+    },
+    {
+      "operationId": "UpdateTask",
+      "method": "POST",
+      "path": "/ScheduledTasks/{taskId}/Triggers"
+    },
+    {
+      "operationId": "StartTask",
+      "method": "POST",
+      "path": "/ScheduledTasks/Running/{taskId}"
+    },
+    {
+      "operationId": "StopTask",
+      "method": "DELETE",
+      "path": "/ScheduledTasks/Running/{taskId}"
+    },
+    {
+      "operationId": "GetSearchHints",
+      "method": "GET",
+      "path": "/Search/Hints"
+    },
+    {
+      "operationId": "GetPasswordResetProviders",
+      "method": "GET",
+      "path": "/Auth/PasswordResetProviders"
+    },
+    {
+      "operationId": "GetAuthProviders",
+      "method": "GET",
+      "path": "/Auth/Providers"
+    },
+    {
+      "operationId": "GetSessions",
+      "method": "GET",
+      "path": "/Sessions"
+    },
+    {
+      "operationId": "SendFullGeneralCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Command"
+    },
+    {
+      "operationId": "SendGeneralCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Command/{command}"
+    },
+    {
+      "operationId": "SendMessageCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Message"
+    },
+    {
+      "operationId": "Play",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Playing"
+    },
+    {
+      "operationId": "SendPlaystateCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Playing/{command}"
+    },
+    {
+      "operationId": "SendSystemCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/System/{command}"
+    },
+    {
+      "operationId": "AddUserToSession",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/User/{userId}"
+    },
+    {
+      "operationId": "RemoveUserFromSession",
+      "method": "DELETE",
+      "path": "/Sessions/{sessionId}/User/{userId}"
+    },
+    {
+      "operationId": "DisplayContent",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Viewing"
+    },
+    {
+      "operationId": "PostCapabilities",
+      "method": "POST",
+      "path": "/Sessions/Capabilities"
+    },
+    {
+      "operationId": "PostFullCapabilities",
+      "method": "POST",
+      "path": "/Sessions/Capabilities/Full"
+    },
+    {
+      "operationId": "ReportSessionEnded",
+      "method": "POST",
+      "path": "/Sessions/Logout"
+    },
+    {
+      "operationId": "ReportViewing",
+      "method": "POST",
+      "path": "/Sessions/Viewing"
+    },
+    {
+      "operationId": "CompleteWizard",
+      "method": "POST",
+      "path": "/Startup/Complete"
+    },
+    {
+      "operationId": "GetStartupConfiguration",
+      "method": "GET",
+      "path": "/Startup/Configuration"
+    },
+    {
+      "operationId": "UpdateInitialConfiguration",
+      "method": "POST",
+      "path": "/Startup/Configuration"
+    },
+    {
+      "operationId": "GetFirstUser_2",
+      "method": "GET",
+      "path": "/Startup/FirstUser"
+    },
+    {
+      "operationId": "SetRemoteAccess",
+      "method": "POST",
+      "path": "/Startup/RemoteAccess"
+    },
+    {
+      "operationId": "GetFirstUser",
+      "method": "GET",
+      "path": "/Startup/User"
+    },
+    {
+      "operationId": "UpdateStartupUser",
+      "method": "POST",
+      "path": "/Startup/User"
+    },
+    {
+      "operationId": "GetStudios",
+      "method": "GET",
+      "path": "/Studios"
+    },
+    {
+      "operationId": "GetStudio",
+      "method": "GET",
+      "path": "/Studios/{name}"
+    },
+    {
+      "operationId": "GetFallbackFontList",
+      "method": "GET",
+      "path": "/FallbackFont/Fonts"
+    },
+    {
+      "operationId": "GetFallbackFont",
+      "method": "GET",
+      "path": "/FallbackFont/Fonts/{name}"
+    },
+    {
+      "operationId": "SearchRemoteSubtitles",
+      "method": "GET",
+      "path": "/Items/{itemId}/RemoteSearch/Subtitles/{language}"
+    },
+    {
+      "operationId": "DownloadRemoteSubtitles",
+      "method": "POST",
+      "path": "/Items/{itemId}/RemoteSearch/Subtitles/{subtitleId}"
+    },
+    {
+      "operationId": "GetRemoteSubtitles",
+      "method": "GET",
+      "path": "/Providers/Subtitles/Subtitles/{subtitleId}"
+    },
+    {
+      "operationId": "GetSubtitlePlaylist",
+      "method": "GET",
+      "path": "/Videos/{itemId}/{mediaSourceId}/Subtitles/{index}/subtitles.m3u8"
+    },
+    {
+      "operationId": "UploadSubtitle",
+      "method": "POST",
+      "path": "/Videos/{itemId}/Subtitles"
+    },
+    {
+      "operationId": "DeleteSubtitle",
+      "method": "DELETE",
+      "path": "/Videos/{itemId}/Subtitles/{index}"
+    },
+    {
+      "operationId": "GetSubtitleWithTicks",
+      "method": "GET",
+      "path": "/Videos/{routeItemId}/{routeMediaSourceId}/Subtitles/{routeIndex}/{routeStartPositionTicks}/Stream.{routeFormat}"
+    },
+    {
+      "operationId": "GetSubtitle",
+      "method": "GET",
+      "path": "/Videos/{routeItemId}/{routeMediaSourceId}/Subtitles/{routeIndex}/Stream.{routeFormat}"
+    },
+    {
+      "operationId": "GetSuggestions",
+      "method": "GET",
+      "path": "/Items/Suggestions"
+    },
+    {
+      "operationId": "SyncPlayGetGroup",
+      "method": "GET",
+      "path": "/SyncPlay/{id}"
+    },
+    {
+      "operationId": "SyncPlayBuffering",
+      "method": "POST",
+      "path": "/SyncPlay/Buffering"
+    },
+    {
+      "operationId": "SyncPlayJoinGroup",
+      "method": "POST",
+      "path": "/SyncPlay/Join"
+    },
+    {
+      "operationId": "SyncPlayLeaveGroup",
+      "method": "POST",
+      "path": "/SyncPlay/Leave"
+    },
+    {
+      "operationId": "SyncPlayGetGroups",
+      "method": "GET",
+      "path": "/SyncPlay/List"
+    },
+    {
+      "operationId": "SyncPlayMovePlaylistItem",
+      "method": "POST",
+      "path": "/SyncPlay/MovePlaylistItem"
+    },
+    {
+      "operationId": "SyncPlayCreateGroup",
+      "method": "POST",
+      "path": "/SyncPlay/New"
+    },
+    {
+      "operationId": "SyncPlayNextItem",
+      "method": "POST",
+      "path": "/SyncPlay/NextItem"
+    },
+    {
+      "operationId": "SyncPlayPause",
+      "method": "POST",
+      "path": "/SyncPlay/Pause"
+    },
+    {
+      "operationId": "SyncPlayPing",
+      "method": "POST",
+      "path": "/SyncPlay/Ping"
+    },
+    {
+      "operationId": "SyncPlayPreviousItem",
+      "method": "POST",
+      "path": "/SyncPlay/PreviousItem"
+    },
+    {
+      "operationId": "SyncPlayQueue",
+      "method": "POST",
+      "path": "/SyncPlay/Queue"
+    },
+    {
+      "operationId": "SyncPlayReady",
+      "method": "POST",
+      "path": "/SyncPlay/Ready"
+    },
+    {
+      "operationId": "SyncPlayRemoveFromPlaylist",
+      "method": "POST",
+      "path": "/SyncPlay/RemoveFromPlaylist"
+    },
+    {
+      "operationId": "SyncPlaySeek",
+      "method": "POST",
+      "path": "/SyncPlay/Seek"
+    },
+    {
+      "operationId": "SyncPlaySetIgnoreWait",
+      "method": "POST",
+      "path": "/SyncPlay/SetIgnoreWait"
+    },
+    {
+      "operationId": "SyncPlaySetNewQueue",
+      "method": "POST",
+      "path": "/SyncPlay/SetNewQueue"
+    },
+    {
+      "operationId": "SyncPlaySetPlaylistItem",
+      "method": "POST",
+      "path": "/SyncPlay/SetPlaylistItem"
+    },
+    {
+      "operationId": "SyncPlaySetRepeatMode",
+      "method": "POST",
+      "path": "/SyncPlay/SetRepeatMode"
+    },
+    {
+      "operationId": "SyncPlaySetShuffleMode",
+      "method": "POST",
+      "path": "/SyncPlay/SetShuffleMode"
+    },
+    {
+      "operationId": "SyncPlayStop",
+      "method": "POST",
+      "path": "/SyncPlay/Stop"
+    },
+    {
+      "operationId": "SyncPlayUnpause",
+      "method": "POST",
+      "path": "/SyncPlay/Unpause"
+    },
+    {
+      "operationId": "GetEndpointInfo",
+      "method": "GET",
+      "path": "/System/Endpoint"
+    },
+    {
+      "operationId": "GetSystemInfo",
+      "method": "GET",
+      "path": "/System/Info"
+    },
+    {
+      "operationId": "GetPublicSystemInfo",
+      "method": "GET",
+      "path": "/System/Info/Public"
+    },
+    {
+      "operationId": "GetSystemStorage",
+      "method": "GET",
+      "path": "/System/Info/Storage"
+    },
+    {
+      "operationId": "GetServerLogs",
+      "method": "GET",
+      "path": "/System/Logs"
+    },
+    {
+      "operationId": "GetLogFile",
+      "method": "GET",
+      "path": "/System/Logs/Log"
+    },
+    {
+      "operationId": "GetPingSystem",
+      "method": "GET",
+      "path": "/System/Ping"
+    },
+    {
+      "operationId": "PostPingSystem",
+      "method": "POST",
+      "path": "/System/Ping"
+    },
+    {
+      "operationId": "RestartApplication",
+      "method": "POST",
+      "path": "/System/Restart"
+    },
+    {
+      "operationId": "ShutdownApplication",
+      "method": "POST",
+      "path": "/System/Shutdown"
+    },
+    {
+      "operationId": "GetUtcTime",
+      "method": "GET",
+      "path": "/GetUtcTime"
+    },
+    {
+      "operationId": "GetTrailers",
+      "method": "GET",
+      "path": "/Trailers"
+    },
+    {
+      "operationId": "GetTrickplayTileImage",
+      "method": "GET",
+      "path": "/Videos/{itemId}/Trickplay/{width}/{index}.jpg"
+    },
+    {
+      "operationId": "GetTrickplayHlsPlaylist",
+      "method": "GET",
+      "path": "/Videos/{itemId}/Trickplay/{width}/tiles.m3u8"
+    },
+    {
+      "operationId": "GetEpisodes",
+      "method": "GET",
+      "path": "/Shows/{seriesId}/Episodes"
+    },
+    {
+      "operationId": "GetSeasons",
+      "method": "GET",
+      "path": "/Shows/{seriesId}/Seasons"
+    },
+    {
+      "operationId": "GetNextUp",
+      "method": "GET",
+      "path": "/Shows/NextUp"
+    },
+    {
+      "operationId": "GetUpcomingEpisodes",
+      "method": "GET",
+      "path": "/Shows/Upcoming"
+    },
+    {
+      "operationId": "GetUniversalAudioStream",
+      "method": "GET",
+      "path": "/Audio/{itemId}/universal"
+    },
+    {
+      "operationId": "HeadUniversalAudioStream",
+      "method": "HEAD",
+      "path": "/Audio/{itemId}/universal"
+    },
+    {
+      "operationId": "GetUsers",
+      "method": "GET",
+      "path": "/Users"
+    },
+    {
+      "operationId": "UpdateUser",
+      "method": "POST",
+      "path": "/Users"
+    },
+    {
+      "operationId": "GetUserById",
+      "method": "GET",
+      "path": "/Users/{userId}"
+    },
+    {
+      "operationId": "DeleteUser",
+      "method": "DELETE",
+      "path": "/Users/{userId}"
+    },
+    {
+      "operationId": "UpdateUserPolicy",
+      "method": "POST",
+      "path": "/Users/{userId}/Policy"
+    },
+    {
+      "operationId": "AuthenticateUserByName",
+      "method": "POST",
+      "path": "/Users/AuthenticateByName"
+    },
+    {
+      "operationId": "AuthenticateWithQuickConnect",
+      "method": "POST",
+      "path": "/Users/AuthenticateWithQuickConnect"
+    },
+    {
+      "operationId": "UpdateUserConfiguration",
+      "method": "POST",
+      "path": "/Users/Configuration"
+    },
+    {
+      "operationId": "ForgotPassword",
+      "method": "POST",
+      "path": "/Users/ForgotPassword"
+    },
+    {
+      "operationId": "ForgotPasswordPin",
+      "method": "POST",
+      "path": "/Users/ForgotPassword/Pin"
+    },
+    {
+      "operationId": "GetCurrentUser",
+      "method": "GET",
+      "path": "/Users/Me"
+    },
+    {
+      "operationId": "CreateUserByName",
+      "method": "POST",
+      "path": "/Users/New"
+    },
+    {
+      "operationId": "UpdateUserPassword",
+      "method": "POST",
+      "path": "/Users/Password"
+    },
+    {
+      "operationId": "GetPublicUsers",
+      "method": "GET",
+      "path": "/Users/Public"
+    },
+    {
+      "operationId": "GetIntros",
+      "method": "GET",
+      "path": "/Items/{itemId}/Intros"
+    },
+    {
+      "operationId": "GetLocalTrailers",
+      "method": "GET",
+      "path": "/Items/{itemId}/LocalTrailers"
+    },
+    {
+      "operationId": "GetSpecialFeatures",
+      "method": "GET",
+      "path": "/Items/{itemId}/SpecialFeatures"
+    },
+    {
+      "operationId": "GetLatestMedia",
+      "method": "GET",
+      "path": "/Items/Latest"
+    },
+    {
+      "operationId": "GetRootFolder",
+      "method": "GET",
+      "path": "/Items/Root"
+    },
+    {
+      "operationId": "MarkFavoriteItem",
+      "method": "POST",
+      "path": "/UserFavoriteItems/{itemId}"
+    },
+    {
+      "operationId": "UnmarkFavoriteItem",
+      "method": "DELETE",
+      "path": "/UserFavoriteItems/{itemId}"
+    },
+    {
+      "operationId": "DeleteUserItemRating",
+      "method": "DELETE",
+      "path": "/UserItems/{itemId}/Rating"
+    },
+    {
+      "operationId": "UpdateUserItemRating",
+      "method": "POST",
+      "path": "/UserItems/{itemId}/Rating"
+    },
+    {
+      "operationId": "GetUserViews",
+      "method": "GET",
+      "path": "/UserViews"
+    },
+    {
+      "operationId": "GetGroupingOptions",
+      "method": "GET",
+      "path": "/UserViews/GroupingOptions"
+    },
+    {
+      "operationId": "GetAttachment",
+      "method": "GET",
+      "path": "/Videos/{videoId}/{mediaSourceId}/Attachments/{index}"
+    },
+    {
+      "operationId": "GetAdditionalPart",
+      "method": "GET",
+      "path": "/Videos/{itemId}/AdditionalParts"
+    },
+    {
+      "operationId": "DeleteAlternateSources",
+      "method": "DELETE",
+      "path": "/Videos/{itemId}/AlternateSources"
+    },
+    {
+      "operationId": "GetVideoStream",
+      "method": "GET",
+      "path": "/Videos/{itemId}/stream"
+    },
+    {
+      "operationId": "HeadVideoStream",
+      "method": "HEAD",
+      "path": "/Videos/{itemId}/stream"
+    },
+    {
+      "operationId": "GetVideoStreamByContainer",
+      "method": "GET",
+      "path": "/Videos/{itemId}/stream.{container}"
+    },
+    {
+      "operationId": "HeadVideoStreamByContainer",
+      "method": "HEAD",
+      "path": "/Videos/{itemId}/stream.{container}"
+    },
+    {
+      "operationId": "MergeVersions",
+      "method": "POST",
+      "path": "/Videos/MergeVersions"
+    },
+    {
+      "operationId": "GetYears",
+      "method": "GET",
+      "path": "/Years"
+    },
+    {
+      "operationId": "GetYear",
+      "method": "GET",
+      "path": "/Years/{year}"
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+format: goldenrec-scenario/v1
+name: authenticated legacy item route twins
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: legacy items password login
+    method: POST
+    path: /Users/AuthenticateByName
+    headers:
+      Accept: application/json
+      Authorization: MediaBrowser Client="Goldenrec legacy items corpus", Device="Goldenrec legacy items corpus", DeviceId="goldenrec-legacy-items", Version="1.0.0"
+    body:
+      Username: ${auth_username}
+      Pw: ${auth_password}
+    capture:
+      user_id: User.Id
+    normalizers:
+      - server-id
+      - auth-tokens
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: AuthenticateUserByName
+  - name: select legacy movie item
+    method: GET
+    path: /Items
+    params:
+      Recursive: true
+      IncludeItemTypes:
+        - Movie
+      SortBy:
+        - SortName
+      SortOrder:
+        - Ascending
+      Limit: 1
+      EnableTotalRecordCount: true
+      Fields:
+        - Path
+        - MediaSources
+        - MediaStreams
+    headers:
+      Accept: application/json
+    auth_role: admin
+    capture:
+      movie_id: Items.0.Id
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItems
+  - name: legacy user items list
+    method: GET
+    path: /Users/${user_id}/Items
+    params:
+      Recursive: true
+      IncludeItemTypes:
+        - Movie
+      SortBy:
+        - SortName
+      SortOrder:
+        - Ascending
+      Limit: 2
+      EnableTotalRecordCount: true
+      Fields:
+        - Path
+        - MediaSources
+        - MediaStreams
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:GetItemsLegacy
+  - name: legacy user item by id
+    method: GET
+    path: /Users/${user_id}/Items/${movie_id}
+    params:
+      Fields:
+        - Path
+        - MediaSources
+        - MediaStreams
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:GetItemLegacy
+  - name: legacy user latest items
+    method: GET
+    path: /Users/${user_id}/Items/Latest
+    params:
+      IncludeItemTypes:
+        - Movie
+      Limit: 2
+      GroupItems: false
+      Fields:
+        - Path
+        - MediaSources
+        - MediaStreams
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:GetLatestMediaLegacy
+  - name: legacy user resumable items
+    method: GET
+    path: /Users/${user_id}/Items/Resume
+    params:
+      Limit: 2
+      EnableTotalRecordCount: true
+      Fields:
+        - Path
+        - MediaSources
+        - MediaStreams
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:GetResumeItemsLegacy
+  - name: legacy user views
+    method: GET
+    path: /Users/${user_id}/Views
+    params:
+      IncludeHidden: false
+      IncludeExternalContent: false
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - user-view-ids
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:GetUserViewsLegacy
+  - name: legacy user grouping options
+    method: GET
+    path: /Users/${user_id}/GroupingOptions
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - user-view-ids
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: SHADOW:GetGroupingOptionsLegacy

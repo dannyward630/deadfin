@@ -1,0 +1,242 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+package library_test
+
+import (
+	"os"
+	"path/filepath"
+	"reflect"
+	"sort"
+	"strings"
+	"testing"
+
+	"github.com/deadfin-org/deadfin/internal/dto"
+	"github.com/deadfin-org/deadfin/internal/item"
+	"github.com/deadfin-org/deadfin/internal/library"
+	"github.com/deadfin-org/deadfin/internal/naming"
+	"github.com/deadfin-org/deadfin/internal/store"
+	"github.com/deadfin-org/deadfin/internal/store/sqlite"
+)
+
+type collectionsHarness struct {
+	root     string
+	data     string
+	topology *library.Topology
+	items    *store.ItemStore
+	scanner  *library.Scanner
+	movies   map[string]item.Item
+}
+
+// newCollectionsHarness scans a movies library with four movies through the
+// default resolver chain, with the collections path set.
+func newCollectionsHarness(t *testing.T, autoCollections bool) *collectionsHarness {
+	t.Helper()
+	stores, err := sqlite.Open(t.Context(), ":memory:")
+	if err != nil {
+		t.Fatalf("open stores: %v", err)
+	}
+	t.Cleanup(func() { _ = stores.Close() })
+	root := t.TempDir()
+	topology, err := library.NewTopology(root, store.NewLibraryStore(stores))
+	if err != nil {
+		t.Fatalf("open topology: %v", err)
+	}
+	t.Cleanup(func() { _ = topology.Close() })
+	media := filepath.Join(t.TempDir(), "movies")
+	for _, name := range []string{"Alpha (1999)", "Bravo (2003)", "Charlie (2003)", "Delta (2010)"} {
+		if err := os.MkdirAll(filepath.Join(media, name), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(media, name, name+".mkv"), []byte("x"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	options := library.DefaultLibraryOptions()
+	options.PathInfos = []library.MediaPathInfo{{Path: media}}
+	options.AutomaticallyAddToCollection = autoCollections
+	if _, err := topology.AddVirtualFolder(t.Context(), "Movies", "movies", options); err != nil {
+		t.Fatalf("add library: %v", err)
+	}
+	items := store.NewItemStore(stores)
+	if err := items.BootstrapSystemFolders(t.Context(), root); err != nil {
+		t.Fatalf("bootstrap: %v", err)
+	}
+	data := filepath.Join(root, "data")
+	scanner, err := library.NewScanner(topology, items, library.NewDefaultChain(naming.DefaultOptions()), library.ScannerOptions{CollectionsPath: filepath.Join(data, "collections")})
+	if err != nil {
+		t.Fatalf("new scanner: %v", err)
+	}
+	t.Cleanup(func() { _ = scanner.Close() })
+	h := &collectionsHarness{root: root, data: data, topology: topology, items: items, scanner: scanner, movies: map[string]item.Item{}}
+	h.scan(t)
+	page, err := items.Query(t.Context(), store.ItemQuery{IncludeItemTypes: []item.Kind{item.KindMovie}, Recursive: true})
+	if err != nil {
+		t.Fatalf("list movies: %v", err)
+	}
+	// FindMovie names a self-contained movie after its directory, so
+	// "Alpha (1999)" is keyed as "Alpha".
+	for _, movie := range page.Items {
+		name, _, _ := strings.Cut(*movie.Name, " (")
+		h.movies[name] = movie
+	}
+	if len(h.movies) != 4 {
+		t.Fatalf("scanned movies = %d, want 4", len(h.movies))
+	}
+	return h
+}
+
+func (h *collectionsHarness) scan(t *testing.T) {
+	t.Helper()
+	result, err := h.scanner.Scan(t.Context())
+	if err != nil || len(result.Errors) != 0 {
+		t.Fatalf("scan: %v %v", err, result.Errors)
+	}
+}
+
+func (h *collectionsHarness) boxSets(t *testing.T) map[string]item.Item {
+	t.Helper()
+	page, err := h.items.Query(t.Context(), store.ItemQuery{IncludeItemTypes: []item.Kind{item.KindBoxSet}, Recursive: true})
+	if err != nil {
+		t.Fatalf("list collections: %v", err)
+	}
+	out := map[string]item.Item{}
+	for _, value := range page.Items {
+		out[*value.Name] = value
+	}
+	return out
+}
+
+func (h *collectionsHarness) members(t *testing.T, id dto.UUID) []dto.UUID {
+	t.Helper()
+	page, err := h.items.Query(t.Context(), store.ItemQuery{ParentID: &id})
+	if err != nil {
+		t.Fatalf("list collection members: %v", err)
+	}
+	out := make([]dto.UUID, 0, len(page.Items))
+	for _, value := range page.Items {
+		out = append(out, value.ID)
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].String() < out[j].String() })
+	return out
+}
+
+func sortedIDs(values ...item.Item) []dto.UUID {
+	out := make([]dto.UUID, 0, len(values))
+	for _, value := range values {
+		out = append(out, value.ID)
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].String() < out[j].String() })
+	return out
+}
+
+// TestCreateCollectionSurvivesRescan ports CreateCollectionAsync and proves
+// a scan finds the same Collections library rows and BoxSet, and keeps the
+// BoxSet's members.
+func TestCreateCollectionSurvivesRescan(t *testing.T) {
+	h := newCollectionsHarness(t, false)
+	created, err := h.scanner.CreateCollection(t.Context(), "Heist: Films", true)
+	if err != nil {
+		t.Fatalf("create collection: %v", err)
+	}
+	directory := filepath.Join(h.data, "collections", "Heist  Films [boxset]")
+	if created.Kind != item.KindBoxSet || created.Path == nil || *created.Path != directory || !created.IsLocked {
+		t.Fatalf("created = %+v", created)
+	}
+	if info, err := os.Stat(directory); err != nil || !info.IsDir() {
+		t.Fatalf("collection directory: %v", err)
+	}
+	folders, err := h.topology.VirtualFolders(t.Context())
+	if err != nil {
+		t.Fatal(err)
+	}
+	var collections *library.VirtualFolder
+	for index := range folders {
+		if folders[index].Name == library.CollectionsLibraryName {
+			collections = &folders[index]
+		}
+	}
+	if collections == nil || collections.CollectionType != "boxsets" || !reflect.DeepEqual(collections.MediaPaths, []string{filepath.Join(h.data, "collections")}) {
+		t.Fatalf("collections library = %+v", collections)
+	}
+	again, err := h.scanner.CreateCollection(t.Context(), "Heist: Films", false)
+	if err != nil || again.ID != created.ID {
+		t.Fatalf("second create = %s, %v; want the existing %s", again.ID, err, created.ID)
+	}
+
+	if err := h.items.AddToCollection(t.Context(), created.ID, []dto.UUID{h.movies["Alpha"].ID, h.movies["Delta"].ID}); err != nil {
+		t.Fatalf("add to collection: %v", err)
+	}
+	h.scan(t)
+	h.scan(t)
+	boxSets := h.boxSets(t)
+	if len(boxSets) != 1 {
+		t.Fatalf("collections after rescan = %v", boxSets)
+	}
+	after := boxSets["Heist: Films"]
+	if after.ID != created.ID || after.ParentID == nil || created.ParentID == nil || *after.ParentID != *created.ParentID || *after.TopParentID != *created.TopParentID {
+		t.Fatalf("rescanned collection = %+v, created %+v", after, created)
+	}
+	if got, want := h.members(t, created.ID), sortedIDs(h.movies["Alpha"], h.movies["Delta"]); !reflect.DeepEqual(got, want) {
+		t.Fatalf("members after rescan = %v, want %v", got, want)
+	}
+
+	if err := h.items.RemoveFromCollection(t.Context(), created.ID, []dto.UUID{h.movies["Alpha"].ID, h.movies["Bravo"].ID}); err != nil {
+		t.Fatalf("remove from collection: %v", err)
+	}
+	h.scan(t)
+	if got, want := h.members(t, created.ID), sortedIDs(h.movies["Delta"]); !reflect.DeepEqual(got, want) {
+		t.Fatalf("members after remove = %v, want %v", got, want)
+	}
+}
+
+// TestAddMoviesToCollections ports CollectionPostScanTask: a TMDb collection
+// shared by two movies creates a BoxSet, a single movie joins only an
+// existing BoxSet, and alternate versions are skipped.
+func TestAddMoviesToCollections(t *testing.T) {
+	h := newCollectionsHarness(t, true)
+	setCollection := func(name, collection string, primary *dto.UUID) {
+		movie, err := h.items.Get(t.Context(), h.movies[name].ID)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if movie.Extra.Movie == nil {
+			movie.Extra.Movie = &item.MovieExtra{}
+		}
+		movie.Extra.Movie.TmdbCollectionName = &collection
+		movie.PrimaryVersionID = primary
+		if err := h.items.Upsert(t.Context(), movie); err != nil {
+			t.Fatal(err)
+		}
+	}
+	alpha := h.movies["Alpha"].ID
+	setCollection("Alpha", "Pair Collection", nil)
+	setCollection("Bravo", "Pair Collection", nil)
+	setCollection("Charlie", "Solo Collection", nil)
+	setCollection("Delta", "Pair Collection", &alpha)
+
+	if err := h.scanner.AddMoviesToCollections(t.Context(), nil); err != nil {
+		t.Fatalf("auto collections: %v", err)
+	}
+	boxSets := h.boxSets(t)
+	if len(boxSets) != 1 {
+		t.Fatalf("collections = %v, want only Pair Collection", boxSets)
+	}
+	pair := boxSets["Pair Collection"]
+	if got, want := h.members(t, pair.ID), sortedIDs(h.movies["Alpha"], h.movies["Bravo"]); !reflect.DeepEqual(got, want) {
+		t.Fatalf("pair members = %v, want %v", got, want)
+	}
+
+	solo, err := h.scanner.CreateCollection(t.Context(), "Solo Collection", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := h.scanner.AddMoviesToCollections(t.Context(), nil); err != nil {
+		t.Fatalf("auto collections rerun: %v", err)
+	}
+	if got, want := h.members(t, solo.ID), sortedIDs(h.movies["Charlie"]); !reflect.DeepEqual(got, want) {
+		t.Fatalf("solo members = %v, want %v", got, want)
+	}
+	if got := len(h.members(t, pair.ID)); got != 2 {
+		t.Fatalf("pair members after rerun = %d, want 2", got)
+	}
+}

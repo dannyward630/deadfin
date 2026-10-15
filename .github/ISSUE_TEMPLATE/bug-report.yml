@@ -1,0 +1,48 @@
+name: Bug report
+description: Deadfin does something wrong or fails.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read docs/alpha/reporting-bugs.md first. Remove tokens, API keys,
+        and private paths from everything you paste.
+  - type: textarea
+    id: build
+    attributes:
+      label: Deadfin build
+      description: The output of `curl -s http://<host>:8096/deadfin/v1/build`.
+      render: json
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: Client
+      description: Name, version, platform, and player (for Swiftfin, native or VLC).
+      placeholder: Swiftfin 1.3 on tvOS 26, native player
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps, expected result, actual result
+      description: What you did, in order. What you expected. What happened.
+    validations:
+      required: true
+  - type: textarea
+    id: jellyfin
+    attributes:
+      label: What Jellyfin does
+      description: If you can, do the same steps in Jellyfin 12.0 and say what happens.
+  - type: textarea
+    id: media
+    attributes:
+      label: Media info
+      description: Container, video and audio codecs, subtitle files. In the web client, item page → ⋯ → Media Info. Do not attach the media file.
+  - type: textarea
+    id: log
+    attributes:
+      label: Server log
+      description: The log around the fault (`docker compose logs --since 10m deadfin`). For playback faults, also the newest `ffmpeg-transcode-*.log`.
+      render: text

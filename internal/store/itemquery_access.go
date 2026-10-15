@@ -1,0 +1,186 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+package store
+
+import (
+	"context"
+	"encoding/json"
+	"strings"
+
+	"github.com/deadfin-org/deadfin/internal/dto"
+	"github.com/deadfin-org/deadfin/internal/item"
+)
+
+type playbackItemQueryReader interface {
+	Query(context.Context, ItemQuery) (ItemQueryResult, error)
+}
+
+type playbackItemUserReader interface {
+	Get(context.Context, dto.UUID) (User, error)
+}
+
+// PlaybackItemAccessReader adapts the existing policy-aware ItemQuery seam to
+// playback source selection. It deliberately supplies both User and UserID:
+// the former applies visibility policy and the latter preserves any user-data
+// query behavior attached to an item projection.
+type PlaybackItemAccessReader struct {
+	items playbackItemQueryReader
+	users playbackItemUserReader
+}
+
+func NewPlaybackItemAccessReader(items playbackItemQueryReader, users playbackItemUserReader) PlaybackItemAccessReader {
+	return PlaybackItemAccessReader{items: items, users: users}
+}
+
+// AccessiblePlaybackItemIDs returns only requested IDs that the selected
+// persisted user may see. A missing item and an inaccessible item both produce
+// an absent ID, so playback can return its compatible not-found result.
+func (reader PlaybackItemAccessReader) AccessiblePlaybackItemIDs(ctx context.Context, userID dto.UUID, ids []dto.UUID) ([]dto.UUID, error) {
+	if len(ids) == 0 {
+		return nil, nil
+	}
+	user, err := reader.users.Get(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+	result, err := reader.items.Query(ctx, ItemQuery{ItemIDs: ids, User: &user, UserID: &user.ID, IncludeOwnedItems: true})
+	if err != nil {
+		return nil, err
+	}
+	accessible := make([]dto.UUID, len(result.Items))
+	for index, it := range result.Items {
+		accessible[index] = it.ID
+	}
+	return accessible, nil
+}
+
+// applyItemQueryAccess moves the subtype-specific visibility check into the ID
+// relation. Playlist ownership is deliberately distinct from generic owner_id:
+// only public playlists, the playlist owner, or an explicit share are visible.
+// This is divergence D-03's SQL replacement for upstream's post-query object
+// filtering, so inaccessible rows cannot consume a page slot or count.
+func applyItemQueryAccess(relation *itemQueryIDRelation, query ItemQuery) {
+	visible := itemQueryAccessClause(relation, query, "visible_item")
+	if visible == "" {
+		return
+	}
+
+	source := relation.current
+	relation.add("visible_ids", "SELECT visible_item.id FROM items AS visible_item JOIN "+source+" AS selected ON selected.id = visible_item.id WHERE "+visible)
+}
+
+// itemQueryAccessClause returns the target-user visibility predicate for one
+// item alias. Explicit ItemIds reuse it so their source-required UNION cannot
+// disclose an inaccessible existing row or count a nonexistent one.
+func itemQueryAccessClause(relation *itemQueryIDRelation, query ItemQuery, alias string) string {
+	if query.User == nil {
+		return ""
+	}
+	policy := itemQueryUserPolicy{}
+	if len(query.User.Policy) != 0 && json.Unmarshal(query.User.Policy, &policy) != nil {
+		policy = itemQueryUserPolicy{}
+	}
+	if policy.IsAdministrator {
+		return ""
+	}
+
+	ownerID := relation.argument(uuidArgDialect(relation.d, query.User.ID))
+	shareID := relation.argument(uuidArgDialect(relation.d, query.User.ID))
+	playlistKind := item.KindPlaylist.String()
+	clauses := []string{"(" + alias + ".kind <> '" + playlistKind + "' OR " + alias + ".open_access = " + relation.d.Boolean(true) + " OR " + alias + ".playlist_owner_user_id = " + ownerID + " OR EXISTS (SELECT 1 FROM item_shares AS playlist_share WHERE playlist_share.item_id = " + alias + ".id AND playlist_share.user_id = " + shareID + "))"}
+	if policy.EnableAllFolders != nil && !*policy.EnableAllFolders {
+		topParentFolders := itemQueryAccessUUIDList(relation, policy.EnabledFolders)
+		itemFolders := itemQueryAccessUUIDList(relation, policy.EnabledFolders)
+		ancestorFolders := itemQueryAccessUUIDList(relation, policy.EnabledFolders)
+		clauses = append(clauses, "("+alias+".kind = '"+playlistKind+"' OR ("+alias+".top_parent_id IN ("+topParentFolders+") OR "+alias+".id IN ("+itemFolders+") OR EXISTS (SELECT 1 FROM ancestors AS policy_ancestor WHERE policy_ancestor.item_id = "+alias+".id AND policy_ancestor.ancestor_id IN ("+ancestorFolders+"))))")
+	}
+	clauses = append(clauses, itemQueryAccessTagClause(relation, alias, policy.BlockedTags, true))
+	clauses = append(clauses, itemQueryAccessTagClause(relation, alias, policy.AllowedTags, false))
+	if policy.MaxParentalRating != nil {
+		lessThanScore := relation.argument(*policy.MaxParentalRating)
+		equalScore := relation.argument(*policy.MaxParentalRating)
+		subScore := 0
+		if policy.MaxParentalSubRating != nil {
+			subScore = *policy.MaxParentalSubRating
+		}
+		sub := relation.argument(subScore)
+		clauses = append(clauses, "("+alias+".inherited_parental_rating_value IS NULL OR "+alias+".inherited_parental_rating_value < "+lessThanScore+" OR ("+alias+".inherited_parental_rating_value = "+equalScore+" AND COALESCE("+alias+".inherited_parental_rating_subvalue, 0) <= "+sub+"))")
+	}
+	if len(policy.BlockUnratedItems) != 0 {
+		values := make([]string, 0, len(policy.BlockUnratedItems))
+		for _, unrated := range policy.BlockUnratedItems {
+			values = append(values, relation.argument(enum(item.UnratedItem(unrated))))
+		}
+		clauses = append(clauses, "("+alias+".inherited_parental_rating_value IS NOT NULL OR "+alias+".unrated_type IS NULL OR "+alias+".unrated_type NOT IN ("+strings.Join(values, ", ")+"))")
+	}
+	return strings.Join(itemQueryNonEmptyClauses(clauses), " AND ")
+}
+
+// itemQueryAccessClauseArguments applies the shared visibility policy to a
+// standalone SQL statement while extending that statement's argument list.
+// It deliberately shares itemQueryAccessClause so specialized queries cannot
+// drift from ItemQuery policy semantics.
+func itemQueryAccessClauseArguments(d Dialect, query ItemQuery, alias string, args []any) (string, []any) {
+	if query.User == nil {
+		return "", args
+	}
+	relation := itemQueryIDRelation{d: d, args: args}
+	return itemQueryAccessClause(&relation, query, alias), relation.args
+}
+
+type itemQueryUserPolicy struct {
+	IsAdministrator      bool
+	EnableAllFolders     *bool
+	EnabledFolders       []dto.UUID
+	BlockedTags          []string
+	AllowedTags          []string
+	MaxParentalRating    *int
+	MaxParentalSubRating *int
+	BlockUnratedItems    []int
+}
+
+func itemQueryAccessUUIDList(relation *itemQueryIDRelation, values []dto.UUID) string {
+	if len(values) == 0 {
+		return "NULL"
+	}
+	placeholders := make([]string, len(values))
+	for index, value := range values {
+		placeholders[index] = relation.argument(uuidArgDialect(relation.d, value))
+	}
+	return strings.Join(placeholders, ", ")
+}
+
+func itemQueryAccessTagClause(relation *itemQueryIDRelation, alias string, tags []string, exclude bool) string {
+	if len(tags) == 0 {
+		return ""
+	}
+	cleanTags := make([]string, 0, len(tags))
+	for _, tag := range tags {
+		if clean := item.CleanName(tag); clean != "" {
+			cleanTags = append(cleanTags, clean)
+		}
+	}
+	if len(cleanTags) == 0 {
+		return ""
+	}
+	kind := relation.argument("tag")
+	values := make([]string, len(cleanTags))
+	for index, clean := range cleanTags {
+		values[index] = relation.argument(clean)
+	}
+	prefix := "EXISTS"
+	if exclude {
+		prefix = "NOT EXISTS"
+	}
+	return prefix + " (SELECT 1 FROM item_value_map AS policy_value_map JOIN item_values AS policy_value ON policy_value.id = policy_value_map.value_id WHERE (policy_value_map.item_id = " + alias + ".id OR policy_value_map.item_id = " + alias + ".series_id OR policy_value_map.item_id = " + alias + ".top_parent_id OR EXISTS (SELECT 1 FROM ancestors AS policy_tag_ancestor WHERE policy_tag_ancestor.item_id = " + alias + ".id AND policy_tag_ancestor.ancestor_id = policy_value_map.item_id)) AND policy_value.kind = " + kind + " AND policy_value.clean_value IN (" + strings.Join(values, ", ") + "))"
+}
+
+func itemQueryNonEmptyClauses(clauses []string) []string {
+	result := clauses[:0]
+	for _, clause := range clauses {
+		if clause != "" {
+			result = append(result, clause)
+		}
+	}
+	return result
+}

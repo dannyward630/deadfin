@@ -1,0 +1,2437 @@
+{
+  "cases": [
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 180,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 320
+      },
+      "id": "jpeg-landscape-width-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=320&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=320&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "width": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-width-320.jpg",
+        "sha256": "55b646b59b308611134a30e1b0d6261ba52143a12ca2a6de59c5affcbf0d4456",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 240,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 427
+      },
+      "id": "jpeg-landscape-height-240",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?height=240&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?height=240&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "height": 240
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-height-240.jpg",
+        "sha256": "811ccd70843af37ef1ad60758de8532629cf553d81315d207bae5cb12c0962cb",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 480
+      },
+      "id": "jpeg-landscape-box-480x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=480&height=360&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=480&height=360&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "height": 360,
+          "width": 480
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-box-480x360.jpg",
+        "sha256": "3ea75463002143fdb370e8bdfca8bf9f269cc6e62166150125dc786ec738d1aa",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-landscape-max-width-640",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "maxWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-max-width-640.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-landscape-max-height-360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxHeight=360&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxHeight=360&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "maxHeight": 360
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-max-height-360.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-landscape-max-box-640x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&maxHeight=360&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&maxHeight=360&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "maxHeight": 360,
+          "maxWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-max-box-640x360.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 320,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 569
+      },
+      "id": "jpeg-landscape-fill-square-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 320,
+          "fillWidth": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-fill-square-320.jpg",
+        "sha256": "c36aae56c3c01252e41b1b55dc48083fe5bf1461be65b2d69d64321af7ed5c9f",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-landscape-fill-wide-640x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=640&fillHeight=360&quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=640&fillHeight=360&quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 360,
+          "fillWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-fill-wide-640x360.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-landscape-quality-30",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=30&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=30&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 30,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-quality-30.jpg",
+        "sha256": "8ca2ec8b2ebea9c5da2e98cf67b33b5cec0dd4d49e6634dc5bda92e128cf9286",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-landscape-noop",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-landscape-noop.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-alpha-noop",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-noop.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 180,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 320
+      },
+      "id": "png-alpha-width-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?width=320&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?width=320&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "width": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-width-320.png",
+        "sha256": "ac2414f1c384f0ddd90928771fe50412fa4a210c48b83d594c6bee0353c60469",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 240,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 427
+      },
+      "id": "png-alpha-height-240",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?height=240&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?height=240&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "height": 240
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-height-240.png",
+        "sha256": "62e1d1a1f096717499677bcdcf1d83589e9bee3e37836ffe8a1b3b8f6d102aea",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 480
+      },
+      "id": "png-alpha-box-480x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?width=480&height=360&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?width=480&height=360&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "height": 360,
+          "width": 480
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-box-480x360.png",
+        "sha256": "cfdd143f6dc44f2e469306976c69b982543cabf7bc8b93010ba405228289c223",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-alpha-max-width-640",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?maxWidth=640&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?maxWidth=640&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "maxWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-max-width-640.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-alpha-max-height-360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?maxHeight=360&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?maxHeight=360&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "maxHeight": 360
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-max-height-360.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-alpha-max-box-640x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?maxWidth=640&maxHeight=360&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?maxWidth=640&maxHeight=360&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "maxHeight": 360,
+          "maxWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-max-box-640x360.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 320,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 569
+      },
+      "id": "png-alpha-fill-square-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 320,
+          "fillWidth": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-fill-square-320.png",
+        "sha256": "b376db9b66eed878ecd193d7c723f08da4f1e98368a56009b93aea8ceeceaaea",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-alpha-fill-wide-640x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?fillWidth=640&fillHeight=360&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?fillWidth=640&fillHeight=360&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 360,
+          "fillWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-fill-wide-640x360.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-alpha-quality-0",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=0&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=0&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 0,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-quality-0.png",
+        "sha256": "318ef7ec785105155edab335aff6bd6bffc28d10d078e257003f0a80aa413d44",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-alpha-quality-100",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=100&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=100&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "png",
+        "quality": 100,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-alpha-quality-100.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-webp-noop",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Subtitle Sample (2024)/Subtitle Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "texture",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/texture.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-webp-noop.png",
+        "sha256": "852f528ab741ff757bdf10268e3a66a25b91a3390c65267e0da1f311d5a291d6",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 180,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 320
+      },
+      "id": "png-webp-width-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Subtitle Sample (2024)/Subtitle Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?width=320&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?width=320&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "texture",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "width": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/texture.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-webp-width-320.png",
+        "sha256": "3a6cd592fba553de19c3fb42a32f9aeb05cd86c543f02567cd6297c2c64ee02d",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 320,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 569
+      },
+      "id": "png-webp-fill-square-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Subtitle Sample (2024)/Subtitle Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "texture",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 320,
+          "fillWidth": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/texture.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-webp-fill-square-320.png",
+        "sha256": "a7a6e2cd084e128850e77cd8e6f1dcd3b82dc624220a99925716e758d1f0f8d6",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-webp-max-width-640",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Subtitle Sample (2024)/Subtitle Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?maxWidth=640&quality=90&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?maxWidth=640&quality=90&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "texture",
+        "outputFormat": "png",
+        "quality": 90,
+        "resize": {
+          "maxWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/texture.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-webp-max-width-640.png",
+        "sha256": "852f528ab741ff757bdf10268e3a66a25b91a3390c65267e0da1f311d5a291d6",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "png"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/png",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "png-webp-quality-50",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/png",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Subtitle Sample (2024)/Subtitle Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?quality=50&format=png",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?quality=50&format=png"
+        },
+        "imageType": "Primary",
+        "itemKey": "texture",
+        "outputFormat": "png",
+        "quality": 50,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/texture.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/png-webp-quality-50.png",
+        "sha256": "852f528ab741ff757bdf10268e3a66a25b91a3390c65267e0da1f311d5a291d6",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-landscape-noop",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-noop.webp",
+        "sha256": "9af683596c8ae4152432ad1fb8087b77a98eece30646e15201b3bace30cbb5d1",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 180,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 320
+      },
+      "id": "webp-landscape-width-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=320&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=320&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "width": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-width-320.webp",
+        "sha256": "e0ce7f78ceae7ab8dd918d8a4697356534df86dab196b5dc5974a63b96897b11",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 240,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 427
+      },
+      "id": "webp-landscape-height-240",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?height=240&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?height=240&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "height": 240
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-height-240.webp",
+        "sha256": "8fd3b6ebf9048fae2c0161b8653e82421aefe84492ae0bbf892223b178c43e7e",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 480
+      },
+      "id": "webp-landscape-box-480x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=480&height=360&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?width=480&height=360&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "height": 360,
+          "width": 480
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-box-480x360.webp",
+        "sha256": "dbef99d914d088885056c5406dd5bce3d95ac8106865d87ff94374fcb215d844",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-landscape-max-width-640",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "maxWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-max-width-640.webp",
+        "sha256": "9af683596c8ae4152432ad1fb8087b77a98eece30646e15201b3bace30cbb5d1",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-landscape-max-height-360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxHeight=360&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxHeight=360&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "maxHeight": 360
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-max-height-360.webp",
+        "sha256": "9af683596c8ae4152432ad1fb8087b77a98eece30646e15201b3bace30cbb5d1",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-landscape-max-box-640x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&maxHeight=360&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?maxWidth=640&maxHeight=360&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "maxHeight": 360,
+          "maxWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-max-box-640x360.webp",
+        "sha256": "9af683596c8ae4152432ad1fb8087b77a98eece30646e15201b3bace30cbb5d1",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 320,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 569
+      },
+      "id": "webp-landscape-fill-square-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 320,
+          "fillWidth": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-fill-square-320.webp",
+        "sha256": "d77d7fce621fd291b807d6810918003394aa56dbcf71d8772718cba5443debb0",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-landscape-fill-wide-640x360",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=640&fillHeight=360&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?fillWidth=640&fillHeight=360&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 360,
+          "fillWidth": 640
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-fill-wide-640x360.webp",
+        "sha256": "9af683596c8ae4152432ad1fb8087b77a98eece30646e15201b3bace30cbb5d1",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-landscape-quality-0",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=0&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=0&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 0,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-quality-0.webp",
+        "sha256": "7afbe7cc5de96f1fe05f043da7cdbf3848374b39c387e8943094ef8c746d4ba1",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-landscape-quality-100",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Standalone Movie (2023)/Standalone Movie (2023).mkv",
+          "method": "GET",
+          "path": "/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=100&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/7e897749137a8161f7a084cfad246bd3/Images/Primary?quality=100&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "landscape",
+        "outputFormat": "webp",
+        "quality": 100,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/landscape.jpg",
+        "sha256": "7f3eec7771be7d3104daf387ed82dc430d79dd35878a2d5d26f29294fc514b6f"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-landscape-quality-100.webp",
+        "sha256": "634d2e323357b00b72efb3d129ff454382cac67327b10ca67b2827e0dcd5b2b6",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-alpha-noop",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-alpha-noop.webp",
+        "sha256": "1cd68cd17d4a72fafd04c1a22a275b16d01345306b362fe972d521ca52dfdbbc",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 180,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 320
+      },
+      "id": "webp-alpha-width-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?width=320&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?width=320&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "width": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-alpha-width-320.webp",
+        "sha256": "e7ab5939ecc96a2256dd4c691245fcb476d906b5918ac940cd9eacf434e3fff4",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 320,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 569
+      },
+      "id": "webp-alpha-fill-square-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/HLG Sample (2024)/HLG Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/458d9e74eebaba5afea807ad08bf6e51/Images/Primary?fillWidth=320&fillHeight=320&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "alpha",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "fillHeight": 320,
+          "fillWidth": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/alpha.png",
+        "sha256": "746ae0e264839603c2c051c2a81b43c4781e85b6055de1490b237a56e02bc0de"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-alpha-fill-square-320.webp",
+        "sha256": "2dad16e76c8c5836764d84387d7fc5ed1a59218a1dbc9400089751251875d23b",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "webp-webp-noop",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Subtitle Sample (2024)/Subtitle Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "texture",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/texture.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-webp-noop.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "webp"
+      ],
+      "expected": {
+        "height": 180,
+        "mimeType": "image/webp",
+        "orientation": 1,
+        "width": 320
+      },
+      "id": "webp-webp-width-320",
+      "request": {
+        "autoOrient": false,
+        "capture": {
+          "contentType": "image/webp",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Movie:/media/movies/Subtitle Sample (2024)/Subtitle Sample (2024).mkv",
+          "method": "GET",
+          "path": "/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?width=320&quality=90&format=webp",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/ad08623a9ec58acc2d5541518d90a065/Images/Primary?width=320&quality=90&format=webp"
+        },
+        "imageType": "Primary",
+        "itemKey": "texture",
+        "outputFormat": "webp",
+        "quality": 90,
+        "resize": {
+          "width": 320
+        },
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/texture.webp",
+        "sha256": "a64b22e61b8510fc38fe90b2c572fe2de811112075c725cef57652a5ab276c06"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/webp-webp-width-320.webp",
+        "sha256": "dce69be6ffb4351686d1603904e8cc41fa14a561f68592a0cae9f2bc2ad5bf33",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-orientation-1",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": false,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-1.jpg",
+          "method": "GET",
+          "path": "/Items/866a69ac8c7f72bd3c247b88dc1810d4/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/866a69ac8c7f72bd3c247b88dc1810d4/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-1",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-1.jpg",
+        "sha256": "309a6ddc23e4f102cf2acbabe23cd1fe1de3fb7ed739e0667b58d23f8a407d9e"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-1.jpg",
+        "sha256": "309a6ddc23e4f102cf2acbabe23cd1fe1de3fb7ed739e0667b58d23f8a407d9e",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-orientation-2",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": true,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-2.jpg",
+          "method": "GET",
+          "path": "/Items/60e97bf9b185483b3ec1390dc4b32f59/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/60e97bf9b185483b3ec1390dc4b32f59/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-2",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-2.jpg",
+        "sha256": "388d8a9ee99358c22764c051bea26492f8040c0680c8cbe5705c27f2cc47ee38"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-2.jpg",
+        "sha256": "93983297700c9e6756280728853f2a7fdf4cb278b53b20d789bb5f2ba368e45e",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-orientation-3",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": true,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-3.jpg",
+          "method": "GET",
+          "path": "/Items/26183b779ea5dda5e2e331fec6a5d80f/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/26183b779ea5dda5e2e331fec6a5d80f/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-3",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-3.jpg",
+        "sha256": "45471b3d01dd754ef127caa22aa0d62eec0b2a8486b190d4ca25f4ca263ba4fc"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-3.jpg",
+        "sha256": "7c6144f708df28adc39168dc3f3dc6c5edb059a1a9a589ad5157030ac544d6a5",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 360,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 640
+      },
+      "id": "jpeg-orientation-4",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": true,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-4.jpg",
+          "method": "GET",
+          "path": "/Items/b9a6d2342cc44f190cd236a34c90c42a/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/b9a6d2342cc44f190cd236a34c90c42a/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-4",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-4.jpg",
+        "sha256": "d8c5dde4fabf26eaea2fe2ce686c69d92134f5419a5fdd80466e76aa827c456c"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-4.jpg",
+        "sha256": "56c43e357bc837eebeb19208e67490593e242eab698f695fd4567129a53e13e3",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 640,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 360
+      },
+      "id": "jpeg-orientation-5",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": true,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-5.jpg",
+          "method": "GET",
+          "path": "/Items/9e6ee79eae12e0ad1e4e4662419c0f1d/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/9e6ee79eae12e0ad1e4e4662419c0f1d/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-5",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-5.jpg",
+        "sha256": "d54f0d1e6fa306426653a78e0779d9c46f12ac51485bb311b1aadd750d467825"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-5.jpg",
+        "sha256": "f502183a93159e431d12208d6a5ffed58db883b58d0f88bd83779585cc8fd5fb",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 640,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 360
+      },
+      "id": "jpeg-orientation-6",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": true,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-6.jpg",
+          "method": "GET",
+          "path": "/Items/10c75aa17d2e5e91a010571c8bc20472/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/10c75aa17d2e5e91a010571c8bc20472/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-6",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-6.jpg",
+        "sha256": "5f6ce317a2c952b89a2da29d2adc68146bdcec01f71271e913fe9012860c2c73"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-6.jpg",
+        "sha256": "92ec161cfcebc73d2214b56655467f5d6cea75f4bc449243a62124d229f712e6",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 640,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 360
+      },
+      "id": "jpeg-orientation-7",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": true,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-7.jpg",
+          "method": "GET",
+          "path": "/Items/36f5824733984deaf071f4ee4a100cd9/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/36f5824733984deaf071f4ee4a100cd9/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-7",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-7.jpg",
+        "sha256": "ec49dbe3cad5718d7ad2534a77b8d3799dce3f694aa8d9ea26454a8bfa2412b8"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-7.jpg",
+        "sha256": "cf25d2c1ae3d03d3ab28ee1e29b6c8a1de3caa755929a6f9b01b2a8d31f2680d",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    },
+    {
+      "categories": [
+        "stock-http",
+        "local-fixture",
+        "jpeg"
+      ],
+      "expected": {
+        "height": 640,
+        "mimeType": "image/jpeg",
+        "orientation": 1,
+        "width": 360
+      },
+      "id": "jpeg-orientation-8",
+      "request": {
+        "autoOrient": true,
+        "processorAutoOrient": true,
+        "capture": {
+          "contentType": "image/jpeg",
+          "httpStatus": 200,
+          "imageIndex": null,
+          "imageType": "Primary",
+          "itemIdentity": "Photo:/media/photos/orientation-8.jpg",
+          "method": "GET",
+          "path": "/Items/90db266c7289a16fcb5c2b8d09962c37/Images/Primary?quality=90&format=jpeg",
+          "transport": "curl --noproxy *",
+          "url": "http://127.0.0.1:8096/Items/90db266c7289a16fcb5c2b8d09962c37/Images/Primary?quality=90&format=jpeg"
+        },
+        "imageType": "Primary",
+        "itemKey": "orientation-8",
+        "outputFormat": "jpeg",
+        "quality": 90,
+        "resize": {},
+        "sourceModifiedUTC": "2025-01-02T03:04:05Z"
+      },
+      "source": {
+        "kind": "local-fixture",
+        "path": "inputs/orientation-8.jpg",
+        "sha256": "167431891fd22e66a51599b2eb9250442f9d53896bb8075eae4f9c479233ee46"
+      },
+      "stock": {
+        "capturedAt": "2026-07-26T21:10:48Z",
+        "ociDigest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+        "path": "stock/jpeg-orientation-8.jpg",
+        "sha256": "ee119a7199bdfe38cfd09986674fa135a52b74e8cb7e992ffe86acf553b605bb",
+        "toolVersion": "goldenrec-capture-images/1; python=3.13.12; curl 8.18.0 (aarch64-apple-darwin25.3.0) libcurl/8.18.0 OpenSSL/3.6.1 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.67.1 ngtcp2/1.19.0 nghttp3/1.14.0 mit-krb5/1.22.1",
+        "upstreamCommit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+      }
+    }
+  ],
+  "schemaVersion": 1
+}

@@ -1,0 +1,133 @@
+# REUSE metadata for files that cannot carry an SPDX header.
+# Spec: https://reuse.software/spec-3.3/
+#
+# Source files carry their own SPDX headers. This file covers documentation,
+# data, fixtures, generated files, and third-party material. "closest"
+# precedence lets a header in a file win over these defaults. When
+# annotations overlap, the last match wins, so the list runs from general to
+# specific.
+version = 1
+
+# Deadfin's own source, documentation, data, configuration, and generated
+# files. A Go source file carries its own SPDX-License-Identifier line; this
+# annotation adds the copyright text.
+[[annotations]]
+path = [
+    "**/*.md",
+    "**/*.json",
+    "**/*.yaml",
+    "**/*.yml",
+    "**/*.toml",
+    "**/*.txt",
+    "**/*.sql",
+    "**/*.mk",
+    "**/*.nix",
+    "**/*.gz",
+    "Makefile",
+    "Dockerfile",
+    "VERSION",
+    "go.mod",
+    "go.sum",
+    "tools/*/go.mod",
+    "tools/*/go.sum",
+    ".gitignore",
+    ".dockerignore",
+    ".golangci.yaml",
+    "**/.gitignore",
+    "**/*.Dockerfile",
+    "**/*.targets",
+    "upstream/PIN",
+    "**/*.go",
+    "**/*.sh",
+    "**/*.py",
+    "**/*.cs",
+    "**/*.csproj",
+    "**/Dockerfile",
+    "tools/image-smoke",
+    "tools/image-publication",
+    "third_party/deadfin-image/NOTICE",
+    "docs/assets/*.svg",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "Deadfin contributors"
+SPDX-License-Identifier = "GPL-2.0-only"
+
+# Test fixtures and golden files. The media and images are synthetic, made by
+# tools/goldenrec/fixtures/gen.sh and tools/verify-env; the goldens are
+# outputs of Deadfin or of pinned Jellyfin run on those inputs.
+[[annotations]]
+path = [
+    "**/testdata/**",
+    ".ci/fixtures/**",
+    "tools/goldenrec/fixtures/**",
+    "evidence/**",
+    "checklists/**",
+    "results/**",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "Deadfin contributors"
+SPDX-License-Identifier = "GPL-2.0-only"
+
+# Material taken or derived from Jellyfin at the pinned commit (upstream/PIN):
+# the OpenAPI document, the differential corpora, the localization and rating
+# tables, the provider plugin configuration pages, and goldens recorded from
+# the upstream C# code. Jellyfin is GPL-2.0 (see PROVENANCE.md).
+[[annotations]]
+path = [
+    "ledger/**",
+    "corpora/**",
+    "internal/localization/assets/**",
+    "internal/api/handlers/pluginpages/**",
+    "**/testdata/upstream-*/**",
+    "internal/playback/testdata/golden/**",
+    "internal/encoding/testdata/golden/**",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = ["Jellyfin contributors", "Deadfin contributors"]
+SPDX-License-Identifier = "GPL-2.0-only"
+
+# Third-party: SkiaSharp native library and its notices.
+[[annotations]]
+path = [
+    "internal/images/native/skia/**",
+    "third_party/skia-sharp/**",
+]
+precedence = "override"
+SPDX-FileCopyrightText = ["2015-2016 Xamarin, Inc.", "2017-2018 Microsoft Corporation"]
+SPDX-License-Identifier = "MIT"
+
+# Third-party: vendored gopkg.in/yaml.v3 (dual-licensed by upstream; see its
+# LICENSE and NOTICE).
+[[annotations]]
+path = "tools/difftool/vendor/**"
+precedence = "closest"
+SPDX-FileCopyrightText = ["2006-2011 Kirill Simonov", "2011-2019 Canonical Ltd"]
+SPDX-License-Identifier = "MIT AND Apache-2.0"
+
+# Third-party: vendored actions/upload-artifact for Gitea Actions.
+[[annotations]]
+path = ".gitea/actions/upload-artifact/**"
+precedence = "override"
+SPDX-FileCopyrightText = "2018 GitHub, Inc. and contributors"
+SPDX-License-Identifier = "MIT"
+
+# Third-party data: an excerpt of manami-project/anime-offline-database. The
+# file names its own license.
+[[annotations]]
+path = "internal/anime/testdata/anime-offline-database-minified.json"
+precedence = "override"
+SPDX-FileCopyrightText = "manami-project/anime-offline-database contributors"
+SPDX-License-Identifier = "ODbL-1.0 AND LicenseRef-DbCL-1.0"
+
+# Third-party data: excerpts of the Anime-Lists mapping and the AniDB title
+# dump, and recorded or hand-written metadata-provider API responses used as
+# test cassettes. See LICENSES/LicenseRef-provider-data.txt.
+[[annotations]]
+path = [
+    "internal/anime/testdata/anime-list-master.xml",
+    "internal/anime/testdata/anime-titles.xml.gz",
+    "internal/providers/*/testdata/**",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "The respective data providers"
+SPDX-License-Identifier = "LicenseRef-provider-data"

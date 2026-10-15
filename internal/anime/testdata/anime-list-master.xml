@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anime-list>
+  <anime anidbid="69" tvdbid="81797" defaulttvdbseason="a" episodeoffset="" tmdbtv="37854" tmdbseason="a" tmdboffset="" tmdbid="" imdbid="">
+    <name>One Piece</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-27;2-3;3-9;4-10;5-14;6-0;7-0;8-0;9-0;10-0;11-0;12-0;13-0;14-0;15-0;16-31;17-23;18-24;19-28;20-29;21-30;22-0;23-32;24-34;25-0;26-36;27-37;28-40;29-41;30-42;31-43;32-44;33-45;34-47;35-48;36-49;37-50;38-51;39-52;40-53;41-54;42-55;43-56;44-57;45-0;46-58;47-59;48-60;49-61;50-62;51-63;</mapping>
+      <mapping anidbseason="1" tmdbseason="1" start="1" end="61" offset="0"/>
+      <mapping anidbseason="1" tmdbseason="2" start="62" end="77" offset="-61"/>
+      <mapping anidbseason="1" tmdbseason="3" start="78" end="91" offset="-77"/>
+      <mapping anidbseason="1" tmdbseason="4" start="92" end="130" offset="-91"/>
+      <mapping anidbseason="1" tmdbseason="5" start="131" end="143" offset="-130"/>
+      <mapping anidbseason="1" tmdbseason="6" start="144" end="195" offset="-143"/>
+      <mapping anidbseason="1" tmdbseason="7" start="196" end="228" offset="-195"/>
+      <mapping anidbseason="1" tmdbseason="8" start="229" end="263" offset="-228"/>
+      <mapping anidbseason="1" tmdbseason="9" start="264" end="336" offset="-263"/>
+      <mapping anidbseason="1" tmdbseason="10" start="337" end="381" offset="-336"/>
+      <mapping anidbseason="1" tmdbseason="11" start="382" end="407" offset="-381"/>
+      <mapping anidbseason="1" tmdbseason="12" start="408" end="421" offset="-407"/>
+      <mapping anidbseason="1" tmdbseason="13" start="422" end="522" offset="-421"/>
+      <mapping anidbseason="1" tmdbseason="14" start="523" end="580" offset="-522"/>
+      <mapping anidbseason="1" tmdbseason="15" start="581" end="642" offset="-580"/>
+      <mapping anidbseason="1" tmdbseason="16" start="643" end="692" offset="-642"/>
+      <mapping anidbseason="1" tmdbseason="17" start="693" end="748" offset="-692"/>
+      <mapping anidbseason="1" tmdbseason="18" start="749" end="803" offset="-748"/>
+      <mapping anidbseason="1" tmdbseason="19" start="804" end="877" offset="-803"/>
+      <mapping anidbseason="1" tmdbseason="20" start="878" end="891" offset="-877"/>
+      <mapping anidbseason="1" tmdbseason="21" start="892" end="1088" offset="-891"/>
+      <mapping anidbseason="1" tmdbseason="22" start="1089" end="1155" offset="-1088"/>
+      <mapping anidbseason="1" tvdbseason="1" start="1" end="8" offset="0"/>
+      <mapping anidbseason="1" tvdbseason="2" start="9" end="30" offset="-8"/>
+      <mapping anidbseason="1" tvdbseason="3" start="31" end="47" offset="-30"/>
+      <mapping anidbseason="1" tvdbseason="4" start="48" end="60" offset="-47"/>
+      <mapping anidbseason="1" tvdbseason="5" start="61" end="69" offset="-60"/>
+      <mapping anidbseason="1" tvdbseason="6" start="70" end="91" offset="-69"/>
+      <mapping anidbseason="1" tvdbseason="7" start="92" end="130" offset="-91"/>
+      <mapping anidbseason="1" tvdbseason="8" start="131" end="143" offset="-130"/>
+      <mapping anidbseason="1" tvdbseason="9" start="144" end="195" offset="-143"/>
+      <mapping anidbseason="1" tvdbseason="10" start="196" end="226" offset="-195"/>
+      <mapping anidbseason="1" tvdbseason="11" start="227" end="325" offset="-226"/>
+      <mapping anidbseason="1" tvdbseason="12" start="326" end="381" offset="-325"/>
+      <mapping anidbseason="1" tvdbseason="13" start="382" end="481" offset="-381"/>
+      <mapping anidbseason="1" tvdbseason="14" start="482" end="516" offset="-481"/>
+      <mapping anidbseason="1" tvdbseason="15" start="517" end="578" offset="-516"/>
+      <mapping anidbseason="1" tvdbseason="16" start="579" end="628" offset="-578"/>
+      <mapping anidbseason="1" tvdbseason="17" start="629" end="746" offset="-628"/>
+      <mapping anidbseason="1" tvdbseason="18" start="747" end="779" offset="-746"/>
+      <mapping anidbseason="1" tvdbseason="19" start="780" end="877" offset="-779"/>
+      <mapping anidbseason="1" tvdbseason="20" start="878" end="891" offset="-877"/>
+      <mapping anidbseason="1" tvdbseason="21" start="892" end="1085" offset="-891"/>
+      <mapping anidbseason="1" tvdbseason="22" start="1086" end="1155" offset="-1085"/>
+      <mapping anidbseason="1" tvdbseason="23" start="1156" offset="-1155"/>
+    </mapping-list>
+  </anime>
+  <anime anidbid="411" tvdbid="81797" defaulttvdbseason="0" episodeoffset="1" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="19576" imdbid="tt0814243">
+    <name>One Piece (2000)</name>
+  </anime>
+  <anime anidbid="893" tvdbid="81797" defaulttvdbseason="0" episodeoffset="" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="23446" imdbid="tt0832449">
+    <name>One Piece: Nejimakijima no Bouken</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-5;</mapping>
+      <mapping anidbseason="1" tvdbseason="0">;1-4;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="1253" tvdbid="81797" defaulttvdbseason="0" episodeoffset="" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="44725" imdbid="tt0997084">
+    <name>One Piece: Chinjuujima no Chopper Oukoku</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-7;</mapping>
+      <mapping anidbseason="1" tvdbseason="0">;1-6;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="1254" tvdbid="81797" defaulttvdbseason="0" episodeoffset="" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="44727" imdbid="tt1006926">
+    <name>One Piece The Movie: Dead End no Bouken</name>
+    <mapping-list>
+      <mapping anidbseason="1" tvdbseason="0">;1-8;2-8;3-8;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="2036" tvdbid="81797" defaulttvdbseason="0" episodeoffset="" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="44728" imdbid="tt1010435">
+    <name>One Piece: Norowareta Seiken</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-12;</mapping>
+      <mapping anidbseason="1" tvdbseason="0">;1-11;2-11;3-11;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="2644" tvdbid="81797" defaulttvdbseason="0" episodeoffset="12" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="44729" imdbid="tt1018764">
+    <name>One Piece: Omatsuri Danshaku to Himitsu no Shima</name>
+  </anime>
+  <anime anidbid="2736" tvdbid="81797" defaulttvdbseason="0" episodeoffset="0" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="116315" imdbid="tt1012788">
+    <name>One Piece: Taose! Kaizoku Ganzack</name>
+  </anime>
+  <anime anidbid="4097" tvdbid="81797" defaulttvdbseason="0" episodeoffset="14" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="44730" imdbid="tt1059950">
+    <name>One Piece The Movie: Karakurijou no Mecha Kyohei</name>
+  </anime>
+  <anime anidbid="4851" tvdbid="81797" defaulttvdbseason="0" episodeoffset="15" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="25278" imdbid="tt1037116">
+    <name>One Piece: Episode of Arabasta - Sabaku no Oujo to Kaizoku-tachi</name>
+  </anime>
+  <anime anidbid="5691" tvdbid="81797" defaulttvdbseason="0" episodeoffset="16" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="44731" imdbid="tt1206326">
+    <name>One Piece The Movie: Episode of Chopper Plus - Fuyu ni Saku, Kiseki no Sakura</name>
+  </anime>
+  <anime anidbid="6199" tvdbid="81797" defaulttvdbseason="0" episodeoffset="17" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="422807" imdbid="">
+    <name>One Piece Special: Romance Dawn Story</name>
+  </anime>
+  <anime anidbid="6537" tvdbid="81797" defaulttvdbseason="0" episodeoffset="18" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="41498" imdbid="tt1485763">
+    <name>One Piece Film: Strong World</name>
+  </anime>
+  <anime anidbid="7538" tvdbid="81797" defaulttvdbseason="0" episodeoffset="19" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="270413" imdbid="">
+    <name>One Piece Film: Strong World - Episode 0</name>
+  </anime>
+  <anime anidbid="8010" tvdbid="81797" defaulttvdbseason="0" episodeoffset="20" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="79082" imdbid="tt1865467">
+    <name>One Piece 3D: Mugiwara Chase</name>
+  </anime>
+  <anime anidbid="8762" tvdbid="81797" defaulttvdbseason="0" episodeoffset="21" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="462387" imdbid="tt27639430">
+    <name>One Piece 3D: Gekisou! Trap Coaster</name>
+  </anime>
+  <anime anidbid="8940" tvdbid="81797" defaulttvdbseason="0" episodeoffset="" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="176983" imdbid="tt2375379">
+    <name>One Piece Film: Z</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-25;2-25;3-25;</mapping>
+      <mapping anidbseason="1" tvdbseason="0">;1-26;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="9541" tvdbid="267440" defaulttvdbseason="1" episodeoffset="" tmdbtv="1429" tmdbseason="1" tmdboffset="" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-1;2-2;3-3;4-4;5-5;6-6;7-8;8-9;9-10;10-11;11-0;12-0;13-0;14-0;15-0;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="9826" tvdbid="267440" defaulttvdbseason="0" episodeoffset="" tmdbtv="1429" tmdbseason="0" tmdboffset="" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin OAD</name>
+    <mapping-list>
+      <mapping anidbseason="1" tvdbseason="0">;1-7;2-12;3-13;4-15;5-17;6-20;7-22;8-23;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="10583" tvdbid="267440" defaulttvdbseason="0" episodeoffset="" tmdbtv="1429" tmdbseason="0" tmdboffset="" tmdbid="" imdbid="tt3646944,tt3646946">
+    <name>Gekijouban Shingeki no Kyojin</name>
+    <mapping-list>
+      <mapping anidbseason="1" tvdbseason="0">;1-14;2-18;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="10944" tvdbid="267440" defaulttvdbseason="2" episodeoffset="" tmdbtv="1429" tmdbseason="2" tmdboffset="" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin Season 2</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-0;2-0;3-0;4-0;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="11529" tvdbid="81797" defaulttvdbseason="0" episodeoffset="" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="374205" imdbid="tt5251328">
+    <name>One Piece Film: Gold</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-35;</mapping>
+      <mapping anidbseason="1" tvdbseason="0">;1-33;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="13241" tvdbid="267440" defaulttvdbseason="3" episodeoffset="" tmdbtv="1429" tmdbseason="3" tmdboffset="" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin Season 3</name>
+    <mapping-list>
+      <mapping anidbseason="0" tvdbseason="0">;1-0;2-0;3-0;4-0;5-0;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="13546" tvdbid="267440" defaulttvdbseason="0" episodeoffset="" tmdbtv="1429" tmdbseason="0" tmdboffset="" tmdbid="" imdbid="tt7941892">
+    <name>Gekijouban Shingeki no Kyojin Season 2: Kakusei no Houkou</name>
+    <mapping-list>
+      <mapping anidbseason="1" tvdbseason="0">;1-21;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="14318" tvdbid="81797" defaulttvdbseason="0" episodeoffset="37" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="568012" imdbid="tt9430698">
+    <name>Gekijouban One Piece: Stampede</name>
+  </anime>
+  <anime anidbid="14444" tvdbid="267440" defaulttvdbseason="3" episodeoffset="12" tmdbtv="1429" tmdbseason="3" tmdboffset="12" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin Season 3 (2019)</name>
+  </anime>
+  <anime anidbid="14977" tvdbid="267440" defaulttvdbseason="4" episodeoffset="" tmdbtv="1429" tmdbseason="4" tmdboffset="" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin: The Final Season</name>
+  </anime>
+  <anime anidbid="15582" tvdbid="267440" defaulttvdbseason="0" episodeoffset="" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="714194" imdbid="tt12415546">
+    <name>Shingeki no Kyojin: Chronicle</name>
+    <mapping-list>
+      <mapping anidbseason="1" tvdbseason="0">;1-31;</mapping>
+    </mapping-list>
+  </anime>
+  <anime anidbid="16177" tvdbid="267440" defaulttvdbseason="4" episodeoffset="16" tmdbtv="1429" tmdbseason="4" tmdboffset="16" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin: The Final Season (2022)</name>
+  </anime>
+  <anime anidbid="16947" tvdbid="405920" defaulttvdbseason="1" episodeoffset="" tmdbtv="120089" tmdbseason="1" tmdboffset="" tmdbid="" imdbid="">
+    <name>Spy x Family</name>
+  </anime>
+  <anime anidbid="16983" tvdbid="81797" defaulttvdbseason="0" episodeoffset="45" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="900667" imdbid="tt16183464">
+    <name>One Piece Film: Red</name>
+  </anime>
+  <anime anidbid="17061" tvdbid="405920" defaulttvdbseason="1" episodeoffset="12" tmdbtv="120089" tmdbseason="1" tmdboffset="12" tmdbid="" imdbid="">
+    <name>Spy x Family (2022)</name>
+  </anime>
+  <anime anidbid="17303" tvdbid="267440" defaulttvdbseason="4" episodeoffset="28" tmdbtv="1429" tmdbseason="4" tmdboffset="28" tmdbid="" imdbid="">
+    <name>Shingeki no Kyojin: The Final Season (2023)</name>
+  </anime>
+  <anime anidbid="17784" tvdbid="405920" defaulttvdbseason="2" episodeoffset="" tmdbtv="120089" tmdbseason="2" tmdboffset="" tmdbid="" imdbid="">
+    <name>Spy x Family (2023)</name>
+  </anime>
+  <anime anidbid="17785" tvdbid="405920" defaulttvdbseason="0" episodeoffset="2" tmdbtv="" tmdbseason="" tmdboffset="" tmdbid="1062807" imdbid="tt26684398">
+    <name>Gekijouban Spy x Family Code: White</name>
+  </anime>
+  <anime anidbid="18677" tvdbid="405920" defaulttvdbseason="3" episodeoffset="" tmdbtv="120089" tmdbseason="3" tmdboffset="" tmdbid="" imdbid="">
+    <name>Spy x Family (2025)</name>
+  </anime>
+  <anime anidbid="17617" tvdbid="424536" defaulttvdbseason="1" episodeoffset="" tmdbtv="209867" tmdbseason="1" tmdboffset="" tmdbid="" imdbid="">
+    <name>Sousou no Frieren</name>
+  </anime>
+  <anime anidbid="18886" tvdbid="424536" defaulttvdbseason="2" episodeoffset="" tmdbtv="209867" tmdbseason="1" tmdboffset="28" tmdbid="" imdbid="">
+    <name>Sousou no Frieren (2026)</name>
+  </anime>
+  <anime anidbid="19977" tvdbid="424536" defaulttvdbseason="3" episodeoffset="" tmdbtv="209867" tmdbseason="1" tmdboffset="38" tmdbid="" imdbid="">
+    <name>Sousou no Frieren (2027)</name>
+  </anime>
+</anime-list>

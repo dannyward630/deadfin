@@ -1,0 +1,26 @@
+Name:      ghcr.io/deadfin-org/deadfin:77a33833d48263cf3949be9d70cfc6488ec7c482
+MediaType: application/vnd.oci.image.index.v1+json
+Digest:    sha256:0f2095fa4cea835dfdca5fc7b182bd41a82777daeb993eebdfaf1c8e9bccc8e2
+           
+Manifests: 
+  Name:        ghcr.io/deadfin-org/deadfin:77a33833d48263cf3949be9d70cfc6488ec7c482@sha256:eadef63bbc175b61869b668ae27b19aa5ffc6d8174b4f9b92177fdd9f04f5a9d
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/amd64
+               
+  Name:        ghcr.io/deadfin-org/deadfin:77a33833d48263cf3949be9d70cfc6488ec7c482@sha256:db4c9d076652c229c1bb604117cadb106c3fc6e1c4da9667387fe49232a3ccf0
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.digest: sha256:eadef63bbc175b61869b668ae27b19aa5ffc6d8174b4f9b92177fdd9f04f5a9d
+    vnd.docker.reference.type:   attestation-manifest
+               
+  Name:        ghcr.io/deadfin-org/deadfin:77a33833d48263cf3949be9d70cfc6488ec7c482@sha256:7212c774501b0e500505b8b00058746c061f2ff384b2d781a8e3e9452755e93b
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
+               
+  Name:        ghcr.io/deadfin-org/deadfin:77a33833d48263cf3949be9d70cfc6488ec7c482@sha256:21e2cfecdc9b50042320a6803f74c19524d222ddd92e366985754831dc56534b
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    unknown/unknown
+  Annotations: 
+    vnd.docker.reference.type:   attestation-manifest
+    vnd.docker.reference.digest: sha256:7212c774501b0e500505b8b00058746c061f2ff384b2d781a8e3e9452755e93b

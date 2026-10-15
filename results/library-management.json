@@ -1,0 +1,528 @@
+{
+  "format": "difftool-results/v1",
+  "run_id": "library-management-deadfin-baa149a9e3526e65d3f8b5102066d62f92fb7c2b",
+  "steps": [
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "list virtual folders (empty)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add paths probe library",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add media path (POST VirtualFolders/Paths)",
+      "operation-id": "AddMediaPath",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "list virtual folders (after add path)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "remove media path (DELETE VirtualFolders/Paths)",
+      "operation-id": "RemoveMediaPath",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "list virtual folders (after remove path)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "remove paths probe library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library with omitted collectionType",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback omitted collectionType (no marker)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup omitted collectionType library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library with empty collectionType",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback empty collectionType (no marker)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup empty collectionType library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library with invalid collectionType",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback invalid collectionType (no marker)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup invalid collectionType library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType movies",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType movies",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType movies library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType tvshows",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType tvshows",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType tvshows library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType music",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType music",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType music library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType musicvideos",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType musicvideos",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType musicvideos library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType homevideos",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType homevideos",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType homevideos library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType boxsets",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType boxsets",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType boxsets library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType books",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType books",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType books library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType mixed",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType mixed",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType mixed library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 0 (movies)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 0 (movies)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 0 (movies) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 1 (tvshows)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 1 (tvshows)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 1 (tvshows) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 01 (tvshows)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 01 (tvshows)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 01 (tvshows) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 2 (music)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 2 (music)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 2 (music) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 3 (musicvideos)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 3 (musicvideos)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 3 (musicvideos) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 4 (homevideos)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 4 (homevideos)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 4 (homevideos) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 5 (boxsets)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 5 (boxsets)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 5 (boxsets) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric +5 (boxsets)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric +5 (boxsets)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric +5 (boxsets) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 6 (books)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 6 (books)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 6 (books) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType numeric 7 (mixed)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType numeric 7 (mixed)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType numeric 7 (mixed) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType alternate Movies (movies)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType alternate Movies (movies)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType alternate Movies (movies) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType alternate \" TVSHOWS \" (tvshows)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType alternate \" TVSHOWS \" (tvshows)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType alternate \" TVSHOWS \" (tvshows) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType alternate MuSiC (music)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType alternate MuSiC (music)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType alternate MuSiC (music) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add library collectionType rejected 1.0 (no marker)",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "readback collectionType rejected 1.0 (no marker)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup collectionType rejected 1.0 (no marker) library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "add options probe library",
+      "operation-id": "AddVirtualFolder",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "capture folder ItemId (identity readback)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "update library options (POST LibraryOptions with captured ItemId)",
+      "operation-id": "UpdateLibraryOptions",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "persisted-options readback (unnormalized LibraryOptions capture)",
+      "operation-id": "GetVirtualFolders",
+      "status": "pass"
+    },
+    {
+      "scenario": "library management routes with stock parity",
+      "step": "cleanup options probe library",
+      "operation-id": "RemoveVirtualFolder",
+      "status": "pass"
+    }
+  ]
+}

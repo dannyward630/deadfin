@@ -1,0 +1,25 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: standard
+  exclusions:
+    paths:
+      - ".ci/fixtures/"
+    rules:
+      # Embedded selector spelling is intentional in dto.Time parity tests and code.
+      - linters:
+          - staticcheck
+        text: "QF1008:"
+
+formatters:
+  enable:
+    - gofumpt
+  settings:
+    gofumpt:
+      module-path: github.com/deadfin-org/deadfin
+  exclusions:
+    paths:
+      - ".ci/fixtures/"

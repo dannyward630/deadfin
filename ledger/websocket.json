@@ -1,0 +1,226 @@
+{
+  "source": {
+    "jellyfin_pin": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+    "upstream_count": 34,
+    "implemented_count": 30
+  },
+  "messages": [
+    {
+      "name": "ActivityLogEntry",
+      "status": "done",
+      "evidence": "internal/ws/server.go:389",
+      "deadfin": true
+    },
+    {
+      "name": "ActivityLogEntryStart",
+      "status": "done",
+      "evidence": "internal/ws/server.go:370",
+      "deadfin": true
+    },
+    {
+      "name": "ActivityLogEntryStop",
+      "status": "done",
+      "evidence": "internal/ws/server.go:372",
+      "deadfin": true
+    },
+    {
+      "name": "ForceKeepAlive",
+      "status": "done",
+      "evidence": "internal/ws/server.go:272",
+      "deadfin": true
+    },
+    {
+      "name": "GeneralCommand",
+      "status": "done",
+      "evidence": "internal/sessioncontrol/service.go:84",
+      "deadfin": true
+    },
+    {
+      "name": "KeepAlive",
+      "status": "done",
+      "evidence": "internal/ws/server.go:334",
+      "deadfin": true
+    },
+    {
+      "name": "LibraryChanged",
+      "status": "done",
+      "evidence": "internal/ws/server.go:467",
+      "deadfin": true
+    },
+    {
+      "name": "PackageInstallationCancelled",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:32",
+      "deadfin": true
+    },
+    {
+      "name": "PackageInstallationCompleted",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:30",
+      "deadfin": true
+    },
+    {
+      "name": "PackageInstallationFailed",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:31",
+      "deadfin": true
+    },
+    {
+      "name": "PackageInstalling",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:29",
+      "deadfin": true
+    },
+    {
+      "name": "PackageUninstalled",
+      "status": "todo",
+      "reason": "not implemented in Deadfin",
+      "deadfin": false
+    },
+    {
+      "name": "Play",
+      "status": "done",
+      "evidence": "internal/sessioncontrol/service.go:50",
+      "deadfin": true
+    },
+    {
+      "name": "Playstate",
+      "status": "done",
+      "evidence": "internal/sessioncontrol/service.go:67",
+      "deadfin": true
+    },
+    {
+      "name": "RefreshProgress",
+      "status": "done",
+      "evidence": "internal/ws/server.go:535",
+      "deadfin": true
+    },
+    {
+      "name": "RestartRequired",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:35",
+      "deadfin": true
+    },
+    {
+      "name": "ScheduledTaskEnded",
+      "status": "todo",
+      "reason": "not implemented in Deadfin",
+      "deadfin": false
+    },
+    {
+      "name": "ScheduledTasksInfo",
+      "status": "done",
+      "evidence": "internal/ws/server.go:395",
+      "deadfin": true
+    },
+    {
+      "name": "ScheduledTasksInfoStart",
+      "status": "done",
+      "evidence": "internal/ws/server.go:373",
+      "deadfin": true
+    },
+    {
+      "name": "ScheduledTasksInfoStop",
+      "status": "done",
+      "evidence": "internal/ws/server.go:375",
+      "deadfin": true
+    },
+    {
+      "name": "SeriesTimerCancelled",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:28",
+      "deadfin": true
+    },
+    {
+      "name": "SeriesTimerCreated",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:26",
+      "deadfin": true
+    },
+    {
+      "name": "ServerRestarting",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:34",
+      "deadfin": true
+    },
+    {
+      "name": "ServerShuttingDown",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:33",
+      "deadfin": true
+    },
+    {
+      "name": "Sessions",
+      "status": "done",
+      "evidence": "internal/ws/server.go:385",
+      "deadfin": true
+    },
+    {
+      "name": "SessionsStart",
+      "status": "done",
+      "evidence": "internal/ws/server.go:365",
+      "deadfin": true
+    },
+    {
+      "name": "SessionsStop",
+      "status": "done",
+      "evidence": "internal/ws/server.go:367",
+      "deadfin": true
+    },
+    {
+      "name": "SyncPlayCommand",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:23",
+      "deadfin": true
+    },
+    {
+      "name": "SyncPlayGroupUpdate",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:24",
+      "deadfin": true
+    },
+    {
+      "name": "TimerCancelled",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:27",
+      "deadfin": true
+    },
+    {
+      "name": "TimerCreated",
+      "status": "partial",
+      "reason": "catalog entry only; no send evidence",
+      "evidence": "internal/ws/message.go:25",
+      "deadfin": true
+    },
+    {
+      "name": "UserDataChanged",
+      "status": "done",
+      "evidence": "internal/ws/server.go:483",
+      "deadfin": true
+    },
+    {
+      "name": "UserDeleted",
+      "status": "todo",
+      "reason": "not implemented in Deadfin",
+      "deadfin": false
+    },
+    {
+      "name": "UserUpdated",
+      "status": "todo",
+      "reason": "not implemented in Deadfin",
+      "deadfin": false
+    }
+  ]
+}

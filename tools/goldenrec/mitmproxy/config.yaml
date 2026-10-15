@@ -1,0 +1,10 @@
+# Loaded by capture.sh. The generated CA and mitmproxy runtime files live in
+# tools/goldenrec/state/mitmproxy, which is ignored; this checked-in file is options only.
+# Trust that generated CA only on a dedicated synthetic-fixture device, then remove it
+# after the capture session.
+mode:
+- regular
+listen_host: 0.0.0.0
+listen_port: 8080
+block_global: false
+ssl_insecure: false

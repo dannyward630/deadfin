@@ -1,0 +1,17 @@
+LicenseRef-provider-data
+
+These files hold small excerpts of third-party metadata, or hand-written
+fixtures in the shape of a provider's API response. They are test inputs.
+
+Sources:
+- internal/anime/testdata/anime-list-master.xml: an excerpt of the
+  Anime-Lists mapping, https://github.com/Anime-Lists/anime-lists
+- internal/anime/testdata/anime-titles.xml.gz: an excerpt of the AniDB
+  title dump, https://anidb.net/ (AniDB terms of use apply)
+- internal/providers/*/testdata: responses in the shape of the TMDb, AniList,
+  MusicBrainz, TheAudioDB and ListenBrainz APIs. Rights in any real
+  metadata in them stay with those services and their contributors.
+
+Rights in this data stay with its providers; the GPL grant for Deadfin
+covers Deadfin's own work. To have any of it changed or removed, open an
+issue at https://github.com/deadfin-org/deadfin/issues.

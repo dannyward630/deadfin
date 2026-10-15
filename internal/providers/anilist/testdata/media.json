@@ -1,0 +1,451 @@
+[
+  {
+    "method": "POST",
+    "url": "https://graphql.anilist.co",
+    "request": {
+      "query": "query ($id: Int) {\n  Media(id: $id, type: ANIME) {\n    id\n    idMal\n    format\n    status\n    episodes\n    season\n    seasonYear\n    startDate { year month day }\n    endDate { year month day }\n    title { romaji english native }\n    synonyms\n    description(asHtml: false)\n    genres\n    averageScore\n    studios(isMain: true) { nodes { name } }\n    coverImage { extraLarge large }\n    bannerImage\n    relations { edges { relationType(version: 2) node { id type format title { romaji english } } } }\n  }\n}",
+      "variables": {
+        "id": 16498
+      }
+    },
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "no-cache, private"
+      ],
+      "Content-Type": [
+        "application/json"
+      ],
+      "Date": [
+        "Sun, 11 Oct 2026 02:30:20 GMT"
+      ],
+      "X-RateLimit-Limit": [
+        "30"
+      ],
+      "X-RateLimit-Remaining": [
+        "29"
+      ]
+    },
+    "body": {
+      "data": {
+        "Media": {
+          "id": 16498,
+          "idMal": 16498,
+          "format": "TV",
+          "status": "FINISHED",
+          "episodes": 25,
+          "season": "SPRING",
+          "seasonYear": 2013,
+          "startDate": {
+            "year": 2013,
+            "month": 4,
+            "day": 7
+          },
+          "endDate": {
+            "year": 2013,
+            "month": 9,
+            "day": 28
+          },
+          "title": {
+            "romaji": "Shingeki no Kyojin",
+            "english": "Attack on Titan",
+            "native": "\u9032\u6483\u306e\u5de8\u4eba"
+          },
+          "synonyms": [
+            "SnK",
+            "AoT",
+            "Ataque a los Titanes",
+            "Ataque dos Tit\u00e3s",
+            "L'Attacco dei Giganti",
+            "\u05de\u05ea\u05e7\u05e4\u05ea \u05d4\u05d8\u05d9\u05d8\u05d0\u05e0\u05d9\u05dd",
+            "\u8fdb\u51fb\u7684\u5de8\u4eba",
+            "L\u2019Attaque des Titans",
+            "\u0627\u0644\u0647\u062c\u0648\u0645 \u0639\u0644\u0649 \u0627\u0644\u0639\u0645\u0627\u0644\u0642\u0629",
+            "\u0e1c\u0e48\u0e32\u0e1e\u0e34\u0e20\u0e1e\u0e44\u0e17\u0e17\u0e31\u0e19",
+            "\u062d\u0645\u0644\u0647 \u0628\u0647 \u062a\u0627\u06cc\u062a\u0627\u0646",
+            "Ataque de Tit\u00e3s",
+            "Atak Tytan\u00f3w",
+            "\u0410\u0442\u0430\u043a\u0430 \u0442\u0438\u0442\u0430\u043d\u043e\u0432",
+            "\u0110\u1ea1i Chi\u1ebfn Titan"
+          ],
+          "description": "Several hundred years ago, humans were nearly exterminated by titans. Titans are typically several stories tall, seem to have no intelligence, devour human beings and, worst of all, seem to do it for the pleasure rather than as a food source. A small percentage of humanity survived by walling themselves in a city protected by extremely high walls, even taller than the biggest of titans.\u003cbr\u003e\u003cbr\u003e\r\nFlash forward to the present and the city has not seen a titan in over 100 years. Teenage boy Eren and his foster sister Mikasa witness something horrific as the city walls are destroyed by a colossal titan that appears out of thin air. As the smaller titans flood the city, the two kids watch in horror as their mother is eaten alive. Eren vows that he will murder every single titan and take revenge for all of mankind.\u003cbr\u003e\u003cbr\u003e\r\n(Source: MangaHelpers)",
+          "genres": [
+            "Action",
+            "Drama",
+            "Fantasy",
+            "Mystery"
+          ],
+          "averageScore": 85,
+          "studios": {
+            "nodes": [
+              {
+                "name": "WIT STUDIO"
+              }
+            ]
+          },
+          "coverImage": {
+            "extraLarge": "https:\/\/s4.anilist.co\/file\/anilistcdn\/media\/anime\/cover\/large\/bx16498-buvcRTBx4NSm.jpg",
+            "large": "https:\/\/s4.anilist.co\/file\/anilistcdn\/media\/anime\/cover\/medium\/bx16498-buvcRTBx4NSm.jpg"
+          },
+          "bannerImage": "https:\/\/s4.anilist.co\/file\/anilistcdn\/media\/anime\/banner\/16498-8jpFCOcDmneX.jpg",
+          "relations": {
+            "edges": [
+              {
+                "relationType": "SOURCE",
+                "node": {
+                  "id": 53390,
+                  "type": "MANGA",
+                  "format": "MANGA",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin",
+                    "english": "Attack on Titan"
+                  }
+                }
+              },
+              {
+                "relationType": "ALTERNATIVE",
+                "node": {
+                  "id": 20691,
+                  "type": "ANIME",
+                  "format": "MOVIE",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin Zenpen: Guren no Yumiya",
+                    "english": "Attack on Titan Part I: Crimson Bow and Arrow"
+                  }
+                }
+              },
+              {
+                "relationType": "ALTERNATIVE",
+                "node": {
+                  "id": 20692,
+                  "type": "ANIME",
+                  "format": "MOVIE",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin Kouhen: Jiyuu no Tsubasa",
+                    "english": "Attack on Titan Part II: Wings of Freedom"
+                  }
+                }
+              },
+              {
+                "relationType": "SEQUEL",
+                "node": {
+                  "id": 20958,
+                  "type": "ANIME",
+                  "format": "TV",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin Season 2",
+                    "english": "Attack on Titan Season 2"
+                  }
+                }
+              },
+              {
+                "relationType": "SPIN_OFF",
+                "node": {
+                  "id": 21281,
+                  "type": "ANIME",
+                  "format": "TV",
+                  "title": {
+                    "romaji": "Shingeki! Kyojin Chuugakkou",
+                    "english": "Attack on Titan: Junior High"
+                  }
+                }
+              },
+              {
+                "relationType": "SIDE_STORY",
+                "node": {
+                  "id": 18397,
+                  "type": "ANIME",
+                  "format": "OVA",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin OVA",
+                    "english": "Attack on Titan OVA"
+                  }
+                }
+              },
+              {
+                "relationType": "SUMMARY",
+                "node": {
+                  "id": 119113,
+                  "type": "ANIME",
+                  "format": "MOVIE",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin: Chronicle",
+                    "english": "Attack on Titan ~Chronicle~"
+                  }
+                }
+              },
+              {
+                "relationType": "PREQUEL",
+                "node": {
+                  "id": 20811,
+                  "type": "ANIME",
+                  "format": "OVA",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin Gaiden: Kuinaki Sentaku",
+                    "english": "Attack on Titan: No Regrets"
+                  }
+                }
+              },
+              {
+                "relationType": "SIDE_STORY",
+                "node": {
+                  "id": 99634,
+                  "type": "ANIME",
+                  "format": "OVA",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin: LOST GIRLS",
+                    "english": "Attack on Titan: Lost Girls"
+                  }
+                }
+              },
+              {
+                "relationType": "OTHER",
+                "node": {
+                  "id": 19391,
+                  "type": "ANIME",
+                  "format": "SPECIAL",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin: Chimi Kyara Gekijou - Tondeke! Kunren Heidan",
+                    "english": "Attack on Titan Picture Drama"
+                  }
+                }
+              },
+              {
+                "relationType": "CHARACTER",
+                "node": {
+                  "id": 143391,
+                  "type": "ANIME",
+                  "format": "ONA",
+                  "title": {
+                    "romaji": "Chiyuki no Fashion Check",
+                    "english": null
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "url": "https://graphql.anilist.co",
+    "request": {
+      "query": "query ($id: Int) {\n  Media(id: $id, type: ANIME) {\n    id\n    idMal\n    format\n    status\n    episodes\n    season\n    seasonYear\n    startDate { year month day }\n    endDate { year month day }\n    title { romaji english native }\n    synonyms\n    description(asHtml: false)\n    genres\n    averageScore\n    studios(isMain: true) { nodes { name } }\n    coverImage { extraLarge large }\n    bannerImage\n    relations { edges { relationType(version: 2) node { id type format title { romaji english } } } }\n  }\n}",
+      "variables": {
+        "id": 99147
+      }
+    },
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "no-cache, private"
+      ],
+      "Content-Type": [
+        "application/json"
+      ],
+      "Date": [
+        "Sun, 11 Oct 2026 02:30:22 GMT"
+      ],
+      "X-RateLimit-Limit": [
+        "30"
+      ],
+      "X-RateLimit-Remaining": [
+        "28"
+      ]
+    },
+    "body": {
+      "data": {
+        "Media": {
+          "id": 99147,
+          "idMal": 35760,
+          "format": "TV",
+          "status": "FINISHED",
+          "episodes": 12,
+          "season": "SUMMER",
+          "seasonYear": 2018,
+          "startDate": {
+            "year": 2018,
+            "month": 7,
+            "day": 23
+          },
+          "endDate": {
+            "year": 2018,
+            "month": 10,
+            "day": 15
+          },
+          "title": {
+            "romaji": "Shingeki no Kyojin Season 3",
+            "english": "Attack on Titan Season 3",
+            "native": "\u9032\u6483\u306e\u5de8\u4eba Season\uff13"
+          },
+          "synonyms": [
+            "SnK 3",
+            "AoT 3",
+            "\u05de\u05ea\u05e7\u05e4\u05ea \u05d4\u05d8\u05d9\u05d8\u05d0\u05e0\u05d9\u05dd \u05e2\u05d5\u05e0\u05d4 3",
+            "L'Attacco dei Giganti 3",
+            "L'Attacco dei Giganti - Terza Stagione",
+            "\u0e1c\u0e48\u0e32\u0e1e\u0e34\u0e20\u0e1e\u0e44\u0e17\u0e17\u0e31\u0e19 \u0e20\u0e32\u0e04 3",
+            "\u062d\u0645\u0644\u0647 \u0628\u0647 \u062a\u0627\u06cc\u062a\u0627\u0646 \u0641\u0635\u0644 3",
+            "\u0e1c\u0e48\u0e32\u0e1e\u0e34\u0e20\u0e1e\u0e44\u0e17\u0e17\u0e31\u0e19 \u0e20\u0e32\u0e04 3 Part 1",
+            "\u0410\u0442\u0430\u043a\u0430 \u0442\u0438\u0442\u0430\u043d\u043e\u0432 3"
+          ],
+          "description": "Eren and his companions in the 104th are assigned to the newly-formed Levi Squad, whose assignment is to keep Eren and Historia safe given Eren's newly-discovered power and Historia's knowledge and pedigree. Levi and Erwin have good reason to be concerned, because the priest of the Church that Hanji had hidden away was found tortured to death, making it clear that the Military Police are involved with the cover-up. Things get more harrowing when the MPs make a move on Erwin and the Levi Squad narrowly avoids capture. Eren is also having problems with his Titan transformation, and a deadly killer has been hired to secure Eren and Historia, one Levi knows all too well from his youth.\u003cbr\u003e\n\u003cbr\u003e\n(Source: Anime News Network)",
+          "genres": [
+            "Action",
+            "Drama",
+            "Fantasy",
+            "Mystery"
+          ],
+          "averageScore": 86,
+          "studios": {
+            "nodes": [
+              {
+                "name": "WIT STUDIO"
+              }
+            ]
+          },
+          "coverImage": {
+            "extraLarge": "https:\/\/s4.anilist.co\/file\/anilistcdn\/media\/anime\/cover\/large\/bx99147-AiPDD8cwlCfi.jpg",
+            "large": "https:\/\/s4.anilist.co\/file\/anilistcdn\/media\/anime\/cover\/medium\/bx99147-AiPDD8cwlCfi.jpg"
+          },
+          "bannerImage": "https:\/\/s4.anilist.co\/file\/anilistcdn\/media\/anime\/banner\/99147-HACsFVrynFf5.jpg",
+          "relations": {
+            "edges": [
+              {
+                "relationType": "PREQUEL",
+                "node": {
+                  "id": 20958,
+                  "type": "ANIME",
+                  "format": "TV",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin Season 2",
+                    "english": "Attack on Titan Season 2"
+                  }
+                }
+              },
+              {
+                "relationType": "SOURCE",
+                "node": {
+                  "id": 53390,
+                  "type": "MANGA",
+                  "format": "MANGA",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin",
+                    "english": "Attack on Titan"
+                  }
+                }
+              },
+              {
+                "relationType": "SEQUEL",
+                "node": {
+                  "id": 104578,
+                  "type": "ANIME",
+                  "format": "TV",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin Season 3 Part 2",
+                    "english": "Attack on Titan Season 3 Part 2"
+                  }
+                }
+              },
+              {
+                "relationType": "OTHER",
+                "node": {
+                  "id": 108942,
+                  "type": "ANIME",
+                  "format": "SPECIAL",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin: Chimi Kyara Gekijou - Rivai-han",
+                    "english": null
+                  }
+                }
+              },
+              {
+                "relationType": "SUMMARY",
+                "node": {
+                  "id": 119113,
+                  "type": "ANIME",
+                  "format": "MOVIE",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin: Chronicle",
+                    "english": "Attack on Titan ~Chronicle~"
+                  }
+                }
+              },
+              {
+                "relationType": "SIDE_STORY",
+                "node": {
+                  "id": 99634,
+                  "type": "ANIME",
+                  "format": "OVA",
+                  "title": {
+                    "romaji": "Shingeki no Kyojin: LOST GIRLS",
+                    "english": "Attack on Titan: Lost Girls"
+                  }
+                }
+              },
+              {
+                "relationType": "OTHER",
+                "node": {
+                  "id": 150005,
+                  "type": "ANIME",
+                  "format": "MUSIC",
+                  "title": {
+                    "romaji": "Akatsuki no Requiem",
+                    "english": null
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "url": "https://graphql.anilist.co",
+    "request": {
+      "query": "query ($id: Int) {\n  Media(id: $id, type: ANIME) {\n    id\n    idMal\n    format\n    status\n    episodes\n    season\n    seasonYear\n    startDate { year month day }\n    endDate { year month day }\n    title { romaji english native }\n    synonyms\n    description(asHtml: false)\n    genres\n    averageScore\n    studios(isMain: true) { nodes { name } }\n    coverImage { extraLarge large }\n    bannerImage\n    relations { edges { relationType(version: 2) node { id type format title { romaji english } } } }\n  }\n}",
+      "variables": {
+        "id": 999999999
+      }
+    },
+    "status": 404,
+    "header": {
+      "Cache-Control": [
+        "no-cache, private"
+      ],
+      "Content-Type": [
+        "application/json"
+      ],
+      "Date": [
+        "Sun, 11 Oct 2026 02:30:24 GMT"
+      ],
+      "X-RateLimit-Limit": [
+        "30"
+      ],
+      "X-RateLimit-Remaining": [
+        "27"
+      ]
+    },
+    "body": {
+      "errors": [
+        {
+          "message": "Not Found.",
+          "status": 404,
+          "locations": [
+            {
+              "line": 2,
+              "column": 3
+            }
+          ]
+        }
+      ],
+      "data": {
+        "Media": null
+      }
+    }
+  }
+]

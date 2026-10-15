@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# Fresh, run-owned container. Works with host and container-based Docker clients.
+# Proves the OCI labels, the Jellyfin public info, and the native build
+# identity (GET /deadfin/v1/build) all agree with the build facts.
+set -euo pipefail
+
+# normalize_dirty maps the accepted DIRTY encodings to
+# true/false and rejects anything else.
+normalize_dirty() {
+  case "$1" in
+    false|0|'') echo false ;;
+    true|1|-dirty) echo true ;;
+    *) echo "dirty must be one of false, 0, empty, true, 1, -dirty; got '$1'" >&2; return 1 ;;
+  esac
+}
+
+# compare_build_identity <public-json> <build-json> <sha> <version> <channel> <dirty-bool>
+# Returns 0 when the native body matches every expected build fact and the
+# compatibility target equals the public info Version.
+compare_build_identity() {
+  local public_json=$1 build_json=$2 sha=$3 version=$4 channel=$5 dirty=$6
+  local target
+  target=$(printf '%s' "$public_json" | jq -r '.Version') || return 1
+  printf '%s' "$build_json" | jq -e \
+    --arg sha "$sha" --arg version "$version" --arg channel "$channel" \
+    --argjson dirty "$dirty" --arg target "$target" '
+    .Component == "deadfin-server"
+    and .Revision == $sha
+    and .Version == $version
+    and .Channel == $channel
+    and .Dirty == $dirty
+    and .CompatibilityTarget == $target
+    and (.ApiVersion | type) == "number" and (.ApiVersion == (.ApiVersion | floor))
+    and (.Capabilities | type) == "array" and (.Capabilities | index("build-info")) != null
+  ' >/dev/null
+}
+
+if [[ ${IMAGE_SMOKE_LIBRARY:-} == 1 ]]; then
+  return 0 2>/dev/null || exit 0
+fi
+
+image=${1:?image required}
+sha=${2:?commit required}
+version=${3:?version required}
+channel=${4:?channel required}
+dirty_raw=${5:?dirty required}
+dirty=$(normalize_dirty "$dirty_raw")
+command -v docker >/dev/null
+command -v jq >/dev/null
+name="deadfin-smoke-$(date +%s)-$$-${RANDOM}"
+fail() { echo "image-smoke: $*" >&2; exit 1; }
+# container_state prints the container's lifecycle facts, or why they are
+# unavailable. A container that vanished (removed by something outside this
+# script) reports "no such container"; one that exited reports its code.
+container_state() {
+  docker inspect --format 'status={{.State.Status}} running={{.State.Running}} exit={{.State.ExitCode}} oom={{.State.OOMKilled}} error="{{.State.Error}}" started={{.State.StartedAt}} finished={{.State.FinishedAt}}' "$name" 2>&1 || true
+}
+cleanup() {
+  local code=$?
+  if [[ $code -ne 0 ]]; then
+    echo "image-smoke: failed with exit $code; container $name: $(container_state)" >&2
+    echo "--- container logs ($name) ---" >&2
+    docker logs "$name" >&2 2>&1 || echo "(no logs: container unavailable)" >&2
+    echo "--- end container logs ---" >&2
+  fi
+  docker rm -f -v "$name" >/dev/null 2>&1 || true
+}
+trap cleanup EXIT
+docker pull "$image" || fail "pull failed: $image"
+label() { docker image inspect --format "{{ index .Config.Labels \"$1\" }}" "$image"; }
+got=$(label org.opencontainers.image.revision) || fail "image inspect failed for $image"
+[[ $got == "$sha" ]] || fail "revision label '$got' != expected '$sha'"
+got=$(label org.opencontainers.image.version) || fail "image inspect failed for $image"
+[[ $got == "$version" ]] || fail "version label '$got' != expected '$version'"
+docker run -d --name "$name" --label deadfin.image-smoke=1 "$image" -listen :8096 >/dev/null || fail "docker run failed for $image"
+echo "image-smoke: started $name"
+# probe <path> prints the raw HTTP/1.0 response from inside the container's
+# network namespace. Debian's bash/coreutils are in the runtime image; the
+# Docker client may itself run in a separate CI container.
+probe() {
+  docker exec "$name" timeout 3 bash -c '
+    exec 3<>/dev/tcp/127.0.0.1/8096
+    printf "GET '"$1"' HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3
+    cat <&3
+  ' 2>/dev/null
+}
+for ((attempt=0; attempt<60; attempt++)); do
+  running=$(docker inspect --format '{{.State.Running}}' "$name" 2>&1) || fail "container $name unavailable after ${attempt}s: $running"
+  [[ $running == true ]] || fail "container $name stopped after ${attempt}s"
+  if response=$(probe /System/Info/Public); then
+    status=${response%%$'\r\n'*}
+    body=${response#*$'\r\n\r\n'}
+    if [[ $status =~ ^HTTP/1\.[01]\ 200\  ]] && printf '%s' "$body" | jq -e '.Version and .ServerName' >/dev/null; then
+      public_body=$body
+      build_response=$(probe /deadfin/v1/build) || { echo 'native build endpoint unreachable' >&2; exit 1; }
+      build_status=${build_response%%$'\r\n'*}
+      build_headers=${build_response%%$'\r\n\r\n'*}
+      build_body=${build_response#*$'\r\n\r\n'}
+      [[ $build_status =~ ^HTTP/1\.[01]\ 200\  ]] || { echo "native build endpoint returned: $build_status" >&2; exit 1; }
+      printf '%s\r\n' "$build_headers" | grep -qi $'^Cache-Control: no-cache\r$' || { echo 'native build endpoint lacks Cache-Control: no-cache' >&2; exit 1; }
+      compare_build_identity "$public_body" "$build_body" "$sha" "$version" "$channel" "$dirty" \
+        || { echo "native build identity mismatch: expected ($sha, $version, $channel, dirty=$dirty); got $build_body" >&2; exit 1; }
+      echo "smoke passed: $image ($sha, $version, $channel, dirty=$dirty)"
+      exit 0
+    fi
+  fi
+  sleep 1
+done
+fail "fresh-container startup timed out after ${attempt}s"

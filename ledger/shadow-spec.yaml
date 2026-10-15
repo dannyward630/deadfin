@@ -1,0 +1,453 @@
+# Shadow spec — routes served but hidden from OpenAPI.
+#
+# Each row maps a Deadfin route to its upstream controller source and the
+# client set that uses it. Operation IDs match Deadfin's route metadata
+# exactly. Routes with the SHADOW: prefix are hidden routes. Routes without
+# the prefix are non-REST conveniences (for example, the /socket WebSocket
+# transport) that Swiftfin uses but that do not appear as Paths.* operations.
+#
+# Clients: swiftfin, web, or both.
+
+operations:
+  - id: SHADOW:AuthenticateUser
+    method: POST
+    path: /Users/{userId}/Authenticate
+    subsystem: User
+    upstream: UserController.cs:178
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:DeleteItemUserData
+    method: DELETE
+    path: /UserItems/{itemId}/UserData
+    subsystem: Items
+    upstream: ItemsController.cs:1128 (Deadfin extension; upstream has GET/POST only)
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:DeleteUserImageByIndexLegacy
+    method: DELETE
+    path: /Users/{userId}/Images/{imageType}/{index}
+    subsystem: Images
+    upstream: ImageController.cs:282
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:DeleteUserImageLegacy
+    method: DELETE
+    path: /Users/{userId}/Images/{imageType}
+    subsystem: Images
+    upstream: ImageController.cs:259
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:DeleteUserItemRatingLegacy
+    method: DELETE
+    path: /Users/{userId}/Items/{itemId}/Rating
+    subsystem: UserData
+    upstream: UserLibraryController.cs:346
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetInstantMixFromArtists2
+    method: GET
+    path: /Artists/InstantMix
+    subsystem: InstantMix
+    upstream: InstantMixController.cs:325
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetIntrosLegacy
+    method: GET
+    path: /Users/{userId}/Items/{itemId}/Intros
+    subsystem: User
+    upstream: UserLibraryController.cs:202
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetItemUserDataLegacy
+    method: GET
+    path: /Users/{userId}/Items/{itemId}/UserData
+    subsystem: UserData
+    upstream: ItemsController.cs:1114
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetMusicGenres
+    method: GET
+    path: /MusicGenres
+    subsystem: MusicGenres
+    upstream: MusicGenresController.cs:77
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetRecordingGroups
+    method: GET
+    path: /LiveTv/Recordings/Groups
+    subsystem: LiveTvRecordings
+    upstream: LiveTvController.cs:366
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetRecordingsSeries
+    method: GET
+    path: /LiveTv/Recordings/Series
+    subsystem: LiveTvRecordings
+    upstream: LiveTvController.cs:341
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetRootFolderLegacy
+    method: GET
+    path: /Users/{userId}/Items/Root
+    subsystem: User
+    upstream: UserLibraryController.cs:152
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetSuggestionsLegacy
+    method: GET
+    path: /Users/{userId}/Suggestions
+    subsystem: Items
+    upstream: SuggestionsController.cs:118
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetUserImageByIndexLegacy
+    method: GET
+    path: /Users/{userId}/Images/{imageType}/{imageIndex}
+    subsystem: Images
+    upstream: ImageController.cs:1617
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetUserImageLegacy
+    method: GET
+    path: /Users/{userId}/Images/{imageType}
+    subsystem: Images
+    upstream: ImageController.cs:1561
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:MarkFavoriteItemLegacy
+    method: POST
+    path: /Users/{userId}/FavoriteItems/{itemId}
+    subsystem: UserData
+    upstream: UserLibraryController.cs:250
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:MarkPlayedItemLegacy
+    method: POST
+    path: /Users/{userId}/PlayedItems/{itemId}
+    subsystem: UserData
+    upstream: PlaystateController.cs:121
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:MarkUnplayedItemLegacy
+    method: DELETE
+    path: /Users/{userId}/PlayedItems/{itemId}
+    subsystem: UserData
+    upstream: PlaystateController.cs:186
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:PostUserImageByIndexLegacy
+    method: POST
+    path: /Users/{userId}/Images/{imageType}/{index}
+    subsystem: Images
+    upstream: ImageController.cs:192
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:PostUserImageLegacy
+    method: POST
+    path: /Users/{userId}/Images/{imageType}
+    subsystem: Images
+    upstream: ImageController.cs:168
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:UnmarkFavoriteItemLegacy
+    method: DELETE
+    path: /Users/{userId}/FavoriteItems/{itemId}
+    subsystem: UserData
+    upstream: UserLibraryController.cs:298
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:UpdateItemUserDataLegacy
+    method: POST
+    path: /Users/{userId}/Items/{itemId}/UserData
+    subsystem: UserData
+    upstream: ItemsController.cs:1174
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:UpdateUserItemRatingLegacy
+    method: POST
+    path: /Users/{userId}/Items/{itemId}/Rating
+    subsystem: UserData
+    upstream: UserLibraryController.cs:397
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:UpdateUserLegacy
+    method: POST
+    path: /Users/{userId}
+    subsystem: User
+    upstream: UserController.cs:398
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetGroupingOptionsLegacy
+    method: GET
+    path: /Users/{userId}/GroupingOptions
+    subsystem: UserViews
+    upstream: UserViewsController.cs:167
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetHlsAudioSegment
+    method: GET
+    path: /Audio/{itemId}/hls1/{playlistId}/{segmentId}.{container}
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:1269
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:GetHlsAudioSegmentLegacyAac
+    method: GET
+    path: /Audio/{itemId}/hls/{segmentId}/stream.aac
+    subsystem: HLS
+    upstream: HlsSegmentController.cs:56
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetHlsAudioSegmentLegacyMp3
+    method: GET
+    path: /Audio/{itemId}/hls/{segmentId}/stream.mp3
+    subsystem: HLS
+    upstream: HlsSegmentController.cs:55
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetHlsPlaylistLegacy
+    method: GET
+    path: /Videos/{itemId}/hls/{playlistId}/stream.m3u8
+    subsystem: HLS
+    upstream: HlsSegmentController.cs:79
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetHlsVideoSegment
+    method: GET
+    path: /Videos/{itemId}/hls1/{playlistId}/{segmentId}.{container}
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:1087
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:GetHlsVideoSegmentLegacy
+    method: GET
+    path: /Videos/{itemId}/hls/{playlistId}/{segmentId}.{segmentContainer}
+    subsystem: HLS
+    upstream: HlsSegmentController.cs:126
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetItemLegacy
+    method: GET
+    path: /Users/{userId}/Items/{itemId}
+    subsystem: User
+    upstream: UserLibraryController.cs:111
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetItemsLegacy
+    method: GET
+    path: /Users/{userId}/Items
+    subsystem: Items
+    upstream: ItemsController.cs:723
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetLatestMediaLegacy
+    method: GET
+    path: /Users/{userId}/Items/Latest
+    subsystem: User
+    upstream: UserLibraryController.cs:613
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetLiveHlsStream
+    method: GET
+    path: /Videos/{itemId}/live.m3u8
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:165
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:GetLocalTrailersLegacy
+    method: GET
+    path: /Users/{userId}/Items/{itemId}/LocalTrailers
+    subsystem: User
+    upstream: UserLibraryController.cs:444
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetMasterHlsAudioPlaylist
+    method: GET
+    path: /Audio/{itemId}/master.m3u8
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:578
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:GetMasterHlsVideoPlaylist
+    method: GET
+    path: /Videos/{itemId}/master.m3u8
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:405
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:GetResumeItemsLegacy
+    method: GET
+    path: /Users/{userId}/Items/Resume
+    subsystem: Items
+    upstream: ItemsController.cs:1029
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetSpecialFeaturesLegacy
+    method: GET
+    path: /Users/{userId}/Items/{itemId}/SpecialFeatures
+    subsystem: User
+    upstream: UserLibraryController.cs:496
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetUserViewsLegacy
+    method: GET
+    path: /Users/{userId}/Views
+    subsystem: UserViews
+    upstream: UserViewsController.cs:110
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:GetVariantHlsAudioPlaylist
+    method: GET
+    path: /Audio/{itemId}/main.m3u8
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:915
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:GetVariantHlsVideoPlaylist
+    method: GET
+    path: /Videos/{itemId}/main.m3u8
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:746
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:HeadMasterHlsAudioPlaylist
+    method: HEAD
+    path: /Audio/{itemId}/master.m3u8
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:579
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:HeadMasterHlsVideoPlaylist
+    method: HEAD
+    path: /Videos/{itemId}/master.m3u8
+    subsystem: HLS
+    upstream: DynamicHlsController.cs:406
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:OnPlaybackProgress
+    method: POST
+    path: /PlayingItems/{itemId}/Progress
+    subsystem: Playstate
+    upstream: PlaystateController.cs:358
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:OnPlaybackProgressLegacy
+    method: POST
+    path: /Users/{userId}/PlayingItems/{itemId}/Progress
+    subsystem: Playstate
+    upstream: PlaystateController.cs:416
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:OnPlaybackStart
+    method: POST
+    path: /PlayingItems/{itemId}
+    subsystem: Playstate
+    upstream: PlaystateController.cs:278
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:OnPlaybackStartLegacy
+    method: POST
+    path: /Users/{userId}/PlayingItems/{itemId}
+    subsystem: Playstate
+    upstream: PlaystateController.cs:324
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:OnPlaybackStopped
+    method: DELETE
+    path: /PlayingItems/{itemId}
+    subsystem: Playstate
+    upstream: PlaystateController.cs:448
+    clients: [swiftfin, web]
+    swiftfin: false
+
+  - id: SHADOW:OnPlaybackStoppedLegacy
+    method: DELETE
+    path: /Users/{userId}/PlayingItems/{itemId}
+    subsystem: Playstate
+    upstream: PlaystateController.cs:493
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:StopEncodingProcess
+    method: DELETE
+    path: /Videos/ActiveEncodings
+    subsystem: HLS
+    upstream: HlsSegmentController.cs:103
+    clients: [swiftfin, web]
+    swiftfin: true
+
+  - id: SHADOW:UpdateUserConfigurationLegacy
+    method: POST
+    path: /Users/{userId}/Configuration
+    subsystem: User
+    upstream: UserController.cs:503
+    clients: [web]
+    swiftfin: false
+
+  - id: SHADOW:UpdateUserPasswordLegacy
+    method: POST
+    path: /Users/{userId}/Password
+    subsystem: User
+    upstream: UserController.cs:336
+    clients: [web]
+    swiftfin: false
+
+  # Non-REST convenience: the /socket WebSocket transport. Swiftfin uses this
+ # for real-time session and playback control. It is not a Paths.* operation
+ # and is not counted in the 95-operation REST set.
+  - id: OpenWebSocket
+    method: GET
+    path: /socket
+    subsystem: WebSocket
+    upstream: Jellyfin.Api/Controllers/SessionController.cs:1
+    clients: [swiftfin, web]
+    swiftfin: false

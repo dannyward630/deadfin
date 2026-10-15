@@ -1,0 +1,80 @@
+format: goldenrec-scenario/v1
+name: ItemLookup Download differential surface (stock-vs-stock lane)
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  # ------------------------------------------------------------------
+  # Download runs in the stock-vs-stock lane only. The two-sided
+  # comparison is impossible without a Deadfin change: the hardened image
+  # client ignores proxies and dials the real image host (D-27).
+  # The imageUrl is a real TMDb image path so stock downloads it
+  # successfully and returns 204. The replay proxy replaces the response
+  # body with the addon deterministic JPEG, so the committed cassette
+  # stays small and stable. The Deadfin handler tests for unlisted-URL
+  # rejection run inside the extended verify-p8.
+  #
+  # Three steps per the spec: RemoteImages listing, Download of a
+  # provider-returned URL (expect 204), and the post-Download item
+  # projection.
+  # ------------------------------------------------------------------
+  - name: RemoteImages listing (pre-Download)
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3/RemoteImages
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetRemoteImages
+
+  - name: Download remote image (expect 204)
+    method: POST
+    path: /Items/7e897749137a8161f7a084cfad246bd3/RemoteImages/Download
+    params:
+      type: Primary
+      imageUrl: https://image.tmdb.org/t/p/original/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: DownloadRemoteImage
+
+  - name: GET item post-Download projection
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - item-created-dates
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem

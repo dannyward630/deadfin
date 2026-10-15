@@ -1,0 +1,115 @@
+format: goldenrec-scenario/v1
+name: wizard-branding-fresh-state
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: read initial startup configuration
+    method: GET
+    path: /sTaRtUp/cOnFiGuRaTiOn
+    operation_id: GetStartupConfiguration
+  - name: update startup configuration
+    method: POST
+    path: /Startup/Configuration
+    body:
+      ServerName: Wizard Branding Differential
+      UICulture: de-DE
+      MetadataCountryCode: DE
+      PreferredMetadataLanguage: de
+    operation_id: UpdateInitialConfiguration
+  - name: read updated startup configuration
+    method: GET
+    path: /STARTUP/configuration
+    operation_id: GetStartupConfiguration
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+  - name: read initialized startup user
+    method: GET
+    path: /startup/user
+    operation_id: GetFirstUser
+    normalizers:
+      - startup-user-name
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+  - name: read initialized first-user alias
+    method: GET
+    path: /Startup/FirstUser
+    operation_id: GetFirstUser_2
+    normalizers:
+      - startup-user-name
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+  - name: configure startup user
+    method: POST
+    path: /STARTUP/USER
+    body:
+      Name: Wizard Diff Admin
+      Password: wizard-difftool-password
+    operation_id: UpdateStartupUser
+  - name: update remote access
+    method: POST
+    path: /startup/remoteaccess
+    body:
+      EnableRemoteAccess: false
+    operation_id: SetRemoteAccess
+  - name: read branding configuration
+    method: GET
+    path: /bRaNdInG/cOnFiGuRaTiOn
+    operation_id: GetBrandingOptions
+  - name: read branding stylesheet
+    method: GET
+    path: /Branding/Css
+    operation_id: GetBrandingCss
+  - name: read localization countries
+    method: GET
+    path: /localization/countries
+    operation_id: GetCountries
+  - name: read localization cultures
+    method: GET
+    path: /Localization/Cultures
+    operation_id: GetCultures
+  - name: read localization parental ratings
+    method: GET
+    path: /LOCALIZATION/PARENTALRATINGS
+    operation_id: GetParentalRatings
+  - name: read localization options
+    method: GET
+    path: /Localization/Options
+    operation_id: GetLocalizationOptions
+  - name: complete startup wizard
+    method: POST
+    path: /Startup/Complete
+    operation_id: CompleteWizard
+  - name: read completed public system information
+    method: GET
+    path: /System/Info/Public
+    operation_id: GetPublicSystemInfo
+  - name: verify anonymous startup gate closes
+    method: GET
+    path: /Startup/User
+    operation_id: GetFirstUser
+  - name: verify anonymous localization gate closes
+    method: GET
+    path: /Localization/Countries
+    operation_id: GetCountries
+  - name: verify public branding remains available
+    method: GET
+    path: /Branding/Configuration
+    operation_id: GetBrandingOptions

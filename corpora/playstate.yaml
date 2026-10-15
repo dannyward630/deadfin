@@ -1,0 +1,470 @@
+format: goldenrec-scenario/v1
+name: stateful Swiftfin playstate parity
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: baseline item read
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    params:
+      Fields:
+        - Height
+        - Width
+        - Path
+        - PrimaryImageAspectRatio
+        - MediaSources
+        - MediaStreams
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - item-user-data-playback-timestamps
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem
+    expect:
+      status: 200
+  - name: modern Swiftfin start
+    method: POST
+    path: /Sessions/Playing
+    body:
+      CanSeek: true
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      PlayMethod: DirectPlay
+      PlaySessionId: 00000000-0000-0000-0000-000000000111
+      PositionTicks: 0
+      SessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: ReportPlaybackStart
+    expect:
+      status: 204
+  - name: modern Swiftfin ping
+    method: POST
+    path: /Sessions/Playing/Ping
+    params:
+      playSessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: PingPlaybackSession
+    expect:
+      status: 204
+  - name: modern Swiftfin progress below resume threshold
+    method: POST
+    path: /Sessions/Playing/Progress
+    body:
+      AudioStreamIndex: 0
+      CanSeek: true
+      IsMuted: false
+      IsPaused: false
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      PlayMethod: DirectPlay
+      PlaySessionId: 00000000-0000-0000-0000-000000000111
+      PositionTicks: 100000
+      RepeatMode: RepeatNone
+      SessionId: 00000000-0000-0000-0000-000000000111
+      SubtitleStreamIndex: -1
+      VolumeLevel: 100
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: ReportPlaybackProgress
+    expect:
+      status: 204
+  - name: item read after modern progress
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    params:
+      Fields:
+        - Height
+        - Width
+        - Path
+        - PrimaryImageAspectRatio
+        - MediaSources
+        - MediaStreams
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - item-user-data-playback-timestamps
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem
+    expect:
+      status: 200
+  - name: modern Swiftfin failed stop
+    method: POST
+    path: /Sessions/Playing/Stopped
+    body:
+      Failed: true
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      PlaySessionId: 00000000-0000-0000-0000-000000000111
+      PositionTicks: 5000000
+      SessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: ReportPlaybackStopped
+    expect:
+      status: 204
+  - name: item read after failed modern stop
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    params:
+      Fields:
+        - Height
+        - Width
+        - Path
+        - PrimaryImageAspectRatio
+        - MediaSources
+        - MediaStreams
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - item-user-data-playback-timestamps
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem
+    expect:
+      status: 200
+  - name: modern Swiftfin restart
+    method: POST
+    path: /Sessions/Playing
+    body:
+      CanSeek: true
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      PlayMethod: DirectPlay
+      PlaySessionId: 00000000-0000-0000-0000-000000000111
+      PositionTicks: 0
+      SessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: ReportPlaybackStart
+    expect:
+      status: 204
+  - name: modern Swiftfin negative stop
+    method: POST
+    path: /Sessions/Playing/Stopped
+    body:
+      Failed: false
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      PlaySessionId: 00000000-0000-0000-0000-000000000111
+      PositionTicks: -1
+      SessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - content-length-header
+    operation_id: ReportPlaybackStopped
+    expect:
+      status: 400
+  - name: modern Swiftfin valid short-runtime stop
+    method: POST
+    path: /Sessions/Playing/Stopped
+    body:
+      Failed: false
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+      MediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      PlaySessionId: 00000000-0000-0000-0000-000000000111
+      PositionTicks: 600000
+      SessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: ReportPlaybackStopped
+    expect:
+      status: 204
+  - name: item read after modern stop
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    params:
+      Fields:
+        - Height
+        - Width
+        - Path
+        - PrimaryImageAspectRatio
+        - MediaSources
+        - MediaStreams
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - item-user-data-playback-timestamps
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem
+    expect:
+      status: 200
+  - name: legacy start without user prefix
+    method: POST
+    path: /PlayingItems/7e897749137a8161f7a084cfad246bd3
+    params:
+      audioStreamIndex: 0
+      canSeek: true
+      liveStreamId: ""
+      mediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      playMethod: DirectPlay
+      playSessionId: 00000000-0000-0000-0000-000000000111
+      subtitleStreamIndex: -1
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: SHADOW:OnPlaybackStart
+    expect:
+      status: 204
+  - name: legacy progress without user prefix
+    method: POST
+    path: /PlayingItems/7e897749137a8161f7a084cfad246bd3/Progress
+    params:
+      audioStreamIndex: 0
+      canSeek: true
+      isMuted: false
+      isPaused: false
+      liveStreamId: ""
+      mediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      playMethod: DirectPlay
+      playSessionId: 00000000-0000-0000-0000-000000000111
+      positionTicks: 100000
+      repeatMode: RepeatNone
+      subtitleStreamIndex: -1
+      volumeLevel: 100
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: SHADOW:OnPlaybackProgress
+    expect:
+      status: 204
+  - name: legacy stop without user prefix
+    method: DELETE
+    path: /PlayingItems/7e897749137a8161f7a084cfad246bd3
+    params:
+      liveStreamId: ""
+      mediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      playSessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: SHADOW:OnPlaybackStopped
+    expect:
+      status: 204
+  - name: item read after legacy stop
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    params:
+      Fields:
+        - Height
+        - Width
+        - Path
+        - PrimaryImageAspectRatio
+        - MediaSources
+        - MediaStreams
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - item-user-data-playback-timestamps
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem
+    expect:
+      status: 200
+  - name: legacy start with unrelated user prefix
+    method: POST
+    path: /Users/00000000-0000-0000-0000-000000000222/PlayingItems/7e897749137a8161f7a084cfad246bd3
+    params:
+      audioStreamIndex: 0
+      canSeek: true
+      liveStreamId: ""
+      mediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      playMethod: DirectPlay
+      playSessionId: 00000000-0000-0000-0000-000000000111
+      subtitleStreamIndex: -1
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: SHADOW:OnPlaybackStartLegacy
+    expect:
+      status: 204
+  - name: legacy progress with unrelated user prefix
+    method: POST
+    path: /Users/00000000-0000-0000-0000-000000000222/PlayingItems/7e897749137a8161f7a084cfad246bd3/Progress
+    params:
+      audioStreamIndex: 0
+      canSeek: true
+      isMuted: false
+      isPaused: false
+      liveStreamId: ""
+      mediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      playMethod: DirectPlay
+      playSessionId: 00000000-0000-0000-0000-000000000111
+      positionTicks: 100000
+      repeatMode: RepeatNone
+      subtitleStreamIndex: -1
+      volumeLevel: 100
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: SHADOW:OnPlaybackProgressLegacy
+    expect:
+      status: 204
+  - name: legacy stop with unrelated user prefix
+    method: DELETE
+    path: /Users/00000000-0000-0000-0000-000000000222/PlayingItems/7e897749137a8161f7a084cfad246bd3
+    params:
+      liveStreamId: ""
+      mediaSourceId: 7e897749137a8161f7a084cfad246bd3
+      playSessionId: 00000000-0000-0000-0000-000000000111
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+    operation_id: SHADOW:OnPlaybackStoppedLegacy
+    expect:
+      status: 204
+  - name: final item read
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    params:
+      Fields:
+        - Height
+        - Width
+        - Path
+        - PrimaryImageAspectRatio
+        - MediaSources
+        - MediaStreams
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - server-id
+      - entity-tags
+      - item-created-dates
+      - user-data-keys
+      - item-user-data-playback-timestamps
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem
+    expect:
+      status: 200

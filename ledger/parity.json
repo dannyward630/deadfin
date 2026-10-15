@@ -1,0 +1,4919 @@
+{
+  "source": {
+    "deadfin_revision": "539eb51ad60df4d96a3eab27fa52086d75dafbf2",
+    "jellyfin_pin": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+    "route_count": 271,
+    "openapi_version": "12.0.0"
+  },
+  "operations": [
+    {
+      "id": "AddItemToPlaylist",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}/Items",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "AddListingProvider",
+      "method": "POST",
+      "path": "/LiveTv/ListingProviders",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "AddMediaPath",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/Paths",
+      "subsystem": "LibraryStructure",
+      "status": "done",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "AddToCollection",
+      "method": "POST",
+      "path": "/Collections/{collectionId}/Items",
+      "subsystem": "Collection",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "AddTunerHost",
+      "method": "POST",
+      "path": "/LiveTv/TunerHosts",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "AddUserToSession",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/User/{userId}",
+      "subsystem": "Session",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: session user management not implemented"
+    },
+    {
+      "id": "AddVirtualFolder",
+      "method": "POST",
+      "path": "/Library/VirtualFolders",
+      "subsystem": "LibraryStructure",
+      "status": "done",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "ApplySearchCriteria",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Apply/{itemId}",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "AuthenticateUserByName",
+      "method": "POST",
+      "path": "/Users/AuthenticateByName",
+      "subsystem": "Authentication",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "AuthenticateWithQuickConnect",
+      "method": "POST",
+      "path": "/Users/AuthenticateWithQuickConnect",
+      "subsystem": "Authentication",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "AuthorizeQuickConnect",
+      "method": "POST",
+      "path": "/QuickConnect/Authorize",
+      "subsystem": "Authentication",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "CancelPackageInstallation",
+      "method": "DELETE",
+      "path": "/Packages/Installing/{packageId}",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "CancelSeriesTimer",
+      "method": "DELETE",
+      "path": "/LiveTv/SeriesTimers/{timerId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "CancelTimer",
+      "method": "DELETE",
+      "path": "/LiveTv/Timers/{timerId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "CloseLiveStream",
+      "method": "POST",
+      "path": "/LiveStreams/Close",
+      "subsystem": "MediaInfo",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "CompleteWizard",
+      "method": "POST",
+      "path": "/Startup/Complete",
+      "subsystem": "Startup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "CreateBackup",
+      "method": "POST",
+      "path": "/Backup/Create",
+      "subsystem": "Backup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "CreateCollection",
+      "method": "POST",
+      "path": "/Collections",
+      "subsystem": "Collection",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Collections not implemented"
+    },
+    {
+      "id": "CreateKey",
+      "method": "POST",
+      "path": "/Auth/Keys",
+      "subsystem": "Authentication",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: API key management not implemented"
+    },
+    {
+      "id": "CreatePlaylist",
+      "method": "POST",
+      "path": "/Playlists",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "CreateSeriesTimer",
+      "method": "POST",
+      "path": "/LiveTv/SeriesTimers",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "CreateTimer",
+      "method": "POST",
+      "path": "/LiveTv/Timers",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "CreateUserByName",
+      "method": "POST",
+      "path": "/Users/New",
+      "subsystem": "User",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: user management not implemented"
+    },
+    {
+      "id": "DeleteAlternateSources",
+      "method": "DELETE",
+      "path": "/Videos/{itemId}/AlternateSources",
+      "subsystem": "Video",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: alternate source deletion not implemented"
+    },
+    {
+      "id": "DeleteCustomSplashscreen",
+      "method": "DELETE",
+      "path": "/Branding/Splashscreen",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "DeleteDevice",
+      "method": "DELETE",
+      "path": "/Devices",
+      "subsystem": "Device",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: device management not implemented"
+    },
+    {
+      "id": "DeleteItem",
+      "method": "DELETE",
+      "path": "/Items/{itemId}",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: item write/delete not implemented"
+    },
+    {
+      "id": "DeleteItemImage",
+      "method": "DELETE",
+      "path": "/Items/{itemId}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: item image upload/delete not implemented"
+    },
+    {
+      "id": "DeleteItemImageByIndex",
+      "method": "DELETE",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: item image upload/delete not implemented"
+    },
+    {
+      "id": "DeleteItems",
+      "method": "DELETE",
+      "path": "/Items",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item write/delete not implemented"
+    },
+    {
+      "id": "DeleteListingProvider",
+      "method": "DELETE",
+      "path": "/LiveTv/ListingProviders",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "DeleteLyrics",
+      "method": "DELETE",
+      "path": "/Audio/{itemId}/Lyrics",
+      "subsystem": "Lyric",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Lyrics not implemented"
+    },
+    {
+      "id": "DeleteRecording",
+      "method": "DELETE",
+      "path": "/LiveTv/Recordings/{recordingId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "DeleteSubtitle",
+      "method": "DELETE",
+      "path": "/Videos/{itemId}/Subtitles/{index}",
+      "subsystem": "Subtitle",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: subtitle upload/delete not implemented"
+    },
+    {
+      "id": "DeleteTunerHost",
+      "method": "DELETE",
+      "path": "/LiveTv/TunerHosts",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "DeleteUser",
+      "method": "DELETE",
+      "path": "/Users/{userId}",
+      "subsystem": "User",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: user management not implemented"
+    },
+    {
+      "id": "DeleteUserImage",
+      "method": "DELETE",
+      "path": "/UserImage",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: profile-image write path not implemented; GET/HEAD serve the stock no-image responses"
+    },
+    {
+      "id": "DeleteUserItemRating",
+      "method": "DELETE",
+      "path": "/UserItems/{itemId}/Rating",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: user item rating not implemented"
+    },
+    {
+      "id": "DisablePlugin",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/{version}/Disable",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "DiscoverTuners",
+      "method": "GET",
+      "path": "/LiveTv/Tuners/Discover",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "DiscvoverTuners",
+      "method": "GET",
+      "path": "/LiveTv/Tuners/Discvover",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "DisplayContent",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Viewing",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "DownloadRemoteImage",
+      "method": "POST",
+      "path": "/Items/{itemId}/RemoteImages/Download",
+      "subsystem": "RemoteImage",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "DownloadRemoteLyrics",
+      "method": "POST",
+      "path": "/Audio/{itemId}/RemoteSearch/Lyrics/{lyricId}",
+      "subsystem": "Lyric",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Lyrics not implemented"
+    },
+    {
+      "id": "DownloadRemoteSubtitles",
+      "method": "POST",
+      "path": "/Items/{itemId}/RemoteSearch/Subtitles/{subtitleId}",
+      "subsystem": "Subtitle",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: remote subtitle search not implemented"
+    },
+    {
+      "id": "EnablePlugin",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/{version}/Enable",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "ForgotPassword",
+      "method": "POST",
+      "path": "/Users/ForgotPassword",
+      "subsystem": "Authentication",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: password reset not implemented"
+    },
+    {
+      "id": "ForgotPasswordPin",
+      "method": "POST",
+      "path": "/Users/ForgotPassword/Pin",
+      "subsystem": "Authentication",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: password reset not implemented"
+    },
+    {
+      "id": "GetAdditionalPart",
+      "method": "GET",
+      "path": "/Videos/{itemId}/AdditionalParts",
+      "subsystem": "Video",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetAlbumArtists",
+      "method": "GET",
+      "path": "/Artists/AlbumArtists",
+      "subsystem": "Artist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Artists lookup not implemented"
+    },
+    {
+      "id": "GetAllChannelFeatures",
+      "method": "GET",
+      "path": "/Channels/Features",
+      "subsystem": "Channel",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Channels not implemented"
+    },
+    {
+      "id": "GetAncestors",
+      "method": "GET",
+      "path": "/Items/{itemId}/Ancestors",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetArtistByName",
+      "method": "GET",
+      "path": "/Artists/{name}",
+      "subsystem": "Artist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Artists lookup not implemented"
+    },
+    {
+      "id": "GetArtistImage",
+      "method": "GET",
+      "path": "/Artists/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetArtists",
+      "method": "GET",
+      "path": "/Artists",
+      "subsystem": "Artist",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetAttachment",
+      "method": "GET",
+      "path": "/Videos/{videoId}/{mediaSourceId}/Attachments/{index}",
+      "subsystem": "Video",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetAudioStream",
+      "method": "GET",
+      "path": "/Audio/{itemId}/stream",
+      "subsystem": "Audio",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetAudioStreamByContainer",
+      "method": "GET",
+      "path": "/Audio/{itemId}/stream.{container}",
+      "subsystem": "Audio",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetAuthProviders",
+      "method": "GET",
+      "path": "/Auth/Providers",
+      "subsystem": "Authentication",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: auth provider config not implemented"
+    },
+    {
+      "id": "GetBackup",
+      "method": "GET",
+      "path": "/Backup/Manifest",
+      "subsystem": "Backup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetBitrateTestBytes",
+      "method": "GET",
+      "path": "/Playback/BitrateTest",
+      "subsystem": "MediaInfo",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetBookRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Book",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetBoxSetRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/BoxSet",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetBrandingCss",
+      "method": "GET",
+      "path": "/Branding/Css",
+      "subsystem": "Branding",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetBrandingCss_2",
+      "method": "GET",
+      "path": "/Branding/Css.css",
+      "subsystem": "Branding",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetBrandingOptions",
+      "method": "GET",
+      "path": "/Branding/Configuration",
+      "subsystem": "Branding",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetChannel",
+      "method": "GET",
+      "path": "/LiveTv/Channels/{channelId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetChannelFeatures",
+      "method": "GET",
+      "path": "/Channels/{channelId}/Features",
+      "subsystem": "Channel",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Channels not implemented"
+    },
+    {
+      "id": "GetChannelItems",
+      "method": "GET",
+      "path": "/Channels/{channelId}/Items",
+      "subsystem": "Channel",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Channels not implemented"
+    },
+    {
+      "id": "GetChannelMappingOptions",
+      "method": "GET",
+      "path": "/LiveTv/ChannelMappingOptions",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetChannels",
+      "method": "GET",
+      "path": "/Channels",
+      "subsystem": "Channel",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Channels not implemented"
+    },
+    {
+      "id": "GetConfiguration",
+      "method": "GET",
+      "path": "/System/Configuration",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetConfigurationPages",
+      "method": "GET",
+      "path": "/web/ConfigurationPages",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetCountries",
+      "method": "GET",
+      "path": "/Localization/Countries",
+      "subsystem": "Localization",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetCultures",
+      "method": "GET",
+      "path": "/Localization/Cultures",
+      "subsystem": "Localization",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetCurrentUser",
+      "method": "GET",
+      "path": "/Users/Me",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetDashboardConfigurationPage",
+      "method": "GET",
+      "path": "/web/ConfigurationPage",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetDefaultDirectoryBrowser",
+      "method": "GET",
+      "path": "/Environment/DefaultDirectoryBrowser",
+      "subsystem": "Environment",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetDefaultListingProvider",
+      "method": "GET",
+      "path": "/LiveTv/ListingProviders/Default",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetDefaultMetadataOptions",
+      "method": "GET",
+      "path": "/System/Configuration/MetadataOptions/Default",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: system configuration management not implemented"
+    },
+    {
+      "id": "GetDefaultTimer",
+      "method": "GET",
+      "path": "/LiveTv/Timers/Defaults",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetDeviceInfo",
+      "method": "GET",
+      "path": "/Devices/Info",
+      "subsystem": "Device",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: device management not implemented"
+    },
+    {
+      "id": "GetDeviceOptions",
+      "method": "GET",
+      "path": "/Devices/Options",
+      "subsystem": "Device",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: device management not implemented"
+    },
+    {
+      "id": "GetDevices",
+      "method": "GET",
+      "path": "/Devices",
+      "subsystem": "Device",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: device management not implemented"
+    },
+    {
+      "id": "GetDirectoryContents",
+      "method": "GET",
+      "path": "/Environment/DirectoryContents",
+      "subsystem": "Environment",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetDisplayPreferences",
+      "method": "GET",
+      "path": "/DisplayPreferences/{displayPreferencesId}",
+      "subsystem": "DisplayPreference",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetDownload",
+      "method": "GET",
+      "path": "/Items/{itemId}/Download",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetDrives",
+      "method": "GET",
+      "path": "/Environment/Drives",
+      "subsystem": "Environment",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetEndpointInfo",
+      "method": "GET",
+      "path": "/System/Endpoint",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetEpisodes",
+      "method": "GET",
+      "path": "/Shows/{seriesId}/Episodes",
+      "subsystem": "Show",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetExternalIdInfos",
+      "method": "GET",
+      "path": "/Items/{itemId}/ExternalIdInfos",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetFallbackFont",
+      "method": "GET",
+      "path": "/FallbackFont/Fonts/{name}",
+      "subsystem": "Subtitle",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: fallback font delivery not implemented"
+    },
+    {
+      "id": "GetFallbackFontList",
+      "method": "GET",
+      "path": "/FallbackFont/Fonts",
+      "subsystem": "Subtitle",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: fallback font delivery not implemented"
+    },
+    {
+      "id": "GetFile",
+      "method": "GET",
+      "path": "/Items/{itemId}/File",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item metadata endpoints not implemented"
+    },
+    {
+      "id": "GetFirstUser",
+      "method": "GET",
+      "path": "/Startup/User",
+      "subsystem": "Startup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetFirstUser_2",
+      "method": "GET",
+      "path": "/Startup/FirstUser",
+      "subsystem": "Startup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetGenre",
+      "method": "GET",
+      "path": "/Genres/{genreName}",
+      "subsystem": "Genre",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Genre lookup not implemented"
+    },
+    {
+      "id": "GetGenreImage",
+      "method": "GET",
+      "path": "/Genres/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetGenreImageByIndex",
+      "method": "GET",
+      "path": "/Genres/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetGenres",
+      "method": "GET",
+      "path": "/Genres",
+      "subsystem": "Genre",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetGroupingOptions",
+      "method": "GET",
+      "path": "/UserViews/GroupingOptions",
+      "subsystem": "UserView",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetGuideInfo",
+      "method": "GET",
+      "path": "/LiveTv/GuideInfo",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetInstantMixFromAlbum",
+      "method": "GET",
+      "path": "/Albums/{itemId}/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "GetInstantMixFromArtists",
+      "method": "GET",
+      "path": "/Artists/{itemId}/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "GetInstantMixFromItem",
+      "method": "GET",
+      "path": "/Items/{itemId}/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "GetInstantMixFromMusicGenreById",
+      "method": "GET",
+      "path": "/MusicGenres/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "GetInstantMixFromMusicGenreByName",
+      "method": "GET",
+      "path": "/MusicGenres/{name}/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "GetInstantMixFromPlaylist",
+      "method": "GET",
+      "path": "/Playlists/{itemId}/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "GetInstantMixFromSong",
+      "method": "GET",
+      "path": "/Songs/{itemId}/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "GetIntros",
+      "method": "GET",
+      "path": "/Items/{itemId}/Intros",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetItem",
+      "method": "GET",
+      "path": "/Items/{itemId}",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetItemCollections",
+      "method": "GET",
+      "path": "/Items/{itemId}/Collections",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item metadata endpoints not implemented"
+    },
+    {
+      "id": "GetItemCounts",
+      "method": "GET",
+      "path": "/Items/Counts",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetItemImage",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetItemImage2",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}/{tag}/{format}/{maxWidth}/{maxHeight}/{percentPlayed}/{unplayedCount}",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetItemImageByIndex",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetItemImageInfos",
+      "method": "GET",
+      "path": "/Items/{itemId}/Images",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetItemSegments",
+      "method": "GET",
+      "path": "/MediaSegments/{itemId}",
+      "subsystem": "MediaSegment",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetItemUserData",
+      "method": "GET",
+      "path": "/UserItems/{itemId}/UserData",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item user-data read not implemented"
+    },
+    {
+      "id": "GetItems",
+      "method": "GET",
+      "path": "/Items",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetKeys",
+      "method": "GET",
+      "path": "/Auth/Keys",
+      "subsystem": "Authentication",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: API key management not implemented"
+    },
+    {
+      "id": "GetLatestChannelItems",
+      "method": "GET",
+      "path": "/Channels/Items/Latest",
+      "subsystem": "Channel",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Channels not implemented"
+    },
+    {
+      "id": "GetLatestMedia",
+      "method": "GET",
+      "path": "/Items/Latest",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetLibraryOptionsInfo",
+      "method": "GET",
+      "path": "/Libraries/AvailableOptions",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetLineups",
+      "method": "GET",
+      "path": "/LiveTv/ListingProviders/Lineups",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetLiveRecordingFile",
+      "method": "GET",
+      "path": "/LiveTv/LiveRecordings/{recordingId}/stream",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetLiveStreamFile",
+      "method": "GET",
+      "path": "/LiveTv/LiveStreamFiles/{streamId}/stream.{container}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetLiveTvChannels",
+      "method": "GET",
+      "path": "/LiveTv/Channels",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetLiveTvInfo",
+      "method": "GET",
+      "path": "/LiveTv/Info",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetLiveTvPrograms",
+      "method": "GET",
+      "path": "/LiveTv/Programs",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetLocalTrailers",
+      "method": "GET",
+      "path": "/Items/{itemId}/LocalTrailers",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetLocalizationOptions",
+      "method": "GET",
+      "path": "/Localization/Options",
+      "subsystem": "Localization",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetLogEntries",
+      "method": "GET",
+      "path": "/System/ActivityLog/Entries",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetLogFile",
+      "method": "GET",
+      "path": "/System/Logs/Log",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: server log access not implemented"
+    },
+    {
+      "id": "GetLyrics",
+      "method": "GET",
+      "path": "/Audio/{itemId}/Lyrics",
+      "subsystem": "Lyric",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Lyrics not implemented"
+    },
+    {
+      "id": "GetMediaFolders",
+      "method": "GET",
+      "path": "/Library/MediaFolders",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: library media update hooks not implemented"
+    },
+    {
+      "id": "GetMetadataEditorInfo",
+      "method": "GET",
+      "path": "/Items/{itemId}/MetadataEditor",
+      "subsystem": "ItemUpdate",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item metadata endpoints not implemented"
+    },
+    {
+      "id": "GetMovieRecommendations",
+      "method": "GET",
+      "path": "/Movies/Recommendations",
+      "subsystem": "Movie",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: movie recommendations not implemented"
+    },
+    {
+      "id": "GetMovieRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Movie",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetMusicAlbumRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/MusicAlbum",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetMusicArtistRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/MusicArtist",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetMusicGenre",
+      "method": "GET",
+      "path": "/MusicGenres/{genreName}",
+      "subsystem": "MusicGenre",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: MusicGenres lookup not implemented"
+    },
+    {
+      "id": "GetMusicGenreImage",
+      "method": "GET",
+      "path": "/MusicGenres/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetMusicGenreImageByIndex",
+      "method": "GET",
+      "path": "/MusicGenres/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetMusicVideoRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/MusicVideo",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetNamedConfiguration",
+      "method": "GET",
+      "path": "/System/Configuration/{key}",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetNextUp",
+      "method": "GET",
+      "path": "/Shows/NextUp",
+      "subsystem": "Show",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetPackageInfo",
+      "method": "GET",
+      "path": "/Packages/{name}",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetPackages",
+      "method": "GET",
+      "path": "/Packages",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetParentPath",
+      "method": "GET",
+      "path": "/Environment/ParentPath",
+      "subsystem": "Environment",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetParentalRatings",
+      "method": "GET",
+      "path": "/Localization/ParentalRatings",
+      "subsystem": "Localization",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetPasswordResetProviders",
+      "method": "GET",
+      "path": "/Auth/PasswordResetProviders",
+      "subsystem": "Authentication",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: password reset provider config not implemented"
+    },
+    {
+      "id": "GetPerson",
+      "method": "GET",
+      "path": "/Persons/{name}",
+      "subsystem": "Person",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Persons lookup not implemented"
+    },
+    {
+      "id": "GetPersonImage",
+      "method": "GET",
+      "path": "/Persons/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetPersonImageByIndex",
+      "method": "GET",
+      "path": "/Persons/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetPersonRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Person",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetPersons",
+      "method": "GET",
+      "path": "/Persons",
+      "subsystem": "Person",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetPhysicalPaths",
+      "method": "GET",
+      "path": "/Library/PhysicalPaths",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: library filesystem endpoints not implemented"
+    },
+    {
+      "id": "GetPingSystem",
+      "method": "GET",
+      "path": "/System/Ping",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetPlaybackInfo",
+      "method": "GET",
+      "path": "/Items/{itemId}/PlaybackInfo",
+      "subsystem": "MediaInfo",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetPlaylist",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "GetPlaylistItems",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}/Items",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "GetPlaylistUser",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}/Users/{userId}",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "GetPlaylistUsers",
+      "method": "GET",
+      "path": "/Playlists/{playlistId}/Users",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "GetPluginConfiguration",
+      "method": "GET",
+      "path": "/Plugins/{pluginId}/Configuration",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetPluginImage",
+      "method": "GET",
+      "path": "/Plugins/{pluginId}/{version}/Image",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetPluginManifest",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/Manifest",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetPlugins",
+      "method": "GET",
+      "path": "/Plugins",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetPostedPlaybackInfo",
+      "method": "POST",
+      "path": "/Items/{itemId}/PlaybackInfo",
+      "subsystem": "MediaInfo",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetProgram",
+      "method": "GET",
+      "path": "/LiveTv/Programs/{programId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetPrograms",
+      "method": "POST",
+      "path": "/LiveTv/Programs",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetPublicSystemInfo",
+      "method": "GET",
+      "path": "/System/Info/Public",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetPublicUsers",
+      "method": "GET",
+      "path": "/Users/Public",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetQueryFilters",
+      "method": "GET",
+      "path": "/Items/Filters2",
+      "subsystem": "Filter",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetQueryFiltersLegacy",
+      "method": "GET",
+      "path": "/Items/Filters",
+      "subsystem": "Filter",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetQuickConnectEnabled",
+      "method": "GET",
+      "path": "/QuickConnect/Enabled",
+      "subsystem": "Authentication",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetQuickConnectState",
+      "method": "GET",
+      "path": "/QuickConnect/Connect",
+      "subsystem": "Authentication",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetRecommendedPrograms",
+      "method": "GET",
+      "path": "/LiveTv/Programs/Recommended",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetRecording",
+      "method": "GET",
+      "path": "/LiveTv/Recordings/{recordingId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetRecordingFolders",
+      "method": "GET",
+      "path": "/LiveTv/Recordings/Folders",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetRecordings",
+      "method": "GET",
+      "path": "/LiveTv/Recordings",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetRemoteImageProviders",
+      "method": "GET",
+      "path": "/Items/{itemId}/RemoteImages/Providers",
+      "subsystem": "RemoteImage",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetRemoteImages",
+      "method": "GET",
+      "path": "/Items/{itemId}/RemoteImages",
+      "subsystem": "RemoteImage",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetRemoteLyrics",
+      "method": "GET",
+      "path": "/Providers/Lyrics/{lyricId}",
+      "subsystem": "Lyric",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Lyrics not implemented"
+    },
+    {
+      "id": "GetRemoteSubtitles",
+      "method": "GET",
+      "path": "/Providers/Subtitles/Subtitles/{subtitleId}",
+      "subsystem": "Subtitle",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: subtitle provider not implemented"
+    },
+    {
+      "id": "GetRepositories",
+      "method": "GET",
+      "path": "/Repositories",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetResumeItems",
+      "method": "GET",
+      "path": "/UserItems/Resume",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetRootFolder",
+      "method": "GET",
+      "path": "/Items/Root",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: root folder endpoint not implemented"
+    },
+    {
+      "id": "GetSchedulesDirectCountries",
+      "method": "GET",
+      "path": "/LiveTv/ListingProviders/SchedulesDirect/Countries",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetSearchHints",
+      "method": "GET",
+      "path": "/Search/Hints",
+      "subsystem": "Search",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSeasons",
+      "method": "GET",
+      "path": "/Shows/{seriesId}/Seasons",
+      "subsystem": "Show",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetSeriesRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Series",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetSeriesTimer",
+      "method": "GET",
+      "path": "/LiveTv/SeriesTimers/{timerId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetSeriesTimers",
+      "method": "GET",
+      "path": "/LiveTv/SeriesTimers",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetServerLogs",
+      "method": "GET",
+      "path": "/System/Logs",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: server log access not implemented"
+    },
+    {
+      "id": "GetSessions",
+      "method": "GET",
+      "path": "/Sessions",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetSimilarAlbums",
+      "method": "GET",
+      "path": "/Albums/{itemId}/Similar",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSimilarArtists",
+      "method": "GET",
+      "path": "/Artists/{itemId}/Similar",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSimilarItems",
+      "method": "GET",
+      "path": "/Items/{itemId}/Similar",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetSimilarMovies",
+      "method": "GET",
+      "path": "/Movies/{itemId}/Similar",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSimilarShows",
+      "method": "GET",
+      "path": "/Shows/{itemId}/Similar",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSimilarTrailers",
+      "method": "GET",
+      "path": "/Trailers/{itemId}/Similar",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSpecialFeatures",
+      "method": "GET",
+      "path": "/Items/{itemId}/SpecialFeatures",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetSplashscreen",
+      "method": "GET",
+      "path": "/Branding/Splashscreen",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetStartupConfiguration",
+      "method": "GET",
+      "path": "/Startup/Configuration",
+      "subsystem": "Startup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetStudio",
+      "method": "GET",
+      "path": "/Studios/{name}",
+      "subsystem": "Studio",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Studios lookup not implemented"
+    },
+    {
+      "id": "GetStudioImage",
+      "method": "GET",
+      "path": "/Studios/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetStudioImageByIndex",
+      "method": "GET",
+      "path": "/Studios/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "GetStudios",
+      "method": "GET",
+      "path": "/Studios",
+      "subsystem": "Studio",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetSubtitle",
+      "method": "GET",
+      "path": "/Videos/{routeItemId}/{routeMediaSourceId}/Subtitles/{routeIndex}/Stream.{routeFormat}",
+      "subsystem": "Subtitle",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSubtitlePlaylist",
+      "method": "GET",
+      "path": "/Videos/{itemId}/{mediaSourceId}/Subtitles/{index}/subtitles.m3u8",
+      "subsystem": "Subtitle",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSubtitleWithTicks",
+      "method": "GET",
+      "path": "/Videos/{routeItemId}/{routeMediaSourceId}/Subtitles/{routeIndex}/{routeStartPositionTicks}/Stream.{routeFormat}",
+      "subsystem": "Subtitle",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSuggestions",
+      "method": "GET",
+      "path": "/Items/Suggestions",
+      "subsystem": "Suggestion",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item suggestions not implemented"
+    },
+    {
+      "id": "GetSystemInfo",
+      "method": "GET",
+      "path": "/System/Info",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetSystemStorage",
+      "method": "GET",
+      "path": "/System/Info/Storage",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetTask",
+      "method": "GET",
+      "path": "/ScheduledTasks/{taskId}",
+      "subsystem": "ScheduledTask",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetTasks",
+      "method": "GET",
+      "path": "/ScheduledTasks",
+      "subsystem": "ScheduledTask",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetThemeMedia",
+      "method": "GET",
+      "path": "/Items/{itemId}/ThemeMedia",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetThemeSongs",
+      "method": "GET",
+      "path": "/Items/{itemId}/ThemeSongs",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item metadata endpoints not implemented"
+    },
+    {
+      "id": "GetThemeVideos",
+      "method": "GET",
+      "path": "/Items/{itemId}/ThemeVideos",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item metadata endpoints not implemented"
+    },
+    {
+      "id": "GetTimer",
+      "method": "GET",
+      "path": "/LiveTv/Timers/{timerId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetTimers",
+      "method": "GET",
+      "path": "/LiveTv/Timers",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetTrailerRemoteSearchResults",
+      "method": "POST",
+      "path": "/Items/RemoteSearch/Trailer",
+      "subsystem": "ItemLookup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetTrailers",
+      "method": "GET",
+      "path": "/Trailers",
+      "subsystem": "Trailer",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Trailers list not implemented"
+    },
+    {
+      "id": "GetTrickplayHlsPlaylist",
+      "method": "GET",
+      "path": "/Videos/{itemId}/Trickplay/{width}/tiles.m3u8",
+      "subsystem": "TrickPlay",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetTrickplayTileImage",
+      "method": "GET",
+      "path": "/Videos/{itemId}/Trickplay/{width}/{index}.jpg",
+      "subsystem": "TrickPlay",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetTunerHostTypes",
+      "method": "GET",
+      "path": "/LiveTv/TunerHosts/Types",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "GetUniversalAudioStream",
+      "method": "GET",
+      "path": "/Audio/{itemId}/universal",
+      "subsystem": "Audio",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetUpcomingEpisodes",
+      "method": "GET",
+      "path": "/Shows/Upcoming",
+      "subsystem": "Show",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: upcoming episodes not implemented"
+    },
+    {
+      "id": "GetUserById",
+      "method": "GET",
+      "path": "/Users/{userId}",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetUserImage",
+      "method": "GET",
+      "path": "/UserImage",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetUserViews",
+      "method": "GET",
+      "path": "/UserViews",
+      "subsystem": "UserView",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetUsers",
+      "method": "GET",
+      "path": "/Users",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetUtcTime",
+      "method": "GET",
+      "path": "/GetUtcTime",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: UTC time endpoint not implemented"
+    },
+    {
+      "id": "GetVideoStream",
+      "method": "GET",
+      "path": "/Videos/{itemId}/stream",
+      "subsystem": "Video",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "GetVideoStreamByContainer",
+      "method": "GET",
+      "path": "/Videos/{itemId}/stream.{container}",
+      "subsystem": "Video",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetVirtualFolders",
+      "method": "GET",
+      "path": "/Library/VirtualFolders",
+      "subsystem": "LibraryStructure",
+      "status": "done",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "GetYear",
+      "method": "GET",
+      "path": "/Years/{year}",
+      "subsystem": "Year",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Years not implemented"
+    },
+    {
+      "id": "GetYears",
+      "method": "GET",
+      "path": "/Years",
+      "subsystem": "Year",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Years not implemented"
+    },
+    {
+      "id": "HeadArtistImage",
+      "method": "HEAD",
+      "path": "/Artists/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadAudioStream",
+      "method": "HEAD",
+      "path": "/Audio/{itemId}/stream",
+      "subsystem": "Audio",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadAudioStreamByContainer",
+      "method": "HEAD",
+      "path": "/Audio/{itemId}/stream.{container}",
+      "subsystem": "Audio",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadGenreImage",
+      "method": "HEAD",
+      "path": "/Genres/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadGenreImageByIndex",
+      "method": "HEAD",
+      "path": "/Genres/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadItemImage",
+      "method": "HEAD",
+      "path": "/Items/{itemId}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadItemImage2",
+      "method": "HEAD",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}/{tag}/{format}/{maxWidth}/{maxHeight}/{percentPlayed}/{unplayedCount}",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadItemImageByIndex",
+      "method": "HEAD",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadMusicGenreImage",
+      "method": "HEAD",
+      "path": "/MusicGenres/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadMusicGenreImageByIndex",
+      "method": "HEAD",
+      "path": "/MusicGenres/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadPersonImage",
+      "method": "HEAD",
+      "path": "/Persons/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadPersonImageByIndex",
+      "method": "HEAD",
+      "path": "/Persons/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadStudioImage",
+      "method": "HEAD",
+      "path": "/Studios/{name}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadStudioImageByIndex",
+      "method": "HEAD",
+      "path": "/Studios/{name}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: named-entity image endpoints not implemented"
+    },
+    {
+      "id": "HeadUniversalAudioStream",
+      "method": "HEAD",
+      "path": "/Audio/{itemId}/universal",
+      "subsystem": "Audio",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadUserImage",
+      "method": "HEAD",
+      "path": "/UserImage",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadVideoStream",
+      "method": "HEAD",
+      "path": "/Videos/{itemId}/stream",
+      "subsystem": "Video",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "HeadVideoStreamByContainer",
+      "method": "HEAD",
+      "path": "/Videos/{itemId}/stream.{container}",
+      "subsystem": "Video",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "InitiateQuickConnect",
+      "method": "POST",
+      "path": "/QuickConnect/Initiate",
+      "subsystem": "Authentication",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "InstallPackage",
+      "method": "POST",
+      "path": "/Packages/Installed/{name}",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "ListBackups",
+      "method": "GET",
+      "path": "/Backup",
+      "subsystem": "Backup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "LogFile",
+      "method": "POST",
+      "path": "/ClientLog/Document",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: client log ingest not implemented"
+    },
+    {
+      "id": "MarkFavoriteItem",
+      "method": "POST",
+      "path": "/UserFavoriteItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "MarkPlayedItem",
+      "method": "POST",
+      "path": "/UserPlayedItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "MarkUnplayedItem",
+      "method": "DELETE",
+      "path": "/UserPlayedItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "MergeVersions",
+      "method": "POST",
+      "path": "/Videos/MergeVersions",
+      "subsystem": "Video",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: version merging not implemented"
+    },
+    {
+      "id": "MoveItem",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}/Items/{itemId}/Move/{newIndex}",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "OpenLiveStream",
+      "method": "POST",
+      "path": "/LiveStreams/Open",
+      "subsystem": "MediaInfo",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "OpenWebSocket",
+      "method": "GET",
+      "path": "/socket",
+      "subsystem": "WebSocket",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "PingPlaybackSession",
+      "method": "POST",
+      "path": "/Sessions/Playing/Ping",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "Play",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Playing",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "PostAddedMovies",
+      "method": "POST",
+      "path": "/Library/Movies/Added",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: library media update hooks not implemented"
+    },
+    {
+      "id": "PostAddedSeries",
+      "method": "POST",
+      "path": "/Library/Series/Added",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: library media update hooks not implemented"
+    },
+    {
+      "id": "PostCapabilities",
+      "method": "POST",
+      "path": "/Sessions/Capabilities",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "PostFullCapabilities",
+      "method": "POST",
+      "path": "/Sessions/Capabilities/Full",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "PostPingSystem",
+      "method": "POST",
+      "path": "/System/Ping",
+      "subsystem": "System",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "PostUpdatedMedia",
+      "method": "POST",
+      "path": "/Library/Media/Updated",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: library media update hooks not implemented"
+    },
+    {
+      "id": "PostUpdatedMovies",
+      "method": "POST",
+      "path": "/Library/Movies/Updated",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: library media update hooks not implemented"
+    },
+    {
+      "id": "PostUpdatedSeries",
+      "method": "POST",
+      "path": "/Library/Series/Updated",
+      "subsystem": "Library",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: library media update hooks not implemented"
+    },
+    {
+      "id": "PostUserImage",
+      "method": "POST",
+      "path": "/UserImage",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: profile-image write path not implemented; GET/HEAD serve the stock no-image responses"
+    },
+    {
+      "id": "RefreshItem",
+      "method": "POST",
+      "path": "/Items/{itemId}/Refresh",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "RefreshLibrary",
+      "method": "POST",
+      "path": "/Library/Refresh",
+      "subsystem": "Library",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "RemoveFromCollection",
+      "method": "DELETE",
+      "path": "/Collections/{collectionId}/Items",
+      "subsystem": "Collection",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Collections not implemented"
+    },
+    {
+      "id": "RemoveItemFromPlaylist",
+      "method": "DELETE",
+      "path": "/Playlists/{playlistId}/Items",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "RemoveMediaPath",
+      "method": "DELETE",
+      "path": "/Library/VirtualFolders/Paths",
+      "subsystem": "LibraryStructure",
+      "status": "done",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "RemoveUserFromPlaylist",
+      "method": "DELETE",
+      "path": "/Playlists/{playlistId}/Users/{userId}",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "RemoveUserFromSession",
+      "method": "DELETE",
+      "path": "/Sessions/{sessionId}/User/{userId}",
+      "subsystem": "Session",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: session user management not implemented"
+    },
+    {
+      "id": "RemoveVirtualFolder",
+      "method": "DELETE",
+      "path": "/Library/VirtualFolders",
+      "subsystem": "LibraryStructure",
+      "status": "done",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "RenameVirtualFolder",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/Name",
+      "subsystem": "LibraryStructure",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: virtual folder rename/update not implemented"
+    },
+    {
+      "id": "ReportPlaybackProgress",
+      "method": "POST",
+      "path": "/Sessions/Playing/Progress",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "ReportPlaybackStart",
+      "method": "POST",
+      "path": "/Sessions/Playing",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "ReportPlaybackStopped",
+      "method": "POST",
+      "path": "/Sessions/Playing/Stopped",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "ReportSessionEnded",
+      "method": "POST",
+      "path": "/Sessions/Logout",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "ReportViewing",
+      "method": "POST",
+      "path": "/Sessions/Viewing",
+      "subsystem": "Session",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: session viewing report not implemented"
+    },
+    {
+      "id": "ResetTuner",
+      "method": "POST",
+      "path": "/LiveTv/Tuners/{tunerId}/Reset",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "RestartApplication",
+      "method": "POST",
+      "path": "/System/Restart",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: server restart/shutdown not implemented"
+    },
+    {
+      "id": "RevokeKey",
+      "method": "DELETE",
+      "path": "/Auth/Keys/{key}",
+      "subsystem": "Authentication",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: API key management not implemented"
+    },
+    {
+      "id": "SHADOW:AuthenticateUser",
+      "method": "POST",
+      "path": "/Users/{userId}/Authenticate",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:DeleteItemUserData",
+      "method": "DELETE",
+      "path": "/UserItems/{itemId}/UserData",
+      "subsystem": "Items",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:DeleteUserImageByIndexLegacy",
+      "method": "DELETE",
+      "path": "/Users/{userId}/Images/{imageType}/{index}",
+      "subsystem": "Images",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: profile-image legacy path not implemented"
+    },
+    {
+      "id": "SHADOW:DeleteUserImageLegacy",
+      "method": "DELETE",
+      "path": "/Users/{userId}/Images/{imageType}",
+      "subsystem": "Images",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: profile-image legacy path not implemented"
+    },
+    {
+      "id": "SHADOW:DeleteUserItemRatingLegacy",
+      "method": "DELETE",
+      "path": "/Users/{userId}/Items/{itemId}/Rating",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy write path not implemented"
+    },
+    {
+      "id": "SHADOW:GetGroupingOptionsLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/GroupingOptions",
+      "subsystem": "UserViews",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetHlsAudioSegment",
+      "method": "GET",
+      "path": "/Audio/{itemId}/hls1/{playlistId}/{segmentId}.{container}",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetHlsAudioSegmentLegacyAac",
+      "method": "GET",
+      "path": "/Audio/{itemId}/hls/{segmentId}/stream.aac",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetHlsAudioSegmentLegacyMp3",
+      "method": "GET",
+      "path": "/Audio/{itemId}/hls/{segmentId}/stream.mp3",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetHlsPlaylistLegacy",
+      "method": "GET",
+      "path": "/Videos/{itemId}/hls/{playlistId}/stream.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetHlsVideoSegment",
+      "method": "GET",
+      "path": "/Videos/{itemId}/hls1/{playlistId}/{segmentId}.{container}",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetHlsVideoSegmentLegacy",
+      "method": "GET",
+      "path": "/Videos/{itemId}/hls/{playlistId}/{segmentId}.{segmentContainer}",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetInstantMixFromArtists2",
+      "method": "GET",
+      "path": "/Artists/InstantMix",
+      "subsystem": "InstantMix",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: InstantMix not implemented"
+    },
+    {
+      "id": "SHADOW:GetIntrosLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/{itemId}/Intros",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetItemLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/{itemId}",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetItemUserDataLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/{itemId}/UserData",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy read path not implemented"
+    },
+    {
+      "id": "SHADOW:GetItemsLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items",
+      "subsystem": "Items",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetLatestMediaLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/Latest",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetLiveHlsStream",
+      "method": "GET",
+      "path": "/Videos/{itemId}/live.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetLocalTrailersLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/{itemId}/LocalTrailers",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetMasterHlsAudioPlaylist",
+      "method": "GET",
+      "path": "/Audio/{itemId}/master.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetMasterHlsVideoPlaylist",
+      "method": "GET",
+      "path": "/Videos/{itemId}/master.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetMusicGenres",
+      "method": "GET",
+      "path": "/MusicGenres",
+      "subsystem": "MusicGenres",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: MusicGenres lookup not implemented"
+    },
+    {
+      "id": "SHADOW:GetRecordingGroups",
+      "method": "GET",
+      "path": "/LiveTv/Recordings/Groups",
+      "subsystem": "LiveTvRecordings",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: LiveTv stubs per D2; recording groups not implemented"
+    },
+    {
+      "id": "SHADOW:GetRecordingsSeries",
+      "method": "GET",
+      "path": "/LiveTv/Recordings/Series",
+      "subsystem": "LiveTvRecordings",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: LiveTv stubs per D2; recording series not implemented"
+    },
+    {
+      "id": "SHADOW:GetResumeItemsLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/Resume",
+      "subsystem": "Items",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetRootFolderLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/Root",
+      "subsystem": "User",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user root folder legacy path not implemented"
+    },
+    {
+      "id": "SHADOW:GetSpecialFeaturesLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Items/{itemId}/SpecialFeatures",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetSuggestionsLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Suggestions",
+      "subsystem": "Items",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: item suggestions not implemented"
+    },
+    {
+      "id": "SHADOW:GetUserImageByIndexLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Images",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: profile-image legacy path not implemented"
+    },
+    {
+      "id": "SHADOW:GetUserImageLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Images/{imageType}",
+      "subsystem": "Images",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: profile-image legacy path not implemented"
+    },
+    {
+      "id": "SHADOW:GetUserViewsLegacy",
+      "method": "GET",
+      "path": "/Users/{userId}/Views",
+      "subsystem": "UserViews",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetVariantHlsAudioPlaylist",
+      "method": "GET",
+      "path": "/Audio/{itemId}/main.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:GetVariantHlsVideoPlaylist",
+      "method": "GET",
+      "path": "/Videos/{itemId}/main.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:HeadMasterHlsAudioPlaylist",
+      "method": "HEAD",
+      "path": "/Audio/{itemId}/master.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:HeadMasterHlsVideoPlaylist",
+      "method": "HEAD",
+      "path": "/Videos/{itemId}/master.m3u8",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:MarkFavoriteItemLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/FavoriteItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy write path not implemented"
+    },
+    {
+      "id": "SHADOW:MarkPlayedItemLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/PlayedItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy write path not implemented"
+    },
+    {
+      "id": "SHADOW:MarkUnplayedItemLegacy",
+      "method": "DELETE",
+      "path": "/Users/{userId}/PlayedItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy write path not implemented"
+    },
+    {
+      "id": "SHADOW:OnPlaybackProgress",
+      "method": "POST",
+      "path": "/PlayingItems/{itemId}/Progress",
+      "subsystem": "Playstate",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:OnPlaybackProgressLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/PlayingItems/{itemId}/Progress",
+      "subsystem": "Playstate",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:OnPlaybackStart",
+      "method": "POST",
+      "path": "/PlayingItems/{itemId}",
+      "subsystem": "Playstate",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:OnPlaybackStartLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/PlayingItems/{itemId}",
+      "subsystem": "Playstate",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:OnPlaybackStopped",
+      "method": "DELETE",
+      "path": "/PlayingItems/{itemId}",
+      "subsystem": "Playstate",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:OnPlaybackStoppedLegacy",
+      "method": "DELETE",
+      "path": "/Users/{userId}/PlayingItems/{itemId}",
+      "subsystem": "Playstate",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:PostUserImageByIndexLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/Images/{imageType}/{index}",
+      "subsystem": "Images",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: profile-image legacy path not implemented"
+    },
+    {
+      "id": "SHADOW:PostUserImageLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/Images/{imageType}",
+      "subsystem": "Images",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: profile-image legacy path not implemented"
+    },
+    {
+      "id": "SHADOW:StopEncodingProcess",
+      "method": "DELETE",
+      "path": "/Videos/ActiveEncodings",
+      "subsystem": "HLS",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "swiftfin",
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:UnmarkFavoriteItemLegacy",
+      "method": "DELETE",
+      "path": "/Users/{userId}/FavoriteItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy write path not implemented"
+    },
+    {
+      "id": "SHADOW:UpdateItemUserDataLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/Items/{itemId}/UserData",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy write path not implemented"
+    },
+    {
+      "id": "SHADOW:UpdateUserConfigurationLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/Configuration",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SHADOW:UpdateUserItemRatingLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/Items/{itemId}/Rating",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user-data legacy write path not implemented"
+    },
+    {
+      "id": "SHADOW:UpdateUserLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}",
+      "subsystem": "User",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": true,
+      "clients": [
+        "web"
+      ],
+      "reason": "deferred: user management not implemented"
+    },
+    {
+      "id": "SHADOW:UpdateUserPasswordLegacy",
+      "method": "POST",
+      "path": "/Users/{userId}/Password",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": true,
+      "clients": [
+        "web"
+      ]
+    },
+    {
+      "id": "SearchRemoteLyrics",
+      "method": "GET",
+      "path": "/Audio/{itemId}/RemoteSearch/Lyrics",
+      "subsystem": "Lyric",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Lyrics not implemented"
+    },
+    {
+      "id": "SearchRemoteSubtitles",
+      "method": "GET",
+      "path": "/Items/{itemId}/RemoteSearch/Subtitles/{language}",
+      "subsystem": "Subtitle",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: remote subtitle search not implemented"
+    },
+    {
+      "id": "SendFullGeneralCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Command",
+      "subsystem": "Session",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: full general command not implemented"
+    },
+    {
+      "id": "SendGeneralCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Command/{command}",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "SendMessageCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Message",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "SendPlaystateCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/Playing/{command}",
+      "subsystem": "Session",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "SendSystemCommand",
+      "method": "POST",
+      "path": "/Sessions/{sessionId}/System/{command}",
+      "subsystem": "Session",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: system command not implemented"
+    },
+    {
+      "id": "SetChannelMapping",
+      "method": "POST",
+      "path": "/LiveTv/ChannelMappings",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SetItemImage",
+      "method": "POST",
+      "path": "/Items/{itemId}/Images/{imageType}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: item image upload/delete not implemented"
+    },
+    {
+      "id": "SetItemImageByIndex",
+      "method": "POST",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item image upload/delete not implemented"
+    },
+    {
+      "id": "SetRemoteAccess",
+      "method": "POST",
+      "path": "/Startup/RemoteAccess",
+      "subsystem": "Startup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "SetRepositories",
+      "method": "POST",
+      "path": "/Repositories",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "ShutdownApplication",
+      "method": "POST",
+      "path": "/System/Shutdown",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: server restart/shutdown not implemented"
+    },
+    {
+      "id": "StartRestoreBackup",
+      "method": "POST",
+      "path": "/Backup/Restore",
+      "subsystem": "Backup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "StartTask",
+      "method": "POST",
+      "path": "/ScheduledTasks/Running/{taskId}",
+      "subsystem": "ScheduledTask",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "StopTask",
+      "method": "DELETE",
+      "path": "/ScheduledTasks/Running/{taskId}",
+      "subsystem": "ScheduledTask",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "SyncPlayBuffering",
+      "method": "POST",
+      "path": "/SyncPlay/Buffering",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayCreateGroup",
+      "method": "POST",
+      "path": "/SyncPlay/New",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayGetGroup",
+      "method": "GET",
+      "path": "/SyncPlay/{id}",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayGetGroups",
+      "method": "GET",
+      "path": "/SyncPlay/List",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayJoinGroup",
+      "method": "POST",
+      "path": "/SyncPlay/Join",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayLeaveGroup",
+      "method": "POST",
+      "path": "/SyncPlay/Leave",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayMovePlaylistItem",
+      "method": "POST",
+      "path": "/SyncPlay/MovePlaylistItem",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayNextItem",
+      "method": "POST",
+      "path": "/SyncPlay/NextItem",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayPause",
+      "method": "POST",
+      "path": "/SyncPlay/Pause",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayPing",
+      "method": "POST",
+      "path": "/SyncPlay/Ping",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayPreviousItem",
+      "method": "POST",
+      "path": "/SyncPlay/PreviousItem",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayQueue",
+      "method": "POST",
+      "path": "/SyncPlay/Queue",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayReady",
+      "method": "POST",
+      "path": "/SyncPlay/Ready",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayRemoveFromPlaylist",
+      "method": "POST",
+      "path": "/SyncPlay/RemoveFromPlaylist",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlaySeek",
+      "method": "POST",
+      "path": "/SyncPlay/Seek",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlaySetIgnoreWait",
+      "method": "POST",
+      "path": "/SyncPlay/SetIgnoreWait",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlaySetNewQueue",
+      "method": "POST",
+      "path": "/SyncPlay/SetNewQueue",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlaySetPlaylistItem",
+      "method": "POST",
+      "path": "/SyncPlay/SetPlaylistItem",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlaySetRepeatMode",
+      "method": "POST",
+      "path": "/SyncPlay/SetRepeatMode",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlaySetShuffleMode",
+      "method": "POST",
+      "path": "/SyncPlay/SetShuffleMode",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayStop",
+      "method": "POST",
+      "path": "/SyncPlay/Stop",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "SyncPlayUnpause",
+      "method": "POST",
+      "path": "/SyncPlay/Unpause",
+      "subsystem": "SyncPlay",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "UninstallPlugin",
+      "method": "DELETE",
+      "path": "/Plugins/{pluginId}",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UninstallPluginByVersion",
+      "method": "DELETE",
+      "path": "/Plugins/{pluginId}/{version}",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UnmarkFavoriteItem",
+      "method": "DELETE",
+      "path": "/UserFavoriteItems/{itemId}",
+      "subsystem": "UserData",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "UpdateBrandingConfiguration",
+      "method": "POST",
+      "path": "/System/Configuration/Branding",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: system configuration management not implemented"
+    },
+    {
+      "id": "UpdateConfiguration",
+      "method": "POST",
+      "path": "/System/Configuration",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: system configuration management not implemented"
+    },
+    {
+      "id": "UpdateDeviceOptions",
+      "method": "POST",
+      "path": "/Devices/Options",
+      "subsystem": "Device",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: device management not implemented"
+    },
+    {
+      "id": "UpdateDisplayPreferences",
+      "method": "POST",
+      "path": "/DisplayPreferences/{displayPreferencesId}",
+      "subsystem": "DisplayPreference",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UpdateInitialConfiguration",
+      "method": "POST",
+      "path": "/Startup/Configuration",
+      "subsystem": "Startup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UpdateItem",
+      "method": "POST",
+      "path": "/Items/{itemId}",
+      "subsystem": "ItemUpdate",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: item write/delete not implemented"
+    },
+    {
+      "id": "UpdateItemContentType",
+      "method": "POST",
+      "path": "/Items/{itemId}/ContentType",
+      "subsystem": "ItemUpdate",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item write/delete not implemented"
+    },
+    {
+      "id": "UpdateItemImageIndex",
+      "method": "POST",
+      "path": "/Items/{itemId}/Images/{imageType}/{imageIndex}/Index",
+      "subsystem": "Image",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: item image upload/delete not implemented"
+    },
+    {
+      "id": "UpdateItemUserData",
+      "method": "POST",
+      "path": "/UserItems/{itemId}/UserData",
+      "subsystem": "UserData",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UpdateLibraryOptions",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/LibraryOptions",
+      "subsystem": "LibraryStructure",
+      "status": "done",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UpdateMediaPath",
+      "method": "POST",
+      "path": "/Library/VirtualFolders/Paths/Update",
+      "subsystem": "LibraryStructure",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: virtual folder rename/update not implemented"
+    },
+    {
+      "id": "UpdateNamedConfiguration",
+      "method": "POST",
+      "path": "/System/Configuration/{key}",
+      "subsystem": "System",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: system configuration management not implemented"
+    },
+    {
+      "id": "UpdatePlaylist",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "UpdatePlaylistUser",
+      "method": "POST",
+      "path": "/Playlists/{playlistId}/Users/{userId}",
+      "subsystem": "Playlist",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Playlists not implemented"
+    },
+    {
+      "id": "UpdatePluginConfiguration",
+      "method": "POST",
+      "path": "/Plugins/{pluginId}/Configuration",
+      "subsystem": "Plugin",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UpdateSeriesTimer",
+      "method": "POST",
+      "path": "/LiveTv/SeriesTimers/{timerId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "UpdateStartupUser",
+      "method": "POST",
+      "path": "/Startup/User",
+      "subsystem": "Startup",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UpdateTask",
+      "method": "POST",
+      "path": "/ScheduledTasks/{taskId}/Triggers",
+      "subsystem": "ScheduledTask",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "UpdateTimer",
+      "method": "POST",
+      "path": "/LiveTv/Timers/{timerId}",
+      "subsystem": "LiveTv",
+      "status": "stubbed",
+      "disposition": "deferred",
+      "registered": true,
+      "shadow": false,
+      "clients": [],
+      "reason": "intentional stub per D2"
+    },
+    {
+      "id": "UpdateUser",
+      "method": "POST",
+      "path": "/Users",
+      "subsystem": "User",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: user management not implemented"
+    },
+    {
+      "id": "UpdateUserConfiguration",
+      "method": "POST",
+      "path": "/Users/Configuration",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "UpdateUserItemRating",
+      "method": "POST",
+      "path": "/UserItems/{itemId}/Rating",
+      "subsystem": "UserData",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: user item rating not implemented"
+    },
+    {
+      "id": "UpdateUserPassword",
+      "method": "POST",
+      "path": "/Users/Password",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "UpdateUserPolicy",
+      "method": "POST",
+      "path": "/Users/{userId}/Policy",
+      "subsystem": "User",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ]
+    },
+    {
+      "id": "UploadCustomSplashscreen",
+      "method": "POST",
+      "path": "/Branding/Splashscreen",
+      "subsystem": "Image",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    },
+    {
+      "id": "UploadLyrics",
+      "method": "POST",
+      "path": "/Audio/{itemId}/Lyrics",
+      "subsystem": "Lyric",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [],
+      "reason": "deferred: Lyrics not implemented"
+    },
+    {
+      "id": "UploadSubtitle",
+      "method": "POST",
+      "path": "/Videos/{itemId}/Subtitles",
+      "subsystem": "Subtitle",
+      "status": "deferred",
+      "disposition": "deferred",
+      "registered": false,
+      "shadow": false,
+      "clients": [
+        "swiftfin"
+      ],
+      "reason": "deferred: subtitle upload/delete not implemented"
+    },
+    {
+      "id": "ValidatePath",
+      "method": "POST",
+      "path": "/Environment/ValidatePath",
+      "subsystem": "Environment",
+      "status": "partial",
+      "registered": true,
+      "shadow": false,
+      "clients": []
+    }
+  ]
+}

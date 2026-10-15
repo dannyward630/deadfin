@@ -1,0 +1,1003 @@
+# Annotations — hand-edited input for the parity ledger generator.
+#
+# This file records deferred/stub reasons, Swiftfin client membership,
+# WebSocket message states, and ratchet flags. The generator reads
+# this file and merges it with the route snapshot and OpenAPI spec.
+# Do not edit generated files (parity.json, websocket.json, PARITY.md).
+
+source:
+  deadfin_revision: "539eb51ad60df4d96a3eab27fa52086d75dafbf2"
+  jellyfin_pin: "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+
+# Operation annotations.
+# Each entry can set status, disposition, reason, clients, and ratchet.
+# status: deferred marks a route that Deadfin intentionally does not serve.
+# clients: [swiftfin] marks Swiftfin REST membership (the 95-operation set).
+operations:
+  AddItemToPlaylist:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  AddUserToSession:
+    status: deferred
+    reason: "deferred: session user management not implemented"
+
+  CreateCollection:
+    status: deferred
+    reason: "deferred: Collections not implemented"
+
+  CreateKey:
+    status: deferred
+    reason: "deferred: API key management not implemented"
+    clients: [swiftfin]
+
+  CreatePlaylist:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  CreateUserByName:
+    status: deferred
+    reason: "deferred: user management not implemented"
+    clients: [swiftfin]
+
+  DeleteAlternateSources:
+    status: deferred
+    reason: "deferred: alternate source deletion not implemented"
+
+  DeleteDevice:
+    status: deferred
+    reason: "deferred: device management not implemented"
+    clients: [swiftfin]
+
+  DeleteItem:
+    status: deferred
+    reason: "deferred: item write/delete not implemented"
+    clients: [swiftfin]
+
+  DeleteItemImage:
+    status: deferred
+    reason: "deferred: item image upload/delete not implemented"
+    clients: [swiftfin]
+
+  DeleteItemImageByIndex:
+    status: deferred
+    reason: "deferred: item image upload/delete not implemented"
+    clients: [swiftfin]
+
+  DeleteItems:
+    status: deferred
+    reason: "deferred: item write/delete not implemented"
+
+  DeleteLyrics:
+    status: deferred
+    reason: "deferred: Lyrics not implemented"
+
+  DeleteSubtitle:
+    status: deferred
+    reason: "deferred: subtitle upload/delete not implemented"
+    clients: [swiftfin]
+
+  DeleteUser:
+    status: deferred
+    reason: "deferred: user management not implemented"
+    clients: [swiftfin]
+
+  DeleteUserImage:
+    status: deferred
+    reason: "deferred: profile-image write path not implemented; GET/HEAD serve the stock no-image responses"
+    clients: [swiftfin]
+
+  DeleteUserItemRating:
+    status: deferred
+    reason: "deferred: user item rating not implemented"
+
+  DownloadRemoteLyrics:
+    status: deferred
+    reason: "deferred: Lyrics not implemented"
+
+  DownloadRemoteSubtitles:
+    status: deferred
+    reason: "deferred: remote subtitle search not implemented"
+    clients: [swiftfin]
+
+  ForgotPassword:
+    status: deferred
+    reason: "deferred: password reset not implemented"
+
+  ForgotPasswordPin:
+    status: deferred
+    reason: "deferred: password reset not implemented"
+
+  GetAlbumArtists:
+    status: deferred
+    reason: "deferred: Artists lookup not implemented"
+
+  GetAllChannelFeatures:
+    status: deferred
+    reason: "deferred: Channels not implemented"
+
+  GetArtistByName:
+    status: deferred
+    reason: "deferred: Artists lookup not implemented"
+
+  GetArtistImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetAuthProviders:
+    status: deferred
+    reason: "deferred: auth provider config not implemented"
+
+  GetChannelFeatures:
+    status: deferred
+    reason: "deferred: Channels not implemented"
+
+  GetChannelItems:
+    status: deferred
+    reason: "deferred: Channels not implemented"
+
+  GetChannels:
+    status: deferred
+    reason: "deferred: Channels not implemented"
+
+  GetDefaultMetadataOptions:
+    status: deferred
+    reason: "deferred: system configuration management not implemented"
+
+  GetDeviceInfo:
+    status: deferred
+    reason: "deferred: device management not implemented"
+
+  GetDeviceOptions:
+    status: deferred
+    reason: "deferred: device management not implemented"
+
+  GetDevices:
+    status: deferred
+    reason: "deferred: device management not implemented"
+    clients: [swiftfin]
+
+  GetFallbackFont:
+    status: deferred
+    reason: "deferred: fallback font delivery not implemented"
+
+  GetFallbackFontList:
+    status: deferred
+    reason: "deferred: fallback font delivery not implemented"
+
+  GetFile:
+    status: deferred
+    reason: "deferred: item metadata endpoints not implemented"
+
+  GetGenre:
+    status: deferred
+    reason: "deferred: Genre lookup not implemented"
+
+  GetGenreImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetGenreImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetInstantMixFromAlbum:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  GetInstantMixFromArtists:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  GetInstantMixFromItem:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  GetInstantMixFromMusicGenreById:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  GetInstantMixFromMusicGenreByName:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  GetInstantMixFromPlaylist:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  GetInstantMixFromSong:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  GetItemCollections:
+    status: deferred
+    reason: "deferred: item metadata endpoints not implemented"
+
+  GetItemUserData:
+    status: deferred
+    reason: "deferred: item user-data read not implemented"
+
+  GetKeys:
+    status: deferred
+    reason: "deferred: API key management not implemented"
+    clients: [swiftfin]
+
+  GetLatestChannelItems:
+    status: deferred
+    reason: "deferred: Channels not implemented"
+
+  GetLogFile:
+    status: deferred
+    reason: "deferred: server log access not implemented"
+    clients: [swiftfin]
+
+  GetLyrics:
+    status: deferred
+    reason: "deferred: Lyrics not implemented"
+
+  GetMediaFolders:
+    status: deferred
+    reason: "deferred: library media update hooks not implemented"
+    clients: [swiftfin]
+
+  GetMetadataEditorInfo:
+    status: deferred
+    reason: "deferred: item metadata endpoints not implemented"
+
+  GetMovieRecommendations:
+    status: deferred
+    reason: "deferred: movie recommendations not implemented"
+
+  GetMusicGenre:
+    status: deferred
+    reason: "deferred: MusicGenres lookup not implemented"
+
+  GetMusicGenreImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetMusicGenreImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetPasswordResetProviders:
+    status: deferred
+    reason: "deferred: password reset provider config not implemented"
+
+  GetPerson:
+    status: deferred
+    reason: "deferred: Persons lookup not implemented"
+
+  GetPersonImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetPersonImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetPhysicalPaths:
+    status: deferred
+    reason: "deferred: library filesystem endpoints not implemented"
+
+  GetPlaylist:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  GetPlaylistItems:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  GetPlaylistUser:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  GetPlaylistUsers:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  GetRemoteLyrics:
+    status: deferred
+    reason: "deferred: Lyrics not implemented"
+
+  GetRemoteSubtitles:
+    status: deferred
+    reason: "deferred: subtitle provider not implemented"
+
+  GetRootFolder:
+    status: deferred
+    reason: "deferred: root folder endpoint not implemented"
+
+  GetServerLogs:
+    status: deferred
+    reason: "deferred: server log access not implemented"
+    clients: [swiftfin]
+
+  GetStudio:
+    status: deferred
+    reason: "deferred: Studios lookup not implemented"
+
+  GetStudioImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetStudioImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  GetSuggestions:
+    status: deferred
+    reason: "deferred: item suggestions not implemented"
+
+  GetThemeSongs:
+    status: deferred
+    reason: "deferred: item metadata endpoints not implemented"
+
+  GetThemeVideos:
+    status: deferred
+    reason: "deferred: item metadata endpoints not implemented"
+
+  GetTrailers:
+    status: deferred
+    reason: "deferred: Trailers list not implemented"
+
+  GetUpcomingEpisodes:
+    status: deferred
+    reason: "deferred: upcoming episodes not implemented"
+
+  GetUtcTime:
+    status: deferred
+    reason: "deferred: UTC time endpoint not implemented"
+
+  GetYear:
+    status: deferred
+    reason: "deferred: Years not implemented"
+
+  GetYears:
+    status: deferred
+    reason: "deferred: Years not implemented"
+
+  HeadArtistImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadGenreImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadGenreImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadMusicGenreImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadMusicGenreImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadPersonImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadPersonImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadStudioImage:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  HeadStudioImageByIndex:
+    status: deferred
+    reason: "deferred: named-entity image endpoints not implemented"
+
+  LogFile:
+    status: deferred
+    reason: "deferred: client log ingest not implemented"
+
+  MergeVersions:
+    status: deferred
+    reason: "deferred: version merging not implemented"
+
+  MoveItem:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  PostAddedMovies:
+    status: deferred
+    reason: "deferred: library media update hooks not implemented"
+
+  PostAddedSeries:
+    status: deferred
+    reason: "deferred: library media update hooks not implemented"
+
+  PostUpdatedMedia:
+    status: deferred
+    reason: "deferred: library media update hooks not implemented"
+
+  PostUpdatedMovies:
+    status: deferred
+    reason: "deferred: library media update hooks not implemented"
+
+  PostUpdatedSeries:
+    status: deferred
+    reason: "deferred: library media update hooks not implemented"
+
+  PostUserImage:
+    status: deferred
+    reason: "deferred: profile-image write path not implemented; GET/HEAD serve the stock no-image responses"
+    clients: [swiftfin]
+
+  RemoveFromCollection:
+    status: deferred
+    reason: "deferred: Collections not implemented"
+
+  RemoveItemFromPlaylist:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  RemoveUserFromPlaylist:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  RemoveUserFromSession:
+    status: deferred
+    reason: "deferred: session user management not implemented"
+
+  RenameVirtualFolder:
+    status: deferred
+    reason: "deferred: virtual folder rename/update not implemented"
+
+  ReportViewing:
+    status: deferred
+    reason: "deferred: session viewing report not implemented"
+
+  RestartApplication:
+    status: deferred
+    reason: "deferred: server restart/shutdown not implemented"
+    clients: [swiftfin]
+
+  RevokeKey:
+    status: deferred
+    reason: "deferred: API key management not implemented"
+    clients: [swiftfin]
+
+  SHADOW:DeleteUserImageByIndexLegacy:
+    status: deferred
+    reason: "deferred: profile-image legacy path not implemented"
+
+  SHADOW:DeleteUserImageLegacy:
+    status: deferred
+    reason: "deferred: profile-image legacy path not implemented"
+
+  SHADOW:DeleteUserItemRatingLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy write path not implemented"
+
+  SHADOW:GetInstantMixFromArtists2:
+    status: deferred
+    reason: "deferred: InstantMix not implemented"
+
+  SHADOW:GetItemUserDataLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy read path not implemented"
+
+  SHADOW:GetMusicGenres:
+    status: deferred
+    reason: "deferred: MusicGenres lookup not implemented"
+
+  SHADOW:GetRecordingGroups:
+    status: deferred
+    reason: "deferred: LiveTv stubs per D2; recording groups not implemented"
+
+  SHADOW:GetRecordingsSeries:
+    status: deferred
+    reason: "deferred: LiveTv stubs per D2; recording series not implemented"
+
+  SHADOW:GetRootFolderLegacy:
+    status: deferred
+    reason: "deferred: user root folder legacy path not implemented"
+
+  SHADOW:GetSuggestionsLegacy:
+    status: deferred
+    reason: "deferred: item suggestions not implemented"
+
+  SHADOW:GetUserImageByIndexLegacy:
+    status: deferred
+    reason: "deferred: profile-image legacy path not implemented"
+
+  SHADOW:GetUserImageLegacy:
+    status: deferred
+    reason: "deferred: profile-image legacy path not implemented"
+
+  SHADOW:MarkFavoriteItemLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy write path not implemented"
+
+  SHADOW:MarkPlayedItemLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy write path not implemented"
+
+  SHADOW:MarkUnplayedItemLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy write path not implemented"
+
+  SHADOW:PostUserImageByIndexLegacy:
+    status: deferred
+    reason: "deferred: profile-image legacy path not implemented"
+
+  SHADOW:PostUserImageLegacy:
+    status: deferred
+    reason: "deferred: profile-image legacy path not implemented"
+
+  SHADOW:UnmarkFavoriteItemLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy write path not implemented"
+
+  SHADOW:UpdateItemUserDataLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy write path not implemented"
+
+  SHADOW:UpdateUserItemRatingLegacy:
+    status: deferred
+    reason: "deferred: user-data legacy write path not implemented"
+
+  SHADOW:UpdateUserLegacy:
+    status: deferred
+    reason: "deferred: user management not implemented"
+
+  SearchRemoteLyrics:
+    status: deferred
+    reason: "deferred: Lyrics not implemented"
+
+  SearchRemoteSubtitles:
+    status: deferred
+    reason: "deferred: remote subtitle search not implemented"
+    clients: [swiftfin]
+
+  SendFullGeneralCommand:
+    status: deferred
+    reason: "deferred: full general command not implemented"
+
+  SendSystemCommand:
+    status: deferred
+    reason: "deferred: system command not implemented"
+
+  SetItemImage:
+    status: deferred
+    reason: "deferred: item image upload/delete not implemented"
+    clients: [swiftfin]
+
+  SetItemImageByIndex:
+    status: deferred
+    reason: "deferred: item image upload/delete not implemented"
+
+  ShutdownApplication:
+    status: deferred
+    reason: "deferred: server restart/shutdown not implemented"
+    clients: [swiftfin]
+
+  UpdateBrandingConfiguration:
+    status: deferred
+    reason: "deferred: system configuration management not implemented"
+
+  UpdateConfiguration:
+    status: deferred
+    reason: "deferred: system configuration management not implemented"
+
+  UpdateDeviceOptions:
+    status: deferred
+    reason: "deferred: device management not implemented"
+    clients: [swiftfin]
+
+  UpdateItem:
+    status: deferred
+    reason: "deferred: item write/delete not implemented"
+    clients: [swiftfin]
+
+  UpdateItemContentType:
+    status: deferred
+    reason: "deferred: item write/delete not implemented"
+
+  UpdateItemImageIndex:
+    status: deferred
+    reason: "deferred: item image upload/delete not implemented"
+
+  UpdateMediaPath:
+    status: deferred
+    reason: "deferred: virtual folder rename/update not implemented"
+
+  UpdateNamedConfiguration:
+    status: deferred
+    reason: "deferred: system configuration management not implemented"
+
+  UpdatePlaylist:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  UpdatePlaylistUser:
+    status: deferred
+    reason: "deferred: Playlists not implemented"
+
+  UpdateUser:
+    status: deferred
+    reason: "deferred: user management not implemented"
+    clients: [swiftfin]
+
+  UpdateUserItemRating:
+    status: deferred
+    reason: "deferred: user item rating not implemented"
+
+  UploadLyrics:
+    status: deferred
+    reason: "deferred: Lyrics not implemented"
+
+  UploadSubtitle:
+    status: deferred
+    reason: "deferred: subtitle upload/delete not implemented"
+    clients: [swiftfin]
+
+  ApplySearchCriteria:
+    clients: [swiftfin]
+
+  AuthorizeQuickConnect:
+    clients: [swiftfin]
+
+  DownloadRemoteImage:
+    clients: [swiftfin]
+
+  GetAdditionalPart:
+    clients: [swiftfin]
+
+  GetBitrateTestBytes:
+    clients: [swiftfin]
+
+  GetBoxSetRemoteSearchResults:
+    clients: [swiftfin]
+
+  GetBrandingOptions:
+    clients: [swiftfin]
+
+  GetCountries:
+    clients: [swiftfin]
+
+  GetCultures:
+    clients: [swiftfin]
+
+  GetCurrentUser:
+    clients: [swiftfin]
+
+  GetDownload:
+    clients: [swiftfin]
+
+  GetEpisodes:
+    clients: [swiftfin]
+
+  GetGenres:
+    clients: [swiftfin]
+
+  GetItem:
+    clients: [swiftfin]
+
+  GetItemImage:
+    clients: [swiftfin]
+
+  GetItemImageInfos:
+    clients: [swiftfin]
+
+  GetItems:
+    clients: [swiftfin]
+
+  GetLatestMedia:
+    clients: [swiftfin]
+
+  GetLiveTvPrograms:
+    clients: [swiftfin]
+
+  GetLocalTrailers:
+    clients: [swiftfin]
+
+  GetLogEntries:
+    clients: [swiftfin]
+
+  GetMovieRemoteSearchResults:
+    clients: [swiftfin]
+
+  GetNextUp:
+    clients: [swiftfin]
+
+  GetParentalRatings:
+    clients: [swiftfin]
+
+  GetPersonRemoteSearchResults:
+    clients: [swiftfin]
+
+  GetPersons:
+    clients: [swiftfin]
+
+  GetPostedPlaybackInfo:
+    clients: [swiftfin]
+
+  GetPublicSystemInfo:
+    clients: [swiftfin]
+
+  GetPublicUsers:
+    clients: [swiftfin]
+
+  GetQueryFiltersLegacy:
+    clients: [swiftfin]
+
+  GetQuickConnectEnabled:
+    clients: [swiftfin]
+
+  GetRecommendedPrograms:
+    clients: [swiftfin]
+
+  GetRecordings:
+    clients: [swiftfin]
+
+  GetRemoteImageProviders:
+    clients: [swiftfin]
+
+  GetRemoteImages:
+    clients: [swiftfin]
+
+  GetResumeItems:
+    clients: [swiftfin]
+
+  GetSeasons:
+    clients: [swiftfin]
+
+  GetSeriesRemoteSearchResults:
+    clients: [swiftfin]
+
+  GetSessions:
+    clients: [swiftfin]
+
+  GetSimilarItems:
+    clients: [swiftfin]
+
+  GetSpecialFeatures:
+    clients: [swiftfin]
+
+  GetSplashscreen:
+    clients: [swiftfin]
+
+  GetStudios:
+    clients: [swiftfin]
+
+  GetTask:
+    clients: [swiftfin]
+
+  GetTasks:
+    clients: [swiftfin]
+
+  GetTrickplayTileImage:
+    clients: [swiftfin]
+
+  GetUserById:
+    clients: [swiftfin]
+
+  GetUserImage:
+    clients: [swiftfin]
+
+  GetUserViews:
+    clients: [swiftfin]
+
+  GetUsers:
+    clients: [swiftfin]
+
+  GetVideoStream:
+    clients: [swiftfin]
+
+  MarkFavoriteItem:
+    clients: [swiftfin]
+
+  MarkPlayedItem:
+    clients: [swiftfin]
+
+  MarkUnplayedItem:
+    clients: [swiftfin]
+
+  Play:
+    clients: [swiftfin]
+
+  RefreshItem:
+    clients: [swiftfin]
+
+  ReportPlaybackProgress:
+    clients: [swiftfin]
+
+  ReportPlaybackStart:
+    clients: [swiftfin]
+
+  ReportPlaybackStopped:
+    clients: [swiftfin]
+
+  SendGeneralCommand:
+    clients: [swiftfin]
+
+  SendMessageCommand:
+    clients: [swiftfin]
+
+  SendPlaystateCommand:
+    clients: [swiftfin]
+
+  StartTask:
+    clients: [swiftfin]
+
+  StopEncodingProcess:
+    clients: [swiftfin]
+
+  StopTask:
+    clients: [swiftfin]
+
+  UnmarkFavoriteItem:
+    clients: [swiftfin]
+
+  UpdateTask:
+    clients: [swiftfin]
+
+  UpdateUserConfiguration:
+    clients: [swiftfin]
+
+  UpdateUserPassword:
+    clients: [swiftfin]
+
+  UpdateUserPolicy:
+    clients: [swiftfin]
+
+# WebSocket message annotations.
+# Each of the 34 upstream SessionMessageType values must have an entry.
+# status: done, partial, stubbed, or todo.
+websocket:
+  ForceKeepAlive:
+    status: done
+    evidence: "internal/ws/server.go:272"
+
+  GeneralCommand:
+    status: done
+    evidence: "internal/sessioncontrol/service.go:84"
+
+  UserDataChanged:
+    status: done
+    evidence: "internal/ws/server.go:483"
+
+  Sessions:
+    status: done
+    evidence: "internal/ws/server.go:385"
+
+  Play:
+    status: done
+    evidence: "internal/sessioncontrol/service.go:50"
+
+  SyncPlayCommand:
+    status: partial
+    evidence: "internal/ws/message.go:23"
+    reason: "catalog entry only; no send evidence"
+
+  SyncPlayGroupUpdate:
+    status: partial
+    evidence: "internal/ws/message.go:24"
+    reason: "catalog entry only; no send evidence"
+
+  Playstate:
+    status: done
+    evidence: "internal/sessioncontrol/service.go:67"
+
+  RestartRequired:
+    status: partial
+    evidence: "internal/ws/message.go:35"
+    reason: "catalog entry only; no send evidence"
+
+  ServerShuttingDown:
+    status: partial
+    evidence: "internal/ws/message.go:33"
+    reason: "catalog entry only; no send evidence"
+
+  ServerRestarting:
+    status: partial
+    evidence: "internal/ws/message.go:34"
+    reason: "catalog entry only; no send evidence"
+
+  LibraryChanged:
+    status: done
+    evidence: "internal/ws/server.go:467"
+
+  UserDeleted:
+    status: todo
+    reason: "not implemented in Deadfin"
+
+  UserUpdated:
+    status: todo
+    reason: "not implemented in Deadfin"
+
+  SeriesTimerCreated:
+    status: partial
+    evidence: "internal/ws/message.go:26"
+    reason: "catalog entry only; no send evidence"
+
+  TimerCreated:
+    status: partial
+    evidence: "internal/ws/message.go:25"
+    reason: "catalog entry only; no send evidence"
+
+  SeriesTimerCancelled:
+    status: partial
+    evidence: "internal/ws/message.go:28"
+    reason: "catalog entry only; no send evidence"
+
+  TimerCancelled:
+    status: partial
+    evidence: "internal/ws/message.go:27"
+    reason: "catalog entry only; no send evidence"
+
+  RefreshProgress:
+    status: done
+    evidence: "internal/ws/server.go:535"
+
+  ScheduledTaskEnded:
+    status: todo
+    reason: "not implemented in Deadfin"
+
+  PackageInstallationCancelled:
+    status: partial
+    evidence: "internal/ws/message.go:32"
+    reason: "catalog entry only; no send evidence"
+
+  PackageInstallationFailed:
+    status: partial
+    evidence: "internal/ws/message.go:31"
+    reason: "catalog entry only; no send evidence"
+
+  PackageInstallationCompleted:
+    status: partial
+    evidence: "internal/ws/message.go:30"
+    reason: "catalog entry only; no send evidence"
+
+  PackageInstalling:
+    status: partial
+    evidence: "internal/ws/message.go:29"
+    reason: "catalog entry only; no send evidence"
+
+  PackageUninstalled:
+    status: todo
+    reason: "not implemented in Deadfin"
+
+  ActivityLogEntry:
+    status: done
+    evidence: "internal/ws/server.go:389"
+
+  ScheduledTasksInfo:
+    status: done
+    evidence: "internal/ws/server.go:395"
+
+  ActivityLogEntryStart:
+    status: done
+    evidence: "internal/ws/server.go:370"
+
+  ActivityLogEntryStop:
+    status: done
+    evidence: "internal/ws/server.go:372"
+
+  SessionsStart:
+    status: done
+    evidence: "internal/ws/server.go:365"
+
+  SessionsStop:
+    status: done
+    evidence: "internal/ws/server.go:367"
+
+  ScheduledTasksInfoStart:
+    status: done
+    evidence: "internal/ws/server.go:373"
+
+  ScheduledTasksInfoStop:
+    status: done
+    evidence: "internal/ws/server.go:375"
+
+  KeepAlive:
+    status: done
+    evidence: "internal/ws/server.go:334"

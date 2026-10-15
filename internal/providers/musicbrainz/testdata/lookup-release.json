@@ -1,0 +1,46 @@
+[
+  {
+    "method": "GET",
+    "url": "https://musicbrainz.org/ws/2/release/test-release-id?fmt=json&inc=release-groups",
+    "status": 200,
+    "header": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": "test-release-id",
+      "title": "Test Album",
+      "date": "2020-05-15",
+      "annotation": "Test annotation",
+      "artist-credit": [
+        {
+          "name": "Test Artist",
+          "artist": {
+            "id": "test-artist-id",
+            "name": "Test Artist",
+            "sort-name": "Artist, Test",
+            "life-span": {
+              "begin": "2000"
+            }
+          }
+        },
+        {
+          "name": "Featured Artist",
+          "artist": {
+            "id": "featured-artist-id",
+            "name": "Featured Artist",
+            "sort-name": "Artist, Featured",
+            "life-span": {
+              "begin": "2005"
+            }
+          }
+        }
+      ],
+      "release-group": {
+        "id": "test-release-group-id",
+        "title": "Test Album"
+      }
+    }
+  }
+]

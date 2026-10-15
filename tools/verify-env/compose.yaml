@@ -1,0 +1,59 @@
+# Dockerized gate environment for Jellyport `make verify-*` targets.
+# Use run.sh; it exports the VERIFY_ENV_* variables this file needs.
+name: jellyport-verify-env
+
+services:
+  postgres:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER: deadfin
+      POSTGRES_PASSWORD: deadfin
+      POSTGRES_DB: deadfin
+    # Loopback only, 5433 to avoid a host PostgreSQL on 5432.
+    ports:
+      - "127.0.0.1:${VERIFY_ENV_POSTGRES_PORT:-5433}:5432"
+    # Ephemeral by design: tests create and drop their own schemas.
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U deadfin -d deadfin"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  gate:
+    build: .
+    # Host network namespace: `make image-verify` publishes a container port
+    # on the host loopback and curls 127.0.0.1, which must resolve to the
+    # host from inside the gate. It also makes the postgres loopback port
+    # reachable without service DNS.
+    network_mode: host
+    # Run as the invoking host user so files written into the mounted
+    # repository belong to that user, not root.
+    user: "${VERIFY_ENV_UID:-1000}:${VERIFY_ENV_GID:-1000}"
+    group_add:
+      - "${VERIFY_ENV_DOCKER_GID:-999}"
+    environment:
+      DEADFIN_TEST_POSTGRES_DSN: "${VERIFY_ENV_POSTGRES_DSN:-postgres://deadfin:deadfin@127.0.0.1:5433/deadfin?sslmode=disable}"
+    volumes:
+      - "${VERIFY_ENV_REPO:-../..}:/work"
+      - verify-cache:/cache
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  fixture-generator:
+    # Committed fixture bytes have one architecture on every supported host.
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: fixture-generator.Dockerfile
+    user: "${VERIFY_ENV_UID:-1000}:${VERIFY_ENV_GID:-1000}"
+    working_dir: /work
+    entrypoint: ["/bin/sh", "tools/verify-env/fixture-generator-entrypoint.sh"]
+    volumes:
+      - "${VERIFY_ENV_REPO:-../..}:/work"
+
+volumes:
+  verify-cache:

@@ -1,0 +1,5 @@
+{"method": "GET", "path": "/Items/Counts"}
+{"method": "GET", "path": "/Audio/abc123/stream.mp3"}
+{"method": "GET", "path": "/Audio/abc123/stream.mp3"}
+{"method": "POST", "path": "/Audio/abc123/stream.mp3"}
+{"method": "GET", "path": "/Videos/xyz/Tiles/256/42.jpg"}

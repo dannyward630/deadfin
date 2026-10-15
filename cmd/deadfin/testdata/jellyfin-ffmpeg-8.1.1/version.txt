@@ -1,0 +1,10 @@
+ffmpeg version 8.1.1-Jellyfin Copyright (c) 2000-2026 the FFmpeg developers
+built with gcc 12 (Debian 12.2.0-14+deb12u1)
+configuration: --prefix=/usr/lib/jellyfin-ffmpeg --target-os=linux --enable-gpl --enable-libx264 --enable-opencl --enable-vaapi --enable-libvpl
+libavutil      60. 26.100 / 60. 26.100
+libavcodec     62. 28.100 / 62. 28.100
+libavformat    62. 12.100 / 62. 12.100
+libavdevice    62.  3.100 / 62.  3.100
+libavfilter    11. 14.100 / 11. 14.100
+libswscale      9.  5.100 /  9.  5.100
+libswresample   6.  3.100 /  6.  3.100

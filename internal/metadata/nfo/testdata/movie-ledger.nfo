@@ -1,0 +1,25 @@
+<movie>
+  <title>Justice League</title>
+  <sorttitle>League, Justice</sorttitle>
+  <originaltitle>Justice League</originaltitle>
+  <plot>United heroes.</plot>
+  <tagline>Justice for all.</tagline>
+  <mpaa>Australia:M</mpaa>
+  <runtime>120 min</runtime>
+  <communityrating>8,5</communityrating>
+  <premiered>2017-11-15</premiered>
+  <enddate>2017-11-16</enddate>
+  <year>2017</year>
+  <genre>Action / Adventure</genre>
+  <studio>DC Comics</studio>
+  <tag>superhero</tag>
+  <uniqueid type="imdb">tt0974015</uniqueid>
+  <uniqueid type="tmdb">141052</uniqueid>
+  <lockedfields>Genres|Name|Unknown</lockedfields>
+  <lockdata>true</lockdata>
+  <director>Zack Snyder</director>
+  <credits>Jerry Siegel / Joe Shuster</credits>
+  <actor><name>Ben Affleck</name><role>Batman</role><order>0</order></actor>
+  <trailer>plugin://plugin.video.youtube/?action=play_video&amp;videoid=dQw4w9WgXcQ</trailer>
+  <ignoredByJellyfin>not metadata</ignoredByJellyfin>
+</movie>

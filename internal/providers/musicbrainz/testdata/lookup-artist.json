@@ -1,0 +1,1 @@
+[{"method":"GET","url":"https://musicbrainz.org/ws/2/artist/test-artist-id?fmt=json&inc=aliases","status":200,"header":{"Content-Type":["application/json"]},"body":{"id":"test-artist-id","name":"Test Artist","sort-name":"Artist, Test","life-span":{"begin":"2000-01-15"}}}]

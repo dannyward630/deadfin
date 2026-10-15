@@ -1,0 +1,12 @@
+version: difftool-normalize/v1
+rules:
+  - name: external-id-infos
+    action: external_id_infos
+    explicit_only: true
+    divergence_id: D-28
+    reason: Deadfin ExternalIdInfos returns descriptors for ported providers only. Stock returns every registered IExternalId (upstream ProviderManager.cs:1002-1016). Only a top-level JSON array of ExternalIdInfo objects is filtered. Entries whose Key is outside the pinned ported-descriptor set are removed before comparison while entries inside the set stay byte-strict in every field. The Deadfin handler test pins the exact set, so a spurious Deadfin descriptor outside the set is still caught.
+  - name: remote-search-result-order
+    action: remote_search_result_order
+    explicit_only: true
+    divergence_id: D-18
+    reason: Stock and Deadfin issue differently-escaped MusicBrainz queries, so their flows record minutes apart and tie-order drift can appear between the two result sets. Only a top-level JSON array of RemoteSearchResult objects is sorted by the canonical key (sorted lowercased provider=value ProviderIds pairs, fallback Name|ProductionYear) while membership, count, and every field stay strict. Apply this rule only when the recording session shows tie-order drift.

@@ -1,0 +1,35 @@
+{
+  "assets": {
+    "golden/encoding.json": "4d1fd29b01e06422bbf8bb9ac4f800f452277bb3007ebaddf6a74d6eac028fd3"
+  },
+  "corpus": "encoding",
+  "format": "deadfin.golden.provenance/v1",
+  "recorder": {
+    "command": "tools/goldenrec/record.sh encoding --output-root deadfin",
+    "sources": {
+      "tools/goldenrec/GoldenRec.csproj": "c3ed7b82eac8fe2d09b02b632277c1977860436d375604563f4b067ea3ee5b71",
+      "tools/goldenrec/Program.cs": "2507ee1b11622baddc9caaab12ddedc8ee0e12e9453d0b41be68c7d5ed39bf7b",
+      "tools/goldenrec/provenance.py": "eb842fa7989149b7238dac098612e46f280c457c523d2b03f57f9f6f9fa355cb",
+      "tools/goldenrec/record.sh": "aba14399e3c445273392b88bf180915ca3377c804b6ae4c316e0ead77e79a1db"
+    }
+  },
+  "upstream": {
+    "assemblies": {
+      "Jellyfin.Api/bin/Release/net10.0/Jellyfin.Api.dll": "1b5f294636da1695fc54c8fec6a4edab4a4a0c5909d67b5f64213799aacaf374",
+      "MediaBrowser.Controller/bin/Release/net10.0/MediaBrowser.Controller.dll": "2d7635cf90abe8e41904ae1d6c72958cee9f78de796184a9d6e1418bc0b65bc8",
+      "MediaBrowser.Model/bin/Release/net10.0/MediaBrowser.Model.dll": "1e8ebadb946aa21f61712596ac3631a9041103a9c114ccef2f6bca19a5caa0da"
+    },
+    "commit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+    "inputs": {
+      "Jellyfin.Api/Controllers/DynamicHlsController.cs": "42ff51d084a664e97afbabac21f91fa206887075b0930a56eb41d85f18bd246b",
+      "Jellyfin.Api/Controllers/VideosController.cs": "ef810bd88ea99d52f601fa4998afb5c37a9104109a8bca28b2d1fa0e231d7ddd",
+      "Jellyfin.Api/Helpers/StreamingHelpers.cs": "aff75d20cdd505e9576afb36444cc182da0a6b983e2bbe37e03fead3a55fa829",
+      "MediaBrowser.Controller/MediaEncoding/EncodingHelper.cs": "b57fe91562c1fb23971ac6fdca066e8bbc8b3c8d9812e2d9b754432b6048f485",
+      "tests/Jellyfin.Model.Tests/Test Data/MediaSourceInfo-mkv-av1-aac-srt-2600k.json": "1642e56c000f0cdbc814a3ebcb5885d9d6d0e5ae3e4542244129483db0cefea2",
+      "tests/Jellyfin.Model.Tests/Test Data/MediaSourceInfo-mp4-h264-ac3-aac-srt-2600k.json": "b5f868e82e104c0c32b67ac48eaafdc48cc2bab88f7863a234258a7e51c08c58",
+      "tests/Jellyfin.Model.Tests/Test Data/MediaSourceInfo-mp4-hevc-ac3-aac-srt-15200k.json": "7c1aaaca24b13f347ef191718b78aec6df49e68b721fc4fd276dd0960972c0e3"
+    },
+    "repository": "jellyfin/jellyfin",
+    "treeHead": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb"
+  }
+}

@@ -1,0 +1,15 @@
+Encoders:
+ V..... = Video
+ A..... = Audio
+ S..... = Subtitle
+ .F.... = Frame-level multithreading
+ ..S... = Slice-level multithreading
+ ...X.. = Codec is experimental
+ ....B. = Supports draw_horiz_band
+ .....D = Supports direct rendering method 1
+ ------
+ V....D libx264              libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
+ V....D h264_qsv             H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (Intel Quick Sync Video acceleration) (codec h264)
+ V....D h264_vaapi           H.264/AVC (VAAPI) (codec h264)
+ V....D hevc_qsv             HEVC (Intel Quick Sync Video acceleration) (codec hevc)
+ A....D aac                  AAC (Advanced Audio Coding)

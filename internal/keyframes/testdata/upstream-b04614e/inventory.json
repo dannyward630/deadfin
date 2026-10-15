@@ -1,0 +1,16 @@
+{
+  "source_commit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+  "source": "src/Jellyfin.MediaEncoding.Keyframes/FfProbe/FfProbeKeyframeExtractor.cs",
+  "fixtures": [
+    {
+      "raw": "packet-format.csv",
+      "result": "packet-format.json",
+      "source_rows": "tests/Jellyfin.MediaEncoding.Keyframes.Tests/FfProbe/Test Data/keyframes.txt"
+    },
+    {
+      "raw": "stream-duration.csv",
+      "result": "stream-duration.json",
+      "source_rows": "tests/Jellyfin.MediaEncoding.Keyframes.Tests/FfProbe/Test Data/keyframes_streamduration.txt"
+    }
+  ]
+}

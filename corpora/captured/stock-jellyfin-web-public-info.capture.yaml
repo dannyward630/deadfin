@@ -1,0 +1,19 @@
+{
+  "format": "goldenrec-scenario/v1",
+  "name": "stock-jellyfin-web-public-info",
+  "base_url_env": "JELLYFIN_BASE_URL",
+  "steps": [
+    {
+      "name": "jellyfin-web-public-system-info",
+      "operation_id": "GetPublicSystemInfo",
+      "method": "GET",
+      "path": "/System/Info/Public",
+      "expect": {
+        "status": 200
+      },
+      "headers": {
+        "accept": "application/json"
+      }
+    }
+  ]
+}

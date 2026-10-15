@@ -1,0 +1,176 @@
+format: goldenrec-scenario/v1
+name: provenance-backed playback information and no-provider live streams
+base_url_env: JELLYFIN_BASE_URL
+# P0-03 has not captured a real Swiftfin/AVPlayer DeviceProfile. That external
+# prerequisite remains blocked; this corpus deliberately replays only the pinned
+# upstream Chrome, LowBandwidth, and DirectMedia profile fixtures below.
+steps:
+  - name: Subtitle Sample GET PlaybackInfo
+    method: GET
+    path: /Items/ad08623a9ec58acc2d5541518d90a065/PlaybackInfo
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - play-session-ids
+      - transcoding-url-tokens
+      - subtitle-delivery-url-item-ids
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPlaybackInfo
+  - name: Subtitle Sample POST DeviceProfile DirectMedia PlaybackInfo
+    method: POST
+    path: /Items/ad08623a9ec58acc2d5541518d90a065/PlaybackInfo
+    headers:
+      Accept: application/json
+    body_file: ../internal/playback/testdata/DeviceProfile-DirectMedia.json
+    body_file_field: DeviceProfile
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - play-session-ids
+      - transcoding-url-tokens
+      - subtitle-delivery-url-item-ids
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPostedPlaybackInfo
+  - name: fixture playback information GET
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3/PlaybackInfo
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - play-session-ids
+      - transcoding-url-tokens
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPlaybackInfo
+  - name: fixture playback information POST web Chrome profile
+    method: POST
+    path: /Items/7e897749137a8161f7a084cfad246bd3/PlaybackInfo
+    headers:
+      Accept: application/json
+    body_file: ../internal/playback/testdata/DeviceProfile-Chrome.json
+    body_file_field: DeviceProfile
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - play-session-ids
+      - transcoding-url-tokens
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPostedPlaybackInfo
+  - name: fixture playback information POST LowBandwidth profile
+    method: POST
+    path: /Items/7e897749137a8161f7a084cfad246bd3/PlaybackInfo
+    headers:
+      Accept: application/json
+    body_file: ../internal/playback/testdata/DeviceProfile-LowBandwidth.json
+    body_file_field: DeviceProfile
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - play-session-ids
+      - transcoding-url-tokens
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPostedPlaybackInfo
+  - name: fixture playback information POST DirectMedia profile
+    method: POST
+    path: /Items/7e897749137a8161f7a084cfad246bd3/PlaybackInfo
+    headers:
+      Accept: application/json
+    body_file: ../internal/playback/testdata/DeviceProfile-DirectMedia.json
+    body_file_field: DeviceProfile
+    auth_role: admin
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - play-session-ids
+      - transcoding-url-tokens
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPostedPlaybackInfo
+  - name: no-provider live stream open
+    method: POST
+    path: /LiveStreams/Open
+    headers:
+      Accept: application/json
+    body:
+      OpenToken: no-provider-fixture
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+      EnableDirectPlay: true
+      EnableDirectStream: true
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: OpenLiveStream
+  - name: no-provider live stream close
+    method: POST
+    path: /LiveStreams/Close
+    params:
+      liveStreamId: no-provider-fixture
+    headers:
+      Accept: application/json
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: CloseLiveStream

@@ -1,0 +1,139 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/configuration",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "images": {
+        "secure_base_url": "https://image.tmdb.org/t/p/",
+        "poster_sizes": [
+          "w92",
+          "w500",
+          "original"
+        ],
+        "backdrop_sizes": [
+          "w300",
+          "original"
+        ]
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/search/movie?query=Apollo+13&year=1995&language=en&include_adult=false",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "results": [
+        {
+          "id": 568,
+          "title": "Apollo 13",
+          "original_title": "Apollo 13",
+          "release_date": "1995-06-30"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/movie/568?language=en&include_image_language=en,null&append_to_response=credits,release_dates,images,videos,keywords",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 568,
+      "title": "Apollo 13",
+      "original_title": "Apollo 13",
+      "original_language": "en",
+      "overview": "The true story of the Apollo 13 lunar mission.",
+      "poster_path": "/apollo-13-poster.jpg",
+      "release_date": "1995-06-30",
+      "images": {
+        "posters": [
+          {
+            "file_path": "/apollo-13-poster.jpg",
+            "iso_639_1": "en",
+            "width": 500,
+            "height": 750
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/search/movie?query=Battle+of+Britain&year=1969&language=en&include_adult=false",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "results": [
+        {
+          "id": 10511,
+          "title": "Battle of Britain",
+          "original_title": "Battle of Britain",
+          "release_date": "1969-09-15"
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/movie/10511?language=en&include_image_language=en,null&append_to_response=credits,release_dates,images,videos,keywords",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 10511,
+      "title": "Battle of Britain",
+      "original_title": "Battle of Britain",
+      "original_language": "en",
+      "overview": "In 1940 the Royal Air Force defends Britain.",
+      "poster_path": "/battle-of-britain-poster.jpg",
+      "release_date": "1969-09-15",
+      "images": {
+        "posters": [
+          {
+            "file_path": "/battle-of-britain-poster.jpg",
+            "iso_639_1": "en",
+            "width": 500,
+            "height": 750
+          }
+        ]
+      }
+    }
+  }
+]

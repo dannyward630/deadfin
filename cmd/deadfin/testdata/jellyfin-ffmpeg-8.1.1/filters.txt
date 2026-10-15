@@ -1,0 +1,31 @@
+Filters:
+  T.. = Timeline support
+  .S. = Slice threading
+  A = Audio input/output
+  V = Video input/output
+  N = Dynamic number and/or type of input/output
+  | = Source or sink filter
+ .. alphasrc          |->V       Generate a canvas of transparent pixels.
+ .. aresample         A->A       Resample audio data.
+ .. deinterlace_vaapi V->V       Deinterlacing of VAAPI surfaces
+ T. format            V->V       Convert the input video to one of the specified pixel formats.
+ .. hwmap             V->V       Map hardware frames
+ .. hwupload          V->V       Upload a normal frame to a hardware frame
+ .. hwupload_vaapi    V->V       Upload a normal frame to a VAAPI frame
+ T. overlay           VV->V      Overlay a video source on top of the input.
+ .. overlay_opencl    VV->V      Overlay one video on top of another
+ .. overlay_qsv       VV->V      Quick Sync Video overlay.
+ .. overlay_vaapi     VV->V      Overlay one video on top of another
+ .. procamp_vaapi     V->V       ProcAmp (color balance) adjustments for hue, saturation, brightness, contrast
+ .. scale             V->V       Scale the input video size and/or convert the image format.
+ .. scale_opencl      V->V       Scale the input video size through OpenCL.
+ .. scale_qsv         V->V       Quick Sync Video "scaling and format conversion"
+ .. scale_vaapi       V->V       Scale to/from VAAPI surfaces.
+ T. setparams         V->V       Force field, or color property for the output video frame.
+ .. subtitles         V->V       Render text subtitles onto input video using the libass library.
+ .. tonemap_opencl    V->V       Perform HDR to SDR conversion with tonemapping.
+ .. tonemap_vaapi     V->V       VAAPI VPP for tone-mapping
+ .S tonemapx          V->V       SIMD optimized HDR to SDR conversion with tonemapping.
+ .. transpose_vaapi   V->V       VAAPI VPP for transpose
+ .. vpp_qsv           V->V       Quick Sync Video "VPP"
+ T. yadif             V->V       Deinterlace the input image.

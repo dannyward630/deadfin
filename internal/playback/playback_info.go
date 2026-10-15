@@ -1,0 +1,650 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+package playback
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/netip"
+	"strings"
+	"time"
+
+	"github.com/deadfin-org/deadfin/internal/dto"
+)
+
+// VirtualPathExpander replaces virtual path placeholders in stored paths
+// before they reach API responses or filesystem operations. The playback
+// package defines this interface so it does not depend on the path package.
+// A nil expander leaves paths unchanged.
+type VirtualPathExpander interface {
+	Expand(string) string
+}
+
+var (
+	// ErrItemNotFound maps an unresolved playback item to the stock 404 response.
+	ErrItemNotFound = errors.New("playback item not found")
+	// ErrMediaSourceNotFound identifies an unknown source on an otherwise
+	// accessible playback item. It wraps ErrItemNotFound to preserve the
+	// selector's historical non-disclosure contract for callers that do not
+	// need the distinction.
+	ErrMediaSourceNotFound = fmt.Errorf("%w: media source not found", ErrItemNotFound)
+	// ErrDownloadNotAllowed identifies a visible item that cannot be delivered
+	// through the physical-file download endpoint.
+	ErrDownloadNotAllowed = errors.New("download not allowed")
+	// ErrLiveStreamUnavailable identifies Live TV operations without a composed provider.
+	ErrLiveStreamUnavailable = errors.New("live stream provider unavailable")
+	// ErrInvalidStoredDeviceProfile identifies malformed persisted device capability JSON.
+	ErrInvalidStoredDeviceProfile = errors.New("invalid stored device profile")
+	// ErrPlaySessionIDUnavailable identifies unavailable session entropy.
+	ErrPlaySessionIDUnavailable = errors.New("play session ID unavailable")
+)
+
+// PlaybackInfoService is the application seam used by the PlaybackInfo HTTP
+// surface. Implementations own source lookup, profile application, and live
+// stream lifecycle; handlers only bind stock transport parameters.
+type PlaybackInfoService interface {
+	PlaybackInfo(context.Context, PlaybackInfoRequest) (PlaybackInfoResponse, error)
+	OpenLiveStream(context.Context, OpenLiveStreamRequest) (LiveStreamResponse, error)
+	CloseLiveStream(context.Context, string) error
+}
+
+// DirectFileSourceService resolves an optionally access-filtered selected
+// source for a static local-file response. It intentionally excludes device
+// negotiation and play-session creation: direct-file transport only needs the
+// existing ordered source graph.
+type DirectFileSourceService interface {
+	StaticSource(context.Context, dto.UUID, dto.UUID, string) (MediaSourceInfo, error)
+}
+
+// DownloadFileSourceService resolves the canonical physical source eligible
+// for an item download. It is intentionally narrower than StaticSource.
+type DownloadFileSourceService interface {
+	DownloadSource(context.Context, dto.UUID, dto.UUID) (MediaSourceInfo, error)
+}
+
+// DeviceProfileReader provides the current stored capabilities for an exact
+// client/device session. It is separate from the request so transport adapters
+// can keep the request profile strongly typed while preserving body-over-stored
+// precedence.
+type DeviceProfileReader interface {
+	DeviceProfile(context.Context, string, string) (*DeviceProfile, error)
+}
+
+// PlaybackPermissionReader supplies the current user's playback policy facts.
+type PlaybackPermissionReader interface {
+	PlaybackPermissions(context.Context, dto.UUID) (PlaybackPermissions, error)
+}
+
+// PlaybackItemAccessReader resolves item visibility with the authenticated
+// user's complete library policy. The playback service owns when this check is
+// applied; store adapters own policy evaluation through their access-aware
+// item-query seam.
+type PlaybackItemAccessReader interface {
+	AccessiblePlaybackItemIDs(context.Context, dto.UUID, []dto.UUID) ([]dto.UUID, error)
+}
+
+// PlaybackNetworkClassifier identifies whether a client address is local to
+// the server for WAN policy bitrate clamping.
+type PlaybackNetworkClassifier interface {
+	IsLAN(netip.Addr) bool
+}
+
+// LiveStreamProvider is the deferred Live TV adapter. A nil provider means
+// that LiveStreams/Open is unavailable while Close remains idempotent.
+type LiveStreamProvider interface {
+	OpenLiveStream(context.Context, OpenLiveStreamRequest) (LiveStreamResponse, error)
+	CloseLiveStream(context.Context, string) error
+}
+
+// PlaybackInfoServiceConfig supplies the concrete orchestration dependencies.
+// Every dependency is typed so HTTP, store, session, user, and network adapters
+// map their own models exactly once at the application seam.
+type PlaybackInfoServiceConfig struct {
+	Sources          MediaSourceGraphReader
+	Access           PlaybackItemAccessReader
+	DeviceProfiles   DeviceProfileReader
+	Permissions      PlaybackPermissionReader
+	Network          PlaybackNetworkClassifier
+	NewPlaySessionID func() string
+	LiveStreams      LiveStreamProvider
+	Selection        SourceSelectionReader
+	Languages        LanguageNormalizer
+	Paths            VirtualPathExpander
+	// Encoding decides whether a non-SDR source can transcode.
+	Encoding TranscodeEncoding
+}
+
+// PlaybackInfoApplication is the concrete PlaybackInfoService implementation.
+// Its methods deliberately remain the only place where source assembly,
+type PlaybackInfoApplication struct {
+	sources          MediaSourceGraphReader
+	access           PlaybackItemAccessReader
+	deviceProfiles   DeviceProfileReader
+	permissions      PlaybackPermissionReader
+	network          PlaybackNetworkClassifier
+	newPlaySessionID func() string
+	liveStreams      LiveStreamProvider
+	selection        SourceSelectionReader
+	languages        LanguageNormalizer
+	paths            VirtualPathExpander
+	encoding         TranscodeEncoding
+}
+
+// NewPlaybackInfoService constructs the concrete playback orchestration
+// service. Nil optional adapters retain their stock no-provider behavior.
+func NewPlaybackInfoService(config PlaybackInfoServiceConfig) *PlaybackInfoApplication {
+	return &PlaybackInfoApplication{
+		sources:          config.Sources,
+		access:           config.Access,
+		deviceProfiles:   config.DeviceProfiles,
+		permissions:      config.Permissions,
+		network:          config.Network,
+		newPlaySessionID: config.NewPlaySessionID,
+		liveStreams:      config.LiveStreams,
+		selection:        config.Selection,
+		languages:        config.Languages,
+		paths:            config.Paths,
+		encoding:         config.Encoding,
+	}
+}
+
+// expandSource applies virtual path expansion to a single media source. When
+// the expander is nil, the source is returned unchanged.
+func (service *PlaybackInfoApplication) expandSource(source MediaSourceInfo) MediaSourceInfo {
+	if service.paths == nil {
+		return source
+	}
+	expandMediaSourcePaths(&source, service.paths)
+	return source
+}
+
+// expandSources applies virtual path expansion to a slice of media sources.
+// When the expander is nil, the slice is returned unchanged.
+func (service *PlaybackInfoApplication) expandSources(sources []MediaSourceInfo) []MediaSourceInfo {
+	if service.paths == nil {
+		return sources
+	}
+	for index := range sources {
+		expandMediaSourcePaths(&sources[index], service.paths)
+	}
+	return sources
+}
+
+// PlaybackInfo assembles one source snapshot, resolves the effective current
+// user/device facts, mints exactly one response session ID, then applies the
+// pure negotiation resolver to every candidate source.
+func (service *PlaybackInfoApplication) PlaybackInfo(ctx context.Context, request PlaybackInfoRequest) (PlaybackInfoResponse, error) {
+	if service.sources == nil {
+		return PlaybackInfoResponse{}, ErrItemNotFound
+	}
+	if service.access != nil {
+		accessible, err := service.access.AccessiblePlaybackItemIDs(ctx, request.UserID, []dto.UUID{request.ItemID})
+		if err != nil {
+			return PlaybackInfoResponse{}, err
+		}
+		if !containsPlaybackItemID(accessible, request.ItemID) {
+			return PlaybackInfoResponse{}, ErrItemNotFound
+		}
+	}
+	records, err := assembleMediaSourceRecords(ctx, service.sources, request.ItemID)
+	if err != nil {
+		return PlaybackInfoResponse{}, err
+	}
+	if service.access != nil {
+		accessible, err := service.access.AccessiblePlaybackItemIDs(ctx, request.UserID, playbackRecordIDs(records))
+		if err != nil {
+			return PlaybackInfoResponse{}, err
+		}
+		records = filterAccessiblePlaybackRecords(records, accessible)
+	}
+	var selection *SourceSelection
+	if service.selection != nil && !request.UserID.IsNil() {
+		resolved, found, err := service.selection.SourceSelection(ctx, request.UserID, request.ItemID, playbackRecordIDs(records))
+		if err != nil {
+			return PlaybackInfoResponse{}, err
+		}
+		if found {
+			selection = &resolved
+		}
+	}
+	rawSourceProjection := false
+	if !request.AssemblyOnly {
+		if request.DeviceProfile == nil && service.deviceProfiles != nil {
+			request.DeviceProfile, err = service.deviceProfiles.DeviceProfile(ctx, request.Client, request.DeviceID)
+			if err != nil {
+				return PlaybackInfoResponse{}, err
+			}
+		}
+		if request.DeviceProfile == nil {
+			request.AssemblyOnly = true
+			rawSourceProjection = true
+		}
+		if service.permissions != nil {
+			request.Permissions, err = service.permissions.PlaybackPermissions(ctx, request.UserID)
+			if err != nil {
+				return PlaybackInfoResponse{}, err
+			}
+		}
+		if service.network != nil {
+			request.Network = PlaybackNetwork{IsLAN: !request.ClientAddress.IsValid() || service.network.IsLAN(request.ClientAddress)}
+		}
+	}
+	playSessionID, err := service.newSessionID()
+	if err != nil {
+		return PlaybackInfoResponse{}, err
+	}
+	request.Session.ID = playSessionID
+	if request.Session.DeviceID == "" {
+		request.Session.DeviceID = request.DeviceID
+	}
+	if request.AssemblyOnly {
+		sources := MediaSourcesFromRecords(records)
+		if rawSourceProjection {
+			sources = rawMediaSourcesFromRecords(records)
+		}
+		if selection != nil {
+			sources = ApplyUserSourceSelection(sources, *selection, service.languages)
+		}
+		return PlaybackInfoResponse{MediaSources: service.expandSources(sources), PlaySessionID: playSessionID}, nil
+	}
+	sources := MediaSourcesFromRecords(records)
+	if selection != nil {
+		sources = ApplyUserSourceSelection(sources, *selection, service.languages)
+	}
+	sources = service.expandSources(sources)
+	request.MediaType = sourceMediaType(sources)
+	request.CanTranscodeVideo = service.encoding.CanTranscodeVideo
+	request.CanExtractSubtitles = service.encoding.CanExtractSubtitles
+	response, err := ResolvePlaybackInfo(request, sources)
+	if err != nil {
+		return PlaybackInfoResponse{}, err
+	}
+	if selection != nil {
+		response.MediaSources = reorderResolvedPlaybackSources(response.MediaSources, *selection)
+	}
+	return response, nil
+}
+
+// reorderResolvedPlaybackSources restores the primary item's resumable
+// alternate preference without replaying source-selection stream defaults over
+// the resolver's negotiated result.
+func reorderResolvedPlaybackSources(sources []MediaSourceInfo, selection SourceSelection) []MediaSourceInfo {
+	if !selection.PrimaryItem || len(sources) < 2 {
+		return sources
+	}
+
+	best, found := 0, false
+	var bestLastPlayed time.Time
+	for index := range sources {
+		data, exists := selection.VersionUserData[sources[index].ID]
+		if !exists || data.PositionTicks <= 0 {
+			continue
+		}
+		lastPlayed := time.Time{}
+		if data.LastPlayed != nil {
+			lastPlayed = *data.LastPlayed
+		}
+		if !found || lastPlayed.After(bestLastPlayed) {
+			best, bestLastPlayed, found = index, lastPlayed, true
+		}
+	}
+	if !found || best == 0 {
+		return sources
+	}
+
+	selected := sources[best]
+	copy(sources[1:best+1], sources[:best])
+	sources[0] = selected
+	return sources
+}
+
+// StaticSource resolves one exact direct-file source from the ordered source
+// graph without applying device negotiation or creating a play session. A
+// non-zero user ID applies the existing access filter. Missing items and
+// inaccessible items return ErrItemNotFound. An unknown source on an
+// accessible graph returns ErrMediaSourceNotFound.
+func (service *PlaybackInfoApplication) StaticSource(ctx context.Context, userID, itemID dto.UUID, mediaSourceID string) (MediaSourceInfo, error) {
+	if service.sources == nil {
+		return MediaSourceInfo{}, ErrItemNotFound
+	}
+	if userID != dto.NilUUID && service.access != nil {
+		accessible, err := service.access.AccessiblePlaybackItemIDs(ctx, userID, []dto.UUID{itemID})
+		if err != nil {
+			return MediaSourceInfo{}, err
+		}
+		if !containsPlaybackItemID(accessible, itemID) {
+			return MediaSourceInfo{}, ErrItemNotFound
+		}
+	}
+
+	records, err := assembleMediaSourceRecords(ctx, service.sources, itemID)
+	if err != nil {
+		return MediaSourceInfo{}, err
+	}
+	if userID != dto.NilUUID && service.access != nil {
+		accessible, err := service.access.AccessiblePlaybackItemIDs(ctx, userID, playbackRecordIDs(records))
+		if err != nil {
+			return MediaSourceInfo{}, err
+		}
+		records = filterAccessiblePlaybackRecords(records, accessible)
+	}
+	if len(records) == 0 {
+		return MediaSourceInfo{}, ErrItemNotFound
+	}
+
+	if mediaSourceID == "" {
+		return service.expandSource(MediaSourceFromRecord(records[0])), nil
+	}
+	for _, record := range records {
+		if record.ID.String() == mediaSourceID {
+			return service.expandSource(MediaSourceFromRecord(record)), nil
+		}
+	}
+	if sourceID, err := dto.ParseUUID(mediaSourceID); err == nil && sourceID == itemID {
+		return service.expandSource(MediaSourceFromRecord(records[0])), nil
+	}
+	return MediaSourceInfo{}, ErrMediaSourceNotFound
+}
+
+// UniversalAudioSource resolves the universal-audio source with the same
+// access-filtered graph as StaticSource, but matches source IDs using the
+// upstream OrdinalIgnoreCase semantics.
+func (service *PlaybackInfoApplication) UniversalAudioSource(ctx context.Context, userID, itemID dto.UUID, mediaSourceID string) (MediaSourceInfo, error) {
+	records, err := service.accessibleSourceRecords(ctx, userID, itemID)
+	if err != nil {
+		return MediaSourceInfo{}, err
+	}
+	if mediaSourceID == "" {
+		return service.expandSource(MediaSourceFromRecord(records[0])), nil
+	}
+	for _, record := range records {
+		if strings.EqualFold(record.ID.String(), mediaSourceID) {
+			return service.expandSource(MediaSourceFromRecord(record)), nil
+		}
+	}
+	if sourceID, parseErr := dto.ParseUUID(mediaSourceID); parseErr == nil && sourceID == itemID {
+		return service.expandSource(MediaSourceFromRecord(records[0])), nil
+	}
+	return MediaSourceInfo{}, ErrMediaSourceNotFound
+}
+
+// DownloadSource resolves only the accessible canonical root source and
+// verifies that its persisted item capability permits a physical download.
+func (service *PlaybackInfoApplication) DownloadSource(ctx context.Context, userID, itemID dto.UUID) (MediaSourceInfo, error) {
+	records, err := service.accessibleSourceRecords(ctx, userID, itemID)
+	if err != nil {
+		return MediaSourceInfo{}, err
+	}
+	for _, record := range records {
+		if record.ID != itemID {
+			continue
+		}
+		if !record.Downloadable {
+			return MediaSourceInfo{}, ErrDownloadNotAllowed
+		}
+		return service.expandSource(MediaSourceFromRecord(record)), nil
+	}
+	return MediaSourceInfo{}, ErrItemNotFound
+}
+
+func (service *PlaybackInfoApplication) accessibleSourceRecords(ctx context.Context, userID, itemID dto.UUID) ([]MediaSourceRecord, error) {
+	if service.sources == nil {
+		return nil, ErrItemNotFound
+	}
+	if userID != dto.NilUUID && service.access != nil {
+		accessible, err := service.access.AccessiblePlaybackItemIDs(ctx, userID, []dto.UUID{itemID})
+		if err != nil {
+			return nil, err
+		}
+		if !containsPlaybackItemID(accessible, itemID) {
+			return nil, ErrItemNotFound
+		}
+	}
+	records, err := assembleMediaSourceRecords(ctx, service.sources, itemID)
+	if err != nil {
+		return nil, err
+	}
+	if userID != dto.NilUUID && service.access != nil {
+		accessible, err := service.access.AccessiblePlaybackItemIDs(ctx, userID, playbackRecordIDs(records))
+		if err != nil {
+			return nil, err
+		}
+		records = filterAccessiblePlaybackRecords(records, accessible)
+	}
+	if len(records) == 0 {
+		return nil, ErrItemNotFound
+	}
+	return records, nil
+}
+
+// OpenLiveStream delegates only when a provider was composed. Live TV is not
+// available in the local-file implementation, so nil providers cannot invent
+// a media source.
+func (service *PlaybackInfoApplication) OpenLiveStream(ctx context.Context, request OpenLiveStreamRequest) (LiveStreamResponse, error) {
+	if service.liveStreams == nil {
+		return LiveStreamResponse{}, ErrLiveStreamUnavailable
+	}
+	return service.liveStreams.OpenLiveStream(ctx, request)
+}
+
+// CloseLiveStream is idempotent without a composed provider, matching an
+// empty live-stream registry while avoiding a fake lifecycle implementation.
+func (service *PlaybackInfoApplication) CloseLiveStream(ctx context.Context, liveStreamID string) error {
+	if service.liveStreams == nil {
+		return nil
+	}
+	return service.liveStreams.CloseLiveStream(ctx, liveStreamID)
+}
+
+func containsPlaybackItemID(ids []dto.UUID, id dto.UUID) bool {
+	for _, candidate := range ids {
+		if candidate == id {
+			return true
+		}
+	}
+	return false
+}
+
+func playbackRecordIDs(records []MediaSourceRecord) []dto.UUID {
+	ids := make([]dto.UUID, len(records))
+	for index, record := range records {
+		ids[index] = record.ID
+	}
+	return ids
+}
+
+func filterAccessiblePlaybackRecords(records []MediaSourceRecord, accessible []dto.UUID) []MediaSourceRecord {
+	if len(records) == 0 || len(accessible) == 0 {
+		return nil
+	}
+	allowed := make(map[dto.UUID]struct{}, len(accessible))
+	for _, id := range accessible {
+		allowed[id] = struct{}{}
+	}
+	filtered := records[:0]
+	for _, record := range records {
+		if _, ok := allowed[record.ID]; ok {
+			filtered = append(filtered, record)
+		}
+	}
+	return filtered
+}
+
+func (service *PlaybackInfoApplication) newSessionID() (string, error) {
+	if service.newPlaySessionID != nil {
+		if value := service.newPlaySessionID(); value != "" {
+			return value, nil
+		}
+		return "", ErrPlaySessionIDUnavailable
+	}
+	var value [16]byte
+	if _, err := rand.Read(value[:]); err != nil {
+		return "", fmt.Errorf("%w: %v", ErrPlaySessionIDUnavailable, err)
+	}
+	return hex.EncodeToString(value[:]), nil
+}
+
+func sourceMediaType(sources []MediaSourceInfo) DlnaProfileType {
+	for _, source := range sources {
+		for _, stream := range source.MediaStreams {
+			if stream.Type == StreamTypeVideo {
+				return DlnaVideo
+			}
+		}
+	}
+	return DlnaAudio
+}
+
+// PlaybackInfoRequest is the pure media-negotiation input. Its identifiers and
+// device profile use the same typed model as the application adapter.
+type PlaybackInfoRequest struct {
+	ItemID                              dto.UUID
+	UserID                              dto.UUID
+	Client                              string
+	MaxStreamingBitrate                 *int
+	StartTimeTicks                      *int64
+	AudioStreamIndex                    *int
+	SubtitleStreamIndex                 *int
+	MaxAudioChannels                    *int
+	MediaSourceID                       string
+	LiveStreamID                        string
+	AutoOpenLiveStream                  bool
+	EnableDirectPlay                    bool
+	EnableDirectStream                  bool
+	EnableTranscoding                   bool
+	AllowVideoStreamCopy                bool
+	AllowAudioStreamCopy                bool
+	AlwaysBurnInSubtitleWhenTranscoding bool
+	DeviceProfile                       *DeviceProfile
+	DeviceID                            string
+	MediaType                           DlnaProfileType
+	Session                             PlaybackSession
+	Permissions                         PlaybackPermissions
+	Network                             PlaybackNetwork
+	ClientAddress                       netip.Addr
+	AssemblyOnly                        bool
+	ForceDirectStream                   bool
+	// CanTranscodeVideo reports whether the encoder can transcode a video
+	// stream. Nil allows only SDR sources (D-32).
+	CanTranscodeVideo func(MediaStream) bool
+	// CanExtractSubtitles reports whether an embedded subtitle stream can
+	// be delivered External during a transcode. Nil reports false.
+	CanExtractSubtitles func(string) bool
+}
+
+// PlaybackSession is caller-owned request identity shared by every generated
+// source URL.
+type PlaybackSession struct {
+	ID          string
+	DeviceID    string
+	AccessToken string
+}
+
+// PlaybackPermissions controls the pure negotiation paths available to a user.
+type PlaybackPermissions struct {
+	EnableAudioTranscoding       bool
+	EnableVideoTranscoding       bool
+	EnableRemuxing               bool
+	ForceRemoteSourceTranscoding bool
+	RemoteBitrateLimit           *int
+}
+
+// PlaybackNetwork supplies the caller's locality classification.
+type PlaybackNetwork struct{ IsLAN bool }
+
+// PlaybackInfoError is the stock response error code.
+type PlaybackInfoError string
+
+const PlaybackInfoNoCompatibleStream PlaybackInfoError = "NoCompatibleStream"
+
+type PlaybackInfoResponse struct {
+	MediaSources  []MediaSourceInfo `json:"MediaSources"`
+	PlaySessionID string            `json:"PlaySessionId,omitempty"`
+	ErrorCode     PlaybackInfoError `json:"ErrorCode,omitempty"`
+}
+
+// MarshalJSON keeps PlaybackInfo's stream projection compatible with the pinned
+// MediaInfo endpoint. ColorRange remains a persisted probe fact used by playback
+// decisions and item projections, but the upstream PlaybackInfo response does
+// not expose its ffprobe color-range token.
+func (response PlaybackInfoResponse) MarshalJSON() ([]byte, error) {
+	sources := make([]playbackInfoMediaSource, len(response.MediaSources))
+	for index := range response.MediaSources {
+		sources[index] = playbackInfoMediaSource(response.MediaSources[index])
+	}
+	return json.Marshal(struct {
+		MediaSources  []playbackInfoMediaSource `json:"MediaSources"`
+		PlaySessionID string                    `json:"PlaySessionId,omitempty"`
+		ErrorCode     PlaybackInfoError         `json:"ErrorCode,omitempty"`
+	}{sources, response.PlaySessionID, response.ErrorCode})
+}
+
+// playbackInfoMediaSource specializes only the PlaybackInfo wire projection;
+// it deliberately leaves MediaSourceInfo's persistence and DTO serialization
+// untouched.
+type playbackInfoMediaSource MediaSourceInfo
+
+func (source playbackInfoMediaSource) MarshalJSON() ([]byte, error) {
+	type wire playbackInfoMediaSource
+
+	var streams *[]MediaStream
+	if source.MediaStreams != nil {
+		projected := make([]MediaStream, len(source.MediaStreams))
+		for index := range source.MediaStreams {
+			projected[index] = source.MediaStreams[index]
+			// PlaybackInfo omits the persisted ffprobe token but keeps the
+			// normal MediaStream derived-wire projection.
+			projected[index].ColorRange = nil
+		}
+		streams = &projected
+	}
+	var attachments *[]MediaAttachment
+	var formats *[]string
+	var headers *map[string]string
+	var id *string
+	if !source.idNull && (source.ID != "" || source.idSet) {
+		id = &source.ID
+	}
+	if source.MediaAttachments != nil {
+		attachments = &source.MediaAttachments
+	}
+	if source.Formats != nil {
+		formats = &source.Formats
+	}
+	if source.RequiredHTTPHeaders != nil {
+		headers = &source.RequiredHTTPHeaders
+	}
+
+	return json.Marshal(struct {
+		wire
+		ID                  *string            `json:"Id,omitempty"`
+		MediaStreams        *[]MediaStream     `json:"MediaStreams,omitempty"`
+		MediaAttachments    *[]MediaAttachment `json:"MediaAttachments,omitempty"`
+		Formats             *[]string          `json:"Formats,omitempty"`
+		RequiredHTTPHeaders *map[string]string `json:"RequiredHttpHeaders,omitempty"`
+	}{wire(source), id, streams, attachments, formats, headers})
+}
+
+type OpenLiveStreamRequest struct {
+	OpenToken                           string
+	UserID                              dto.UUID
+	PlaySessionID                       string
+	MaxStreamingBitrate                 *int
+	StartTimeTicks                      *int64
+	AudioStreamIndex                    *int
+	SubtitleStreamIndex                 *int
+	MaxAudioChannels                    *int
+	ItemID                              dto.UUID
+	DeviceProfile                       *DeviceProfile
+	EnableDirectPlay                    bool
+	EnableDirectStream                  bool
+	AlwaysBurnInSubtitleWhenTranscoding bool
+}
+
+type LiveStreamResponse struct {
+	MediaSource MediaSourceInfo `json:"MediaSource"`
+}

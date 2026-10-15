@@ -1,0 +1,191 @@
+format: goldenrec-scenario/v1
+name: BitrateTest payload lengths, auth matrix, and System Endpoint
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: authenticated default size
+    method: GET
+    path: /Playback/BitrateTest
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+      body_length: 131072
+    operation_id: GetBitrateTestBytes
+  - name: authenticated lower bound one byte
+    method: GET
+    path: /Playback/BitrateTest
+    params:
+      size: 1
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+      body_length: 16
+    operation_id: GetBitrateTestBytes
+  - name: authenticated power of two size
+    method: GET
+    path: /Playback/BitrateTest
+    params:
+      size: 1024
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+      body_length: 1024
+    operation_id: GetBitrateTestBytes
+  - name: authenticated non-power-of-two size
+    method: GET
+    path: /Playback/BitrateTest
+    params:
+      size: 1000
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+      body_length: 1024
+    operation_id: GetBitrateTestBytes
+  - name: authenticated valid upper bound
+    method: GET
+    path: /Playback/BitrateTest
+    params:
+      size: 100000000
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+      body_length: 134217728
+    operation_id: GetBitrateTestBytes
+  - name: zero is below the lower bound
+    method: GET
+    path: /Playback/BitrateTest
+    params:
+      size: 0
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+      - problem-details-trace
+    expect:
+      status: 400
+    operation_id: GetBitrateTestBytes
+  - name: above the valid upper bound
+    method: GET
+    path: /Playback/BitrateTest
+    params:
+      size: 100000001
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+      - problem-details-trace
+    expect:
+      status: 400
+    operation_id: GetBitrateTestBytes
+  - name: non-numeric size is a validation error
+    method: GET
+    path: /Playback/BitrateTest
+    params:
+      size: abc
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+      - problem-details-trace
+    expect:
+      status: 400
+    operation_id: GetBitrateTestBytes
+  - name: unauthenticated bitrate test
+    method: GET
+    path: /Playback/BitrateTest
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 401
+    operation_id: GetBitrateTestBytes
+  - name: authenticated system endpoint
+    method: GET
+    path: /System/Endpoint
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+    operation_id: GetEndpointInfo
+  - name: unauthenticated system endpoint
+    method: GET
+    path: /System/Endpoint
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 401
+    operation_id: GetEndpointInfo

@@ -1,0 +1,57 @@
+Deadfin container image: license notices
+========================================
+
+Deadfin
+-------
+Deadfin is licensed under the GNU General Public License, version 2 only
+(GPL-2.0-only). The license text is in /usr/share/doc/deadfin/LICENSE.
+PROVENANCE.md in the same directory records its lineage from Jellyfin.
+Source: https://github.com/deadfin-org/deadfin (the image label
+org.opencontainers.image.revision names the exact commit).
+
+Deadfin is not affiliated with or endorsed by the Jellyfin project.
+Jellyfin is a trademark of its respective owners.
+
+Third-party components
+----------------------
+This image includes the third-party programs below. Each keeps its own
+license. Deadfin runs ffmpeg and ffprobe as separate processes.
+
+* jellyfin-ffmpeg 8.1.1-1 (package jellyfin-ffmpeg8, installed in
+  /usr/lib/jellyfin-ffmpeg)
+  The Jellyfin project's build of FFmpeg. It is configured with
+  --enable-gpl --enable-version3, so the binaries are licensed under the
+  GNU General Public License, version 3 or later. `ffmpeg -L` prints the
+  license.
+  License and copyright: /usr/share/doc/jellyfin-ffmpeg8/copyright
+  GPL-3 text: /usr/share/common-licenses/GPL-3
+  Corresponding source (release v8.1.1-1, with the build scripts and
+  patches):
+    https://github.com/jellyfin/jellyfin-ffmpeg/releases/tag/v8.1.1-1
+    https://github.com/jellyfin/jellyfin-ffmpeg/tree/v8.1.1-1
+
+* libvips (Debian bookworm packages libvips42 and libvips-tools)
+  GNU Lesser General Public License, version 2.1 or later.
+  License and copyright: /usr/share/doc/libvips42/copyright
+  LGPL-2.1 text: /usr/share/common-licenses/LGPL-2.1
+  Source: https://sources.debian.org/src/vips/ (the version is in
+  `dpkg -s libvips42`)
+
+* SkiaSharp 3.119.4 native library (/usr/local/lib/deadfin/libSkiaSharp.so)
+  MIT License, with bundled third-party notices.
+  /usr/share/licenses/skia-sharp/3.119.4/
+
+* Other Debian packages (the base image, ca-certificates, the libraries
+  that libvips and jellyfin-ffmpeg depend on, and intel-opencl-icd on amd64)
+  Each package's license is in /usr/share/doc/<package>/copyright. Source
+  for each package is at https://sources.debian.org/ (the versions are in
+  `dpkg -l`).
+
+Written offer
+-------------
+For at least three years after we last distribute a given image, the
+Deadfin maintainers will give any third party, on request, a complete
+machine-readable copy of the corresponding source code of every GPL and LGPL
+component in that image, for a charge no more than the cost of physically
+performing the distribution. Ask through an issue at
+https://github.com/deadfin-org/deadfin/issues and name the image digest.

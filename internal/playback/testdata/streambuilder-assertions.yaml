@@ -1,0 +1,5707 @@
+{
+  "format": "deadfin.streambuilder.assertions/v1",
+  "upstream": {
+    "commit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+    "source": "tests/Jellyfin.Model.Tests/Dlna/StreamBuilderTests.cs",
+    "sha256": "2db9a9c33b82488f8c762fadcdb2e4c99b78b5defc70fee730c77c5b82bbce87"
+  },
+  "cases": [
+    {
+      "id": "BuildVideoItemSimple-001",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-002",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-003",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-004",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aacExt-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioIsExternal"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-005",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-006",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mkv-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-007",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-008",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-009",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-hevc-ac3-aacDef-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-010",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-011",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-012",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-013",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-h264-hi10p-aac-5000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-014",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mkv-h264-hi10p-aac-5000k-brokenfps",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-015",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-dvh1.05-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoRangeTypeNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-016",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mkv-dvhe.05-eac3-28000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoRangeTypeNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-017",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mkv-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoRangeTypeNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-018",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "mp4-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoRangeTypeNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-019",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "numstreams-32",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-020",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome",
+      "source": "numstreams-33",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-021",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-022",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-023",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-024",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-aacExt-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioIsExternal"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-025",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-026",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mkv-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-027",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-028",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-029",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-hevc-ac3-aacDef-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-030",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-031",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-032",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-033",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-h264-hi10p-aac-5000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoProfileNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-034",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mkv-h264-hi10p-aac-5000k-brokenfps",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoProfileNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-035",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-dvh1.05-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-036",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mkv-dvhe.05-eac3-28000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-037",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mkv-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-038",
+      "method": "BuildVideoItemSimple",
+      "profile": "Firefox",
+      "source": "mp4-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-039",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-040",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-041",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-042",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-aacExt-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-043",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-044",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mkv-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-045",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecTagNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-046",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecTagNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-047",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-hevc-ac3-aacExt-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecTagNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-048",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-h264-hi10p-aac-5000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoProfileNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-049",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mkv-h264-hi10p-aac-5000k-brokenfps",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoProfileNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-050",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-dvh1.05-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-051",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mkv-dvhe.05-eac3-28000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoCodecTagNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-052",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mkv-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "VideoCodecTagNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-053",
+      "method": "BuildVideoItemSimple",
+      "profile": "SafariNext",
+      "source": "mp4-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecTagNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-054",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidPixel",
+      "source": "mp4-h264-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-055",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidPixel",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-056",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidPixel",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-057",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidPixel",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-058",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidPixel",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-059",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidPixel",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-060",
+      "method": "BuildVideoItemSimple",
+      "profile": "Yatse",
+      "source": "mp4-h264-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-061",
+      "method": "BuildVideoItemSimple",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-062",
+      "method": "BuildVideoItemSimple",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-063",
+      "method": "BuildVideoItemSimple",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-064",
+      "method": "BuildVideoItemSimple",
+      "profile": "Yatse",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-065",
+      "method": "BuildVideoItemSimple",
+      "profile": "Yatse",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-066",
+      "method": "BuildVideoItemSimple",
+      "profile": "Yatse",
+      "source": "mp4-hevc-ac3-aacDef-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-067",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-068",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-069",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-070",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-071",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-072",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-073",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-ac3-aacDef-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-074",
+      "method": "BuildVideoItemSimple",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-ac3-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-075",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-076",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-077",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-078",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-079",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-080",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-081",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-082",
+      "method": "BuildVideoItemSimple",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-083",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-084",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-085",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-086",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-h264-ac3-aacExt-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioIsExternal"
+        ],
+        "kind": "Remux",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-087",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-088",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-089",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-090",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mp4-hevc-ac3-aacDef-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-091",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-092",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-093",
+      "method": "BuildVideoItemSimple",
+      "profile": "Chrome-NoHLS",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-094",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-095",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported",
+          "DirectPlayError"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-096",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-097",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported",
+          "DirectPlayError"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-098",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-099",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported",
+          "DirectPlayError"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-100",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mp4-hevc-ac3-aacDef-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-101",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mkv-av1-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported",
+          "DirectPlayError"
+        ],
+        "kind": "DirectStream",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-102",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mkv-av1-vorbis-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-103",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported",
+          "DirectPlayError"
+        ],
+        "kind": "DirectStream",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-104",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported",
+          "DirectPlayError"
+        ],
+        "kind": "DirectStream",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-105",
+      "method": "BuildVideoItemSimple",
+      "profile": "TranscodeMedia",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "http"
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-106",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-107",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-108",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-109",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-110",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-111",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-112",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-113",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-114",
+      "method": "BuildVideoItemSimple",
+      "profile": "DirectMedia",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-115",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-116",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-117",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-118",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-119",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-120",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-121",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-122",
+      "method": "BuildVideoItemSimple",
+      "profile": "LowBandwidth",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported",
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-123",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-124",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-125",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-126",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-127",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-128",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-129",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-130",
+      "method": "BuildVideoItemSimple",
+      "profile": "Null",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": null,
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-131",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-132",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-133",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-134",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-135",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-136",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-137",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-138",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-139",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-hevc-aac-4000k-r180",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-140",
+      "method": "BuildVideoItemSimple",
+      "profile": "AndroidTVExoPlayer-NoHevcRotation",
+      "source": "mp4-hevc-aac-4000k-r180",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "VideoRotationNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-141",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-142",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-143",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-144",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-dts-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-145",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-146",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-147",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-hevc-truehd-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-148",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-149",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-150",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-151",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-152",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-dvh1.05-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoRangeTypeNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-153",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-154",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-dvhe.05-eac3-28000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoBitrateNotSupported",
+          "VideoRangeTypeNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-155",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "numstreams-32",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-156",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen3-stereo",
+      "source": "numstreams-33",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "StreamCountExceedsLimit"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-157",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-158",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-159",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-160",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-dts-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-161",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-162",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-163",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-hevc-truehd-srt-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-164",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-165",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-166",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-167",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-168",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-dvh1.05-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoRangeTypeNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-169",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-170",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-dvhe.05-eac3-28000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoRangeTypeNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-171",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "numstreams-32",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-172",
+      "method": "BuildVideoItemSimple",
+      "profile": "Tizen4-4K-5.1",
+      "source": "numstreams-33",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "StreamCountExceedsLimit"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-173",
+      "method": "BuildVideoItemSimple",
+      "profile": "WebOS-23",
+      "source": "mkv-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoRangeTypeNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-174",
+      "method": "BuildVideoItemSimple",
+      "profile": "WebOS-23",
+      "source": "mp4-dvh1.05-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-175",
+      "method": "BuildVideoItemSimple",
+      "profile": "WebOS-23",
+      "source": "mp4-dvhe.08-eac3-15200k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemSimple-176",
+      "method": "BuildVideoItemSimple",
+      "profile": "WebOS-23",
+      "source": "mkv-dvhe.05-eac3-28000k",
+      "options": {
+        "audioStreamIndex": null,
+        "subtitleStreamIndex": null,
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoRangeTypeNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-001",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-002",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-003",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-004",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aacExt-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-005",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-006",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-007",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-008",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-009",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-010",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Chrome",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-011",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-012",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-013",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-014",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-015",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-016",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-017",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-018",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-019",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Firefox",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-020",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-021",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-022",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-023",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-aacExt-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-024",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-025",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecTagNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-026",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecTagNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-027",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "SafariNext",
+      "source": "mp4-hevc-ac3-aacExt-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecTagNotSupported",
+          "AudioChannelsNotSupported"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-028",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidPixel",
+      "source": "mp4-h264-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-029",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidPixel",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-030",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidPixel",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-031",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidPixel",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-032",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidPixel",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-033",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Yatse",
+      "source": "mp4-h264-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-034",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-035",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-036",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-037",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Yatse",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-038",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Yatse",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-039",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-040",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-041",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-ac3-aacDef-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-042",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-043",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-044",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-045",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-ac3-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-046",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-047",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-048",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-049",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-050",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "ContainerBitrateExceedsLimit"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-051",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-052",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-053",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "JellyfinMediaPlayer",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-054",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-055",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-056",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-057",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-058",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-059",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-060",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-061",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "AudioCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-062",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-063",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-064",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-065",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-dts-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-066",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-067",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-068",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-hevc-truehd-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-069",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-070",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-071",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen3-stereo",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-072",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-aac-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-073",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-074",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-075",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-dts-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-076",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-hevc-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-077",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-078",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-hevc-truehd-srt-15200k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioCodecNotSupported"
+        ],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-079",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-vp9-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-080",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-vp9-ac3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithFirstExplicitStream-081",
+      "method": "BuildVideoItemWithFirstExplicitStream",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mkv-vp9-vorbis-vtt-2600k",
+      "options": {
+        "audioStreamIndex": "1",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": null,
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-001",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-002",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aac-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-003",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Chrome",
+      "source": "mp4-h264-ac3-aacExt-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "AudioIsExternal"
+        ],
+        "kind": "DirectStream",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-004",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Chrome",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-005",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-006",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Firefox",
+      "source": "mp4-h264-ac3-aac-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-007",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Firefox",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-008",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-009",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Yatse",
+      "source": "mp4-h264-ac3-aac-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-010",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Yatse",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported",
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-011",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "RokuSSPlus",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-012",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "RokuSSPlus",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-013",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Chrome",
+      "source": "no-streams",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "VideoCodecNotSupported"
+        ],
+        "kind": "Transcode",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-014",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-015",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "AndroidTVExoPlayer",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "DirectPlay",
+        "transcodeReasons": [],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-016",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-017",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-h264-ac3-aac-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-018",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Tizen3-stereo",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-019",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-020",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-h264-ac3-aac-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-021",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "Tizen4-4K-5.1",
+      "source": "mp4-hevc-ac3-aac-srt-15200k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "SecondaryAudioNotSupported"
+        ],
+        "kind": "Remux",
+        "protocol": null
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-022",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "TranscodeMedia",
+      "source": "mp4-h264-ac3-aac-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.mp4"
+      }
+    },
+    {
+      "id": "BuildVideoItemWithDirectPlayExplicitStreams-023",
+      "method": "BuildVideoItemWithDirectPlayExplicitStreams",
+      "profile": "TranscodeMedia",
+      "source": "mp4-h264-ac3-aac-mp3-srt-2600k",
+      "options": {
+        "audioStreamIndex": "penultimate",
+        "subtitleStreamIndex": "last",
+        "enableDirectStream": false,
+        "allowAudioStreamCopy": true,
+        "allowVideoStreamCopy": true
+      },
+      "expect": {
+        "playMethod": "Transcode",
+        "transcodeReasons": [
+          "DirectPlayError"
+        ],
+        "kind": "Remux",
+        "protocol": "HLS.ts"
+      }
+    }
+  ]
+}

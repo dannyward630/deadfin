@@ -1,0 +1,1641 @@
+{
+  "format": "deadfin-route-snapshot/v1",
+  "revision": "539eb51ad60df4d96a3eab27fa52086d75dafbf2",
+  "routes": [
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/ListingProviders",
+      "OperationId": "AddListingProvider",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Library/VirtualFolders/Paths",
+      "OperationId": "AddMediaPath",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Collections/{collectionId}/Items",
+      "OperationId": "AddToCollection",
+      "Policy": "CollectionManagement"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/TunerHosts",
+      "OperationId": "AddTunerHost",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Library/VirtualFolders",
+      "OperationId": "AddVirtualFolder",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/Apply/{itemId}",
+      "OperationId": "ApplySearchCriteria",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/AuthenticateByName",
+      "OperationId": "AuthenticateUserByName",
+      "Anonymous": true
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/AuthenticateWithQuickConnect",
+      "OperationId": "AuthenticateWithQuickConnect",
+      "Anonymous": true
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/QuickConnect/Authorize",
+      "OperationId": "AuthorizeQuickConnect",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Packages/Installing/{packageId}",
+      "OperationId": "CancelPackageInstallation",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/LiveTv/SeriesTimers/{timerId}",
+      "OperationId": "CancelSeriesTimer",
+      "Policy": "LiveTvManagement"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/LiveTv/Timers/{timerId}",
+      "OperationId": "CancelTimer",
+      "Policy": "LiveTvManagement"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveStreams/Close",
+      "OperationId": "CloseLiveStream",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Startup/Complete",
+      "OperationId": "CompleteWizard",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Backup/Create",
+      "OperationId": "CreateBackup",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/SeriesTimers",
+      "OperationId": "CreateSeriesTimer",
+      "Policy": "LiveTvManagement"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/Timers",
+      "OperationId": "CreateTimer",
+      "Policy": "LiveTvManagement"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Branding/Splashscreen",
+      "OperationId": "DeleteCustomSplashscreen",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/LiveTv/ListingProviders",
+      "OperationId": "DeleteListingProvider",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/LiveTv/Recordings/{recordingId}",
+      "OperationId": "DeleteRecording",
+      "Policy": "LiveTvManagement"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/LiveTv/TunerHosts",
+      "OperationId": "DeleteTunerHost",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Plugins/{pluginId}/{version}/Disable",
+      "OperationId": "DisablePlugin",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Tuners/Discover",
+      "OperationId": "DiscoverTuners",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Tuners/Discvover",
+      "OperationId": "DiscvoverTuners",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/{sessionId}/Viewing",
+      "OperationId": "DisplayContent",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/{itemId}/RemoteImages/Download",
+      "OperationId": "DownloadRemoteImage",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Plugins/{pluginId}/{version}/Enable",
+      "OperationId": "EnablePlugin",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/AdditionalParts",
+      "OperationId": "GetAdditionalPart",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Ancestors",
+      "OperationId": "GetAncestors",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Artists",
+      "OperationId": "GetArtists",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/stream",
+      "OperationId": "GetAudioStream",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/stream.{container}",
+      "OperationId": "GetAudioStreamByContainer",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Backup/Manifest",
+      "OperationId": "GetBackup",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Playback/BitrateTest",
+      "OperationId": "GetBitrateTestBytes",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/Book",
+      "OperationId": "GetBookRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/BoxSet",
+      "OperationId": "GetBoxSetRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Branding/Css",
+      "OperationId": "GetBrandingCss",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Branding/Css.css",
+      "OperationId": "GetBrandingCss_2",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Branding/Configuration",
+      "OperationId": "GetBrandingOptions",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Channels/{channelId}",
+      "OperationId": "GetChannel",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/ChannelMappingOptions",
+      "OperationId": "GetChannelMappingOptions",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/Configuration",
+      "OperationId": "GetConfiguration",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/web/ConfigurationPages",
+      "OperationId": "GetConfigurationPages",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Localization/Countries",
+      "OperationId": "GetCountries",
+      "Policy": "FirstTimeSetupOrDefault"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Localization/Cultures",
+      "OperationId": "GetCultures",
+      "Policy": "FirstTimeSetupOrDefault"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/Me",
+      "OperationId": "GetCurrentUser",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/web/ConfigurationPage",
+      "OperationId": "GetDashboardConfigurationPage",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Environment/DefaultDirectoryBrowser",
+      "OperationId": "GetDefaultDirectoryBrowser",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/ListingProviders/Default",
+      "OperationId": "GetDefaultListingProvider",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Timers/Defaults",
+      "OperationId": "GetDefaultTimer",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Environment/DirectoryContents",
+      "OperationId": "GetDirectoryContents",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/DisplayPreferences/{displayPreferencesId}",
+      "OperationId": "GetDisplayPreferences",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Download",
+      "OperationId": "GetDownload",
+      "Policy": "Download"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Environment/Drives",
+      "OperationId": "GetDrives",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/Endpoint",
+      "OperationId": "GetEndpointInfo",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Shows/{seriesId}/Episodes",
+      "OperationId": "GetEpisodes",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/ExternalIdInfos",
+      "OperationId": "GetExternalIdInfos",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Startup/User",
+      "OperationId": "GetFirstUser",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Startup/FirstUser",
+      "OperationId": "GetFirstUser_2",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Genres",
+      "OperationId": "GetGenres",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/UserViews/GroupingOptions",
+      "OperationId": "GetGroupingOptions",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/GuideInfo",
+      "OperationId": "GetGuideInfo",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Intros",
+      "OperationId": "GetIntros",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}",
+      "OperationId": "GetItem",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/Counts",
+      "OperationId": "GetItemCounts",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Images/{imageType}",
+      "OperationId": "GetItemImage",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Images/{imageType}/{imageIndex}/{tag}/{format}/{maxWidth}/{maxHeight}/{percentPlayed}/{unplayedCount}",
+      "OperationId": "GetItemImage2",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Images/{imageType}/{imageIndex}",
+      "OperationId": "GetItemImageByIndex",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Images",
+      "OperationId": "GetItemImageInfos",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/MediaSegments/{itemId}",
+      "OperationId": "GetItemSegments",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items",
+      "OperationId": "GetItems",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/Latest",
+      "OperationId": "GetLatestMedia",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Libraries/AvailableOptions",
+      "OperationId": "GetLibraryOptionsInfo",
+      "Policy": "FirstTimeSetupOrDefault"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/ListingProviders/Lineups",
+      "OperationId": "GetLineups",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/LiveRecordings/{recordingId}/stream",
+      "OperationId": "GetLiveRecordingFile",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/LiveStreamFiles/{streamId}/stream.{container}",
+      "OperationId": "GetLiveStreamFile",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Channels",
+      "OperationId": "GetLiveTvChannels",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Info",
+      "OperationId": "GetLiveTvInfo",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Programs",
+      "OperationId": "GetLiveTvPrograms",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/LocalTrailers",
+      "OperationId": "GetLocalTrailers",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Localization/Options",
+      "OperationId": "GetLocalizationOptions",
+      "Policy": "FirstTimeSetupOrDefault"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/ActivityLog/Entries",
+      "OperationId": "GetLogEntries",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/Movie",
+      "OperationId": "GetMovieRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/MusicAlbum",
+      "OperationId": "GetMusicAlbumRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/MusicArtist",
+      "OperationId": "GetMusicArtistRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/MusicVideo",
+      "OperationId": "GetMusicVideoRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/Configuration/{key}",
+      "OperationId": "GetNamedConfiguration",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Shows/NextUp",
+      "OperationId": "GetNextUp",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Packages/{name}",
+      "OperationId": "GetPackageInfo",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Packages",
+      "OperationId": "GetPackages",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Environment/ParentPath",
+      "OperationId": "GetParentPath",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Localization/ParentalRatings",
+      "OperationId": "GetParentalRatings",
+      "Policy": "FirstTimeSetupOrDefault"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/Person",
+      "OperationId": "GetPersonRemoteSearchResults",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Persons",
+      "OperationId": "GetPersons",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/Ping",
+      "OperationId": "GetPingSystem",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/PlaybackInfo",
+      "OperationId": "GetPlaybackInfo",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Plugins/{pluginId}/Configuration",
+      "OperationId": "GetPluginConfiguration",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Plugins/{pluginId}/{version}/Image",
+      "OperationId": "GetPluginImage",
+      "Anonymous": true
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Plugins/{pluginId}/Manifest",
+      "OperationId": "GetPluginManifest",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Plugins",
+      "OperationId": "GetPlugins",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/{itemId}/PlaybackInfo",
+      "OperationId": "GetPostedPlaybackInfo",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Programs/{programId}",
+      "OperationId": "GetProgram",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/Programs",
+      "OperationId": "GetPrograms",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/Info/Public",
+      "OperationId": "GetPublicSystemInfo",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/Public",
+      "OperationId": "GetPublicUsers",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/Filters2",
+      "OperationId": "GetQueryFilters",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/Filters",
+      "OperationId": "GetQueryFiltersLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/QuickConnect/Enabled",
+      "OperationId": "GetQuickConnectEnabled",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/QuickConnect/Connect",
+      "OperationId": "GetQuickConnectState",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Programs/Recommended",
+      "OperationId": "GetRecommendedPrograms",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Recordings/{recordingId}",
+      "OperationId": "GetRecording",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Recordings/Folders",
+      "OperationId": "GetRecordingFolders",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Recordings",
+      "OperationId": "GetRecordings",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/RemoteImages/Providers",
+      "OperationId": "GetRemoteImageProviders",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/RemoteImages",
+      "OperationId": "GetRemoteImages",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Repositories",
+      "OperationId": "GetRepositories",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/UserItems/Resume",
+      "OperationId": "GetResumeItems",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/ListingProviders/SchedulesDirect/Countries",
+      "OperationId": "GetSchedulesDirectCountries",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Search/Hints",
+      "OperationId": "GetSearchHints",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Shows/{seriesId}/Seasons",
+      "OperationId": "GetSeasons",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/Series",
+      "OperationId": "GetSeriesRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/SeriesTimers/{timerId}",
+      "OperationId": "GetSeriesTimer",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/SeriesTimers",
+      "OperationId": "GetSeriesTimers",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Sessions",
+      "OperationId": "GetSessions",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Albums/{itemId}/Similar",
+      "OperationId": "GetSimilarAlbums",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Artists/{itemId}/Similar",
+      "OperationId": "GetSimilarArtists",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/Similar",
+      "OperationId": "GetSimilarItems",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Movies/{itemId}/Similar",
+      "OperationId": "GetSimilarMovies",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Shows/{itemId}/Similar",
+      "OperationId": "GetSimilarShows",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Trailers/{itemId}/Similar",
+      "OperationId": "GetSimilarTrailers",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/SpecialFeatures",
+      "OperationId": "GetSpecialFeatures",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Branding/Splashscreen",
+      "OperationId": "GetSplashscreen",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Startup/Configuration",
+      "OperationId": "GetStartupConfiguration",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Studios",
+      "OperationId": "GetStudios",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{routeItemId}/{routeMediaSourceId}/Subtitles/{routeIndex}/Stream.{routeFormat}",
+      "OperationId": "GetSubtitle",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/{mediaSourceId}/Subtitles/{index}/subtitles.m3u8",
+      "OperationId": "GetSubtitlePlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{routeItemId}/{routeMediaSourceId}/Subtitles/{routeIndex}/{routeStartPositionTicks}/Stream.{routeFormat}",
+      "OperationId": "GetSubtitleWithTicks",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{videoId}/{mediaSourceId}/Attachments/{index}",
+      "OperationId": "GetAttachment",
+      "Anonymous": true,
+      "OptionalIdentity": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/Info",
+      "OperationId": "GetSystemInfo",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/System/Info/Storage",
+      "OperationId": "GetSystemStorage",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/ScheduledTasks/{taskId}",
+      "OperationId": "GetTask",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/ScheduledTasks",
+      "OperationId": "GetTasks",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Items/{itemId}/ThemeMedia",
+      "OperationId": "GetThemeMedia",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Timers/{timerId}",
+      "OperationId": "GetTimer",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/Timers",
+      "OperationId": "GetTimers",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/RemoteSearch/Trailer",
+      "OperationId": "GetTrailerRemoteSearchResults",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/Trickplay/{width}/tiles.m3u8",
+      "OperationId": "GetTrickplayHlsPlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/Trickplay/{width}/{index}.jpg",
+      "OperationId": "GetTrickplayTileImage",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/LiveTv/TunerHosts/Types",
+      "OperationId": "GetTunerHostTypes",
+      "Policy": "LiveTvAccess"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/universal",
+      "OperationId": "GetUniversalAudioStream",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}",
+      "OperationId": "GetUserById",
+      "Policy": "IgnoreParentalControl"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/UserImage",
+      "OperationId": "GetUserImage",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/UserViews",
+      "OperationId": "GetUserViews",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users",
+      "OperationId": "GetUsers",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/stream",
+      "OperationId": "GetVideoStream",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/stream.{container}",
+      "OperationId": "GetVideoStreamByContainer",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Library/VirtualFolders",
+      "OperationId": "GetVirtualFolders",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Audio/{itemId}/stream",
+      "OperationId": "HeadAudioStream",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Audio/{itemId}/stream.{container}",
+      "OperationId": "HeadAudioStreamByContainer",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Items/{itemId}/Images/{imageType}",
+      "OperationId": "HeadItemImage",
+      "Anonymous": true
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Items/{itemId}/Images/{imageType}/{imageIndex}/{tag}/{format}/{maxWidth}/{maxHeight}/{percentPlayed}/{unplayedCount}",
+      "OperationId": "HeadItemImage2",
+      "Anonymous": true
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Items/{itemId}/Images/{imageType}/{imageIndex}",
+      "OperationId": "HeadItemImageByIndex",
+      "Anonymous": true
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Audio/{itemId}/universal",
+      "OperationId": "HeadUniversalAudioStream",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/UserImage",
+      "OperationId": "HeadUserImage",
+      "Anonymous": true
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Videos/{itemId}/stream",
+      "OperationId": "HeadVideoStream",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Videos/{itemId}/stream.{container}",
+      "OperationId": "HeadVideoStreamByContainer",
+      "Policy": "DefaultAuthorization",
+      "PlaySessionCredential": true
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/QuickConnect/Initiate",
+      "OperationId": "InitiateQuickConnect",
+      "Anonymous": true
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Packages/Installed/{name}",
+      "OperationId": "InstallPackage",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Backup",
+      "OperationId": "ListBackups",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/UserFavoriteItems/{itemId}",
+      "OperationId": "MarkFavoriteItem",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/UserPlayedItems/{itemId}",
+      "OperationId": "MarkPlayedItem",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/UserPlayedItems/{itemId}",
+      "OperationId": "MarkUnplayedItem",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/deadfin/v1/build",
+      "OperationId": "NATIVE:GetBuild",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/deadfin/v1/setup",
+      "OperationId": "NATIVE:UnlockSetup",
+      "Anonymous": true
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveStreams/Open",
+      "OperationId": "OpenLiveStream",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/socket",
+      "OperationId": "OpenWebSocket",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/Playing/Ping",
+      "OperationId": "PingPlaybackSession",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/{sessionId}/Playing",
+      "OperationId": "Play",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/Capabilities",
+      "OperationId": "PostCapabilities",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/Capabilities/Full",
+      "OperationId": "PostFullCapabilities",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/System/Ping",
+      "OperationId": "PostPingSystem",
+      "Anonymous": true
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Items/{itemId}/Refresh",
+      "OperationId": "RefreshItem",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Library/Refresh",
+      "OperationId": "RefreshLibrary",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Library/VirtualFolders/Paths",
+      "OperationId": "RemoveMediaPath",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Library/VirtualFolders",
+      "OperationId": "RemoveVirtualFolder",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/Playing/Progress",
+      "OperationId": "ReportPlaybackProgress",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/Playing",
+      "OperationId": "ReportPlaybackStart",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/Playing/Stopped",
+      "OperationId": "ReportPlaybackStopped",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/Logout",
+      "OperationId": "ReportSessionEnded",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/Tuners/{tunerId}/Reset",
+      "OperationId": "ResetTuner",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/{userId}/Authenticate",
+      "OperationId": "SHADOW:AuthenticateUser",
+      "Anonymous": true
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/UserItems/{itemId}/UserData",
+      "OperationId": "SHADOW:DeleteItemUserData",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/GroupingOptions",
+      "OperationId": "SHADOW:GetGroupingOptionsLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/hls1/{playlistId}/{segmentId}.{container}",
+      "OperationId": "SHADOW:GetHlsAudioSegment",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/hls/{segmentId}/stream.aac",
+      "OperationId": "SHADOW:GetHlsAudioSegmentLegacyAac",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/hls/{segmentId}/stream.mp3",
+      "OperationId": "SHADOW:GetHlsAudioSegmentLegacyMp3",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/hls/{playlistId}/stream.m3u8",
+      "OperationId": "SHADOW:GetHlsPlaylistLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/hls1/{playlistId}/{segmentId}.{container}",
+      "OperationId": "SHADOW:GetHlsVideoSegment",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/hls/{playlistId}/{segmentId}.{segmentContainer}",
+      "OperationId": "SHADOW:GetHlsVideoSegmentLegacy",
+      "Anonymous": true
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Items/{itemId}/Intros",
+      "OperationId": "SHADOW:GetIntrosLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Items/{itemId}",
+      "OperationId": "SHADOW:GetItemLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Items",
+      "OperationId": "SHADOW:GetItemsLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Items/Latest",
+      "OperationId": "SHADOW:GetLatestMediaLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/live.m3u8",
+      "OperationId": "SHADOW:GetLiveHlsStream",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Items/{itemId}/LocalTrailers",
+      "OperationId": "SHADOW:GetLocalTrailersLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/master.m3u8",
+      "OperationId": "SHADOW:GetMasterHlsAudioPlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/master.m3u8",
+      "OperationId": "SHADOW:GetMasterHlsVideoPlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Items/Resume",
+      "OperationId": "SHADOW:GetResumeItemsLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Items/{itemId}/SpecialFeatures",
+      "OperationId": "SHADOW:GetSpecialFeaturesLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Users/{userId}/Views",
+      "OperationId": "SHADOW:GetUserViewsLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Audio/{itemId}/main.m3u8",
+      "OperationId": "SHADOW:GetVariantHlsAudioPlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/Videos/{itemId}/main.m3u8",
+      "OperationId": "SHADOW:GetVariantHlsVideoPlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Audio/{itemId}/master.m3u8",
+      "OperationId": "SHADOW:HeadMasterHlsAudioPlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "HEAD",
+      "Pattern": "/Videos/{itemId}/master.m3u8",
+      "OperationId": "SHADOW:HeadMasterHlsVideoPlaylist",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/PlayingItems/{itemId}/Progress",
+      "OperationId": "SHADOW:OnPlaybackProgress",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/{userId}/PlayingItems/{itemId}/Progress",
+      "OperationId": "SHADOW:OnPlaybackProgressLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/PlayingItems/{itemId}",
+      "OperationId": "SHADOW:OnPlaybackStart",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/{userId}/PlayingItems/{itemId}",
+      "OperationId": "SHADOW:OnPlaybackStartLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/PlayingItems/{itemId}",
+      "OperationId": "SHADOW:OnPlaybackStopped",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Users/{userId}/PlayingItems/{itemId}",
+      "OperationId": "SHADOW:OnPlaybackStoppedLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Videos/ActiveEncodings",
+      "OperationId": "SHADOW:StopEncodingProcess",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/{userId}/Configuration",
+      "OperationId": "SHADOW:UpdateUserConfigurationLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/{userId}/Password",
+      "OperationId": "SHADOW:UpdateUserPasswordLegacy",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/{sessionId}/Command/{command}",
+      "OperationId": "SendGeneralCommand",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/{sessionId}/Message",
+      "OperationId": "SendMessageCommand",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Sessions/{sessionId}/Playing/{command}",
+      "OperationId": "SendPlaystateCommand",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/ChannelMappings",
+      "OperationId": "SetChannelMapping",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Startup/RemoteAccess",
+      "OperationId": "SetRemoteAccess",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Repositories",
+      "OperationId": "SetRepositories",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Backup/Restore",
+      "OperationId": "StartRestoreBackup",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/ScheduledTasks/Running/{taskId}",
+      "OperationId": "StartTask",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/ScheduledTasks/Running/{taskId}",
+      "OperationId": "StopTask",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Buffering",
+      "OperationId": "SyncPlayBuffering",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/New",
+      "OperationId": "SyncPlayCreateGroup",
+      "Policy": "SyncPlayCreateGroup"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/SyncPlay/{id}",
+      "OperationId": "SyncPlayGetGroup",
+      "Policy": "SyncPlayJoinGroup"
+    },
+    {
+      "Method": "GET",
+      "Pattern": "/SyncPlay/List",
+      "OperationId": "SyncPlayGetGroups",
+      "Policy": "SyncPlayJoinGroup"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Join",
+      "OperationId": "SyncPlayJoinGroup",
+      "Policy": "SyncPlayJoinGroup"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Leave",
+      "OperationId": "SyncPlayLeaveGroup",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/MovePlaylistItem",
+      "OperationId": "SyncPlayMovePlaylistItem",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/NextItem",
+      "OperationId": "SyncPlayNextItem",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Pause",
+      "OperationId": "SyncPlayPause",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Ping",
+      "OperationId": "SyncPlayPing",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/PreviousItem",
+      "OperationId": "SyncPlayPreviousItem",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Queue",
+      "OperationId": "SyncPlayQueue",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Ready",
+      "OperationId": "SyncPlayReady",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/RemoveFromPlaylist",
+      "OperationId": "SyncPlayRemoveFromPlaylist",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Seek",
+      "OperationId": "SyncPlaySeek",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/SetIgnoreWait",
+      "OperationId": "SyncPlaySetIgnoreWait",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/SetNewQueue",
+      "OperationId": "SyncPlaySetNewQueue",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/SetPlaylistItem",
+      "OperationId": "SyncPlaySetPlaylistItem",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/SetRepeatMode",
+      "OperationId": "SyncPlaySetRepeatMode",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/SetShuffleMode",
+      "OperationId": "SyncPlaySetShuffleMode",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Stop",
+      "OperationId": "SyncPlayStop",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/SyncPlay/Unpause",
+      "OperationId": "SyncPlayUnpause",
+      "Policy": "SyncPlayHasAccess"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Plugins/{pluginId}",
+      "OperationId": "UninstallPlugin",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/Plugins/{pluginId}/{version}",
+      "OperationId": "UninstallPluginByVersion",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "DELETE",
+      "Pattern": "/UserFavoriteItems/{itemId}",
+      "OperationId": "UnmarkFavoriteItem",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/DisplayPreferences/{displayPreferencesId}",
+      "OperationId": "UpdateDisplayPreferences",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Startup/Configuration",
+      "OperationId": "UpdateInitialConfiguration",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/UserItems/{itemId}/UserData",
+      "OperationId": "UpdateItemUserData",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Library/VirtualFolders/LibraryOptions",
+      "OperationId": "UpdateLibraryOptions",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Plugins/{pluginId}/Configuration",
+      "OperationId": "UpdatePluginConfiguration",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/SeriesTimers/{timerId}",
+      "OperationId": "UpdateSeriesTimer",
+      "Policy": "LiveTvManagement"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Startup/User",
+      "OperationId": "UpdateStartupUser",
+      "Policy": "FirstTimeSetupOrElevated"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/ScheduledTasks/{taskId}/Triggers",
+      "OperationId": "UpdateTask",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/LiveTv/Timers/{timerId}",
+      "OperationId": "UpdateTimer",
+      "Policy": "LiveTvManagement"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/Configuration",
+      "OperationId": "UpdateUserConfiguration",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/Password",
+      "OperationId": "UpdateUserPassword",
+      "Policy": "DefaultAuthorization"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Users/{userId}/Policy",
+      "OperationId": "UpdateUserPolicy",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Branding/Splashscreen",
+      "OperationId": "UploadCustomSplashscreen",
+      "Policy": "RequiresElevation"
+    },
+    {
+      "Method": "POST",
+      "Pattern": "/Environment/ValidatePath",
+      "OperationId": "ValidatePath",
+      "Policy": "FirstTimeSetupOrElevated"
+    }
+  ]
+}

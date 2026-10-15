@@ -1,0 +1,18 @@
+{
+  "streams": [
+    {
+      "index": 7,
+      "codec_name": "ttf",
+      "codec_type": "attachment",
+      "codec_tag_string": "[0][0][0][0]",
+      "tags": {
+        "filename": "Regular.ttf",
+        "mimetype": "application/x-truetype-font",
+        "comment": "Jellyfin b04614e ProbeResultNormalizer.cs:671-687 attachment mapping"
+      }
+    }
+  ],
+  "format": {
+    "format_name": "matroska,webm"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "source_commit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+  "source_directory": "upstream/jellyfin/tests/Jellyfin.MediaEncoding.Tests/Test Data/Probing",
+  "fixtures": [
+    "video_metadata.json",
+    "video_mp4_metadata.json",
+    "video_ts.json",
+    "video_webm.json",
+    "video_web_like_mkv_with_subtitle.json",
+    "video_missing_video_bitrate.json",
+    "video_nanosecond_duration_bitrate.json",
+    "video_missing_video_bitrate_unknown_audio.json"
+  ],
+  "derived_fixtures": [
+    "attachment.json"
+  ],
+  "synthetic_fixture_inventory": "tools/goldenrec/fixtures/expected-inventory.json",
+  "synthetic_fixture_hash_manifest": "tools/goldenrec/fixtures/source-manifest.sha256"
+}

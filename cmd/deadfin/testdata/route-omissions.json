@@ -1,0 +1,266 @@
+[
+  {
+    "operationId": "AddUserToSession",
+    "reason": "deferred: session user management not implemented"
+  },
+  {
+    "operationId": "DeleteAlternateSources",
+    "reason": "deferred: alternate source deletion not implemented"
+  },
+  {
+    "operationId": "DeleteDevice",
+    "reason": "deferred: device management not implemented"
+  },
+  {
+    "operationId": "DeleteLyrics",
+    "reason": "deferred: Lyrics not implemented"
+  },
+  {
+    "operationId": "DeleteUserImage",
+    "reason": "deferred: profile-image write path not implemented; GET/HEAD serve the stock no-image responses"
+  },
+  {
+    "operationId": "DeleteUserItemRating",
+    "reason": "deferred: user item rating not implemented"
+  },
+  {
+    "operationId": "DownloadRemoteLyrics",
+    "reason": "deferred: Lyrics not implemented"
+  },
+  {
+    "operationId": "DownloadRemoteSubtitles",
+    "reason": "deferred: remote subtitle search not implemented"
+  },
+  {
+    "operationId": "ForgotPassword",
+    "reason": "deferred: password reset not implemented"
+  },
+  {
+    "operationId": "ForgotPasswordPin",
+    "reason": "deferred: password reset not implemented"
+  },
+  {
+    "operationId": "GetAllChannelFeatures",
+    "reason": "deferred: Channels not implemented"
+  },
+  {
+    "operationId": "GetAuthProviders",
+    "reason": "deferred: auth provider config not implemented"
+  },
+  {
+    "operationId": "GetChannelFeatures",
+    "reason": "deferred: Channels not implemented"
+  },
+  {
+    "operationId": "GetChannelItems",
+    "reason": "deferred: Channels not implemented"
+  },
+  {
+    "operationId": "GetChannels",
+    "reason": "deferred: Channels not implemented"
+  },
+  {
+    "operationId": "GetDefaultMetadataOptions",
+    "reason": "deferred: default metadata options endpoint not implemented; read-only configuration slice implemented without this elevated route"
+  },
+  {
+    "operationId": "GetDeviceInfo",
+    "reason": "deferred: device management not implemented"
+  },
+  {
+    "operationId": "GetDeviceOptions",
+    "reason": "deferred: device management not implemented"
+  },
+  {
+    "operationId": "GetDevices",
+    "reason": "deferred: device management not implemented"
+  },
+  {
+    "operationId": "GetFallbackFont",
+    "reason": "deferred: fallback font delivery not implemented"
+  },
+  {
+    "operationId": "GetFallbackFontList",
+    "reason": "deferred: fallback font delivery not implemented"
+  },
+  {
+    "operationId": "GetFile",
+    "reason": "deferred: item metadata endpoints not implemented"
+  },
+  {
+    "operationId": "GetInstantMixFromAlbum",
+    "reason": "deferred: InstantMix not implemented"
+  },
+  {
+    "operationId": "GetInstantMixFromArtists",
+    "reason": "deferred: InstantMix not implemented"
+  },
+  {
+    "operationId": "GetInstantMixFromItem",
+    "reason": "deferred: InstantMix not implemented"
+  },
+  {
+    "operationId": "GetInstantMixFromMusicGenreById",
+    "reason": "deferred: InstantMix not implemented"
+  },
+  {
+    "operationId": "GetInstantMixFromMusicGenreByName",
+    "reason": "deferred: InstantMix not implemented"
+  },
+  {
+    "operationId": "GetInstantMixFromPlaylist",
+    "reason": "deferred: InstantMix not implemented"
+  },
+  {
+    "operationId": "GetInstantMixFromSong",
+    "reason": "deferred: InstantMix not implemented"
+  },
+  {
+    "operationId": "GetItemCollections",
+    "reason": "deferred: item metadata endpoints not implemented"
+  },
+  {
+    "operationId": "GetItemUserData",
+    "reason": "deferred: item user-data read not implemented"
+  },
+  {
+    "operationId": "GetLatestChannelItems",
+    "reason": "deferred: Channels not implemented"
+  },
+  {
+    "operationId": "GetLogFile",
+    "reason": "deferred: server log access not implemented"
+  },
+  {
+    "operationId": "GetLyrics",
+    "reason": "deferred: Lyrics not implemented"
+  },
+  {
+    "operationId": "GetMediaFolders",
+    "reason": "deferred: library media update hooks not implemented"
+  },
+  {
+    "operationId": "GetMovieRecommendations",
+    "reason": "deferred: movie recommendations not implemented"
+  },
+  {
+    "operationId": "GetPasswordResetProviders",
+    "reason": "deferred: password reset provider config not implemented"
+  },
+  {
+    "operationId": "GetPhysicalPaths",
+    "reason": "deferred: library filesystem endpoints not implemented"
+  },
+  {
+    "operationId": "GetRemoteLyrics",
+    "reason": "deferred: Lyrics not implemented"
+  },
+  {
+    "operationId": "GetRemoteSubtitles",
+    "reason": "deferred: subtitle provider not implemented"
+  },
+  {
+    "operationId": "GetRootFolder",
+    "reason": "deferred: root folder endpoint not implemented"
+  },
+  {
+    "operationId": "GetServerLogs",
+    "reason": "deferred: server log access not implemented"
+  },
+  {
+    "operationId": "GetSuggestions",
+    "reason": "deferred: item suggestions not implemented"
+  },
+  {
+    "operationId": "GetThemeSongs",
+    "reason": "deferred: item metadata endpoints not implemented"
+  },
+  {
+    "operationId": "GetThemeVideos",
+    "reason": "deferred: item metadata endpoints not implemented"
+  },
+  {
+    "operationId": "GetTrailers",
+    "reason": "deferred: Trailers list not implemented"
+  },
+  {
+    "operationId": "GetUpcomingEpisodes",
+    "reason": "deferred: upcoming episodes not implemented"
+  },
+  {
+    "operationId": "GetUtcTime",
+    "reason": "deferred: UTC time endpoint not implemented"
+  },
+  {
+    "operationId": "GetYear",
+    "reason": "deferred: Years not implemented"
+  },
+  {
+    "operationId": "GetYears",
+    "reason": "deferred: Years not implemented"
+  },
+  {
+    "operationId": "LogFile",
+    "reason": "deferred: client log ingest not implemented"
+  },
+  {
+    "operationId": "MergeVersions",
+    "reason": "deferred: version merging not implemented"
+  },
+  {
+    "operationId": "PostUserImage",
+    "reason": "deferred: profile-image write path not implemented; GET/HEAD serve the stock no-image responses"
+  },
+  {
+    "operationId": "RemoveUserFromSession",
+    "reason": "deferred: session user management not implemented"
+  },
+  {
+    "operationId": "RenameVirtualFolder",
+    "reason": "deferred: virtual folder rename/update not implemented"
+  },
+  {
+    "operationId": "ReportViewing",
+    "reason": "deferred: session viewing report not implemented"
+  },
+  {
+    "operationId": "RestartApplication",
+    "reason": "deferred: server restart/shutdown not implemented"
+  },
+  {
+    "operationId": "SearchRemoteLyrics",
+    "reason": "deferred: Lyrics not implemented"
+  },
+  {
+    "operationId": "SearchRemoteSubtitles",
+    "reason": "deferred: remote subtitle search not implemented"
+  },
+  {
+    "operationId": "SendFullGeneralCommand",
+    "reason": "deferred: full general command not implemented"
+  },
+  {
+    "operationId": "SendSystemCommand",
+    "reason": "deferred: system command not implemented"
+  },
+  {
+    "operationId": "ShutdownApplication",
+    "reason": "deferred: server restart/shutdown not implemented"
+  },
+  {
+    "operationId": "UpdateDeviceOptions",
+    "reason": "deferred: device management not implemented"
+  },
+  {
+    "operationId": "UpdateMediaPath",
+    "reason": "deferred: virtual folder rename/update not implemented"
+  },
+  {
+    "operationId": "UpdateUserItemRating",
+    "reason": "deferred: user item rating not implemented"
+  },
+  {
+    "operationId": "UploadLyrics",
+    "reason": "deferred: Lyrics not implemented"
+  }
+]

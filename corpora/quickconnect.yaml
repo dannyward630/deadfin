@@ -1,0 +1,218 @@
+format: goldenrec-scenario/v1
+name: QuickConnect lifecycle, replay, and error contract
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  - name: QuickConnect enabled scalar
+    method: GET
+    path: /QuickConnect/Enabled
+    expect:
+      status: 200
+      body_bytes: "true"
+    operation_id: GetQuickConnectEnabled
+  - name: initiate with client and device metadata
+    method: POST
+    path: /QuickConnect/Initiate
+    headers:
+      Authorization: MediaBrowser Client="Swiftfin", Device="iPhone", DeviceId="swiftfin-quickconnect", Version="1.0.0"
+    capture:
+      qc_secret: Secret
+      qc_code: Code
+    normalizers:
+      - quickconnect-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+    operation_id: InitiateQuickConnect
+  - name: pending poll
+    method: GET
+    path: /QuickConnect/Connect
+    params:
+      secret: ${qc_secret}
+    normalizers:
+      - quickconnect-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+    operation_id: GetQuickConnectState
+  - name: authenticated authorization
+    method: POST
+    path: /QuickConnect/Authorize
+    params:
+      code: ${qc_code}
+      userId: <user-id>
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+      body_bytes: "true"
+    operation_id: AuthorizeQuickConnect
+  - name: authorized poll
+    method: GET
+    path: /QuickConnect/Connect
+    params:
+      secret: ${qc_secret}
+    normalizers:
+      - quickconnect-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+    operation_id: GetQuickConnectState
+  - name: first redemption
+    method: POST
+    path: /Users/AuthenticateWithQuickConnect
+    body:
+      Secret: ${qc_secret}
+    capture:
+      qc_access_token: AccessToken
+      qc_session_id: SessionInfo.Id
+    normalizers:
+      - server-id
+      - auth-tokens
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+    operation_id: AuthenticateWithQuickConnect
+  - name: second redemption replays the authorized result
+    method: POST
+    path: /Users/AuthenticateWithQuickConnect
+    body:
+      Secret: ${qc_secret}
+    normalizers:
+      - server-id
+      - auth-tokens
+      - login-session-volatiles
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 200
+      assert_equal:
+        AccessToken: qc_access_token
+        SessionInfo.Id: qc_session_id
+    operation_id: AuthenticateWithQuickConnect
+  - name: unknown secret
+    method: GET
+    path: /QuickConnect/Connect
+    params:
+      secret: difftool-unknown-secret
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 404
+    operation_id: GetQuickConnectState
+  - name: missing secret
+    method: GET
+    path: /QuickConnect/Connect
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 400
+    operation_id: GetQuickConnectState
+  - name: missing device metadata
+    method: POST
+    path: /QuickConnect/Initiate
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 400
+    operation_id: InitiateQuickConnect
+  - name: unknown code
+    method: POST
+    path: /QuickConnect/Authorize
+    params:
+      code: "000000"
+      userId: <user-id>
+    auth_role: admin
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 404
+    operation_id: AuthorizeQuickConnect
+  - name: unauthorized authorization
+    method: POST
+    path: /QuickConnect/Authorize
+    params:
+      code: "000000"
+      userId: <user-id>
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    expect:
+      status: 401
+    operation_id: AuthorizeQuickConnect

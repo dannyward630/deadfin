@@ -1,0 +1,15 @@
+Decoders:
+ V..... = Video
+ A..... = Audio
+ S..... = Subtitle
+ .F.... = Frame-level multithreading
+ ..S... = Slice-level multithreading
+ ...X.. = Codec is experimental
+ ....B. = Supports draw_horiz_band
+ .....D = Supports direct rendering method 1
+ ------
+ V....D h264                 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+ V....D h264_qsv             H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (Intel Quick Sync Video acceleration) (codec h264)
+ V....D hevc                 HEVC (High Efficiency Video Coding)
+ V....D hevc_qsv             HEVC video (Intel Quick Sync Video acceleration) (codec hevc)
+ S..... pgssub               HDMV Presentation Graphic Stream subtitles (codec hdmv_pgs_subtitle)

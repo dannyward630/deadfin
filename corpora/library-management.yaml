@@ -1,0 +1,1193 @@
+format: goldenrec-scenario/v1
+name: library management routes with stock parity
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  # ------------------------------------------------------------------
+  # Phase 0: empty baseline. GET must return 200 with an empty array.
+  # ------------------------------------------------------------------
+  - name: list virtual folders (empty)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - library-folder-ids
+      - library-options-defaults
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetVirtualFolders
+
+  # ------------------------------------------------------------------
+  # Phase 1: all six management routes exercised through a Paths probe.
+  # POST/DELETE /Library/VirtualFolders/Paths use /tmp, a directory that
+  # exists on both the stock container and the native Deadfin host, so the
+  # same path string is accepted by both servers and read back identically
+  # in Locations. The path is host-agnostic and portable. Single-folder
+  # readbacks avoid host-local directory-enumeration order differences.
+  # ------------------------------------------------------------------
+  - name: add paths probe library
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: PathsProbe
+      collectionType: movies
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: &write
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: AddVirtualFolder
+  - name: add media path (POST VirtualFolders/Paths)
+    method: POST
+    path: /Library/VirtualFolders/Paths
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body:
+      Name: PathsProbe
+      Path: /tmp
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddMediaPath
+  - name: list virtual folders (after add path)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: &read
+      - library-folder-ids
+      - library-options-defaults
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetVirtualFolders
+  - name: remove media path (DELETE VirtualFolders/Paths)
+    method: DELETE
+    path: /Library/VirtualFolders/Paths
+    params:
+      name: PathsProbe
+      path: /tmp
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveMediaPath
+  - name: list virtual folders (after remove path)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: remove paths probe library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: PathsProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+
+  # ------------------------------------------------------------------
+  # Phase 2: collectionType probes. Omitted, empty, and invalid (photos)
+  # each create the folder with no CollectionType (null) and no .collection
+  # marker; readback omits CollectionType. Each of the eight valid values
+  # creates its matching marker; readback reports the canonical lowercase
+  # CollectionType. Each probe is a create/readback/delete cycle so the
+  # readback holds exactly one folder, avoiding host-local enumeration
+  # order differences (stock enumerates the directory in filesystem order;
+  # Deadfin sorts).
+  # ------------------------------------------------------------------
+  - name: add library with omitted collectionType
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback omitted collectionType (no marker)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup omitted collectionType library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library with empty collectionType
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: ""
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback empty collectionType (no marker)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup empty collectionType library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library with invalid collectionType
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: photos
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback invalid collectionType (no marker)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup invalid collectionType library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+
+  # --- Eight valid collectionType values (create/readback/delete each) ---
+  - name: add library collectionType movies
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: movies
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType movies
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType movies library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType tvshows
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: tvshows
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType tvshows
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType tvshows library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType music
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: music
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType music
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType music library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType musicvideos
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: musicvideos
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType musicvideos
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType musicvideos library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType homevideos
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: homevideos
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType homevideos
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType homevideos library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType boxsets
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: boxsets
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType boxsets
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType boxsets library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType books
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: books
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType books
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType books library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType mixed
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: mixed
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType mixed
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType mixed library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+
+  # ------------------------------------------------------------------
+  # Phase 2b: numeric collectionType ordinals. Deadfin PR #116 maps the
+  # base-10 ordinals 0 through 7 to the same canonical names as the
+  # string values above. Stock binds CollectionTypeOptions? at
+  # upstream/jellyfin/Jellyfin.Api/Controllers/LibraryStructureController.cs:81,
+  # so the ASP.NET model binder accepts the same ordinals. Each numeric
+  # value is quoted in YAML so the loader preserves the exact spelling
+  # (01, +5) through fmt.Sprint before the request runs. Each cycle is a
+  # tight same-folder create/readback/delete triple. The readback
+  # normalizer set is the same *read anchor: it masks host-local ItemId
+  # and LibraryOptions defaults but leaves CollectionType visible so the
+  # differential comparison detects an incorrect canonical value. No
+  # normalizer is added for numeric spellings.
+  # ------------------------------------------------------------------
+  - name: add library collectionType numeric 0 (movies)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "0"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 0 (movies)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 0 (movies) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 1 (tvshows)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "1"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 1 (tvshows)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 1 (tvshows) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 01 (tvshows)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "01"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 01 (tvshows)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 01 (tvshows) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 2 (music)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "2"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 2 (music)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 2 (music) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 3 (musicvideos)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "3"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 3 (musicvideos)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 3 (musicvideos) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 4 (homevideos)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "4"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 4 (homevideos)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 4 (homevideos) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 5 (boxsets)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "5"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 5 (boxsets)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 5 (boxsets) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric +5 (boxsets)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "+5"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric +5 (boxsets)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric +5 (boxsets) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 6 (books)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "6"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 6 (books)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 6 (books) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType numeric 7 (mixed)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "7"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType numeric 7 (mixed)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType numeric 7 (mixed) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+
+  # ------------------------------------------------------------------
+  # Phase 2c: alternate collectionType spellings from the source matrix
+  # at deadfin/deadfin@baa149a9e3526e65d3f8b5102066d62f92fb7c2b:internal/
+  # api/handlers/library_management_test.go:273-329. Accepted inputs
+  # produce the canonical lowercase name. The rejected input 1.0
+  # produces null on both hosts (HTTP 204, no CollectionType, no
+  # .collection marker). Stock and Deadfin agree on 1.0. Stock accepts
+  # 8, -1, and 0,1 but Deadfin rejects them (no CollectionType). Those
+  # three spellings are divergences, not replay cycles (see
+  # docs/divergences.md D-26). Each cycle is a tight same-folder
+  # create/readback/delete triple. Accepted spellings use the *read
+  # anchor (masks host-local ItemId and LibraryOptions defaults, leaves
+  # CollectionType visible). Rejected spellings use the same anchor.
+  # No normalizer is added.
+  # ------------------------------------------------------------------
+  - name: add library collectionType alternate Movies (movies)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: Movies
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType alternate Movies (movies)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType alternate Movies (movies) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType alternate " TVSHOWS " (tvshows)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: " TVSHOWS "
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType alternate " TVSHOWS " (tvshows)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType alternate " TVSHOWS " (tvshows) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType alternate MuSiC (music)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: MuSiC
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType alternate MuSiC (music)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType alternate MuSiC (music) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+  - name: add library collectionType rejected 1.0 (no marker)
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+      collectionType: "1.0"
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: readback collectionType rejected 1.0 (no marker)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: cleanup collectionType rejected 1.0 (no marker) library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: CTProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder
+
+  # ------------------------------------------------------------------
+  # Phase 3: virtual-folder identity, ItemId capture, LibraryOptions
+  # update, and persisted-options readback. The GET captures the scanned
+  # CollectionFolder ItemId from the raw response; POST LibraryOptions
+  # addresses the library by that ItemId and persists changed options;
+  # the readback confirms the persisted options. Default-options GET
+  # readbacks (empty, after-path, collectionType, identity) mask host-local
+  # LibraryOptions defaults via library-options-defaults (replacing the
+  # whole object). The persisted-options readback selects library-options-
+  # persisted instead: it masks host-local default fields within
+  # LibraryOptions while preserving EnableInternetProviders and
+  # SaveLocalMetadata, so the changed values remain visible in the
+  # normalized comparison and a host that does not persist them is caught.
+  # The host-local ItemId is masked by library-folder-ids on both readback
+  # kinds. Capturing the persisted values from the raw response documents
+  # persistence; the normalized comparison now also verifies it.
+  # ------------------------------------------------------------------
+  - name: add options probe library
+    method: POST
+    path: /Library/VirtualFolders
+    params:
+      name: OptionsProbe
+      collectionType: movies
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body: {}
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: AddVirtualFolder
+  - name: capture folder ItemId (identity readback)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    capture:
+      folder_item_id: 0.ItemId
+    normalizers: *read
+    operation_id: GetVirtualFolders
+  - name: update library options (POST LibraryOptions with captured ItemId)
+    method: POST
+    path: /Library/VirtualFolders/LibraryOptions
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    body:
+      Id: ${folder_item_id}
+      LibraryOptions:
+        EnableInternetProviders: true
+        SaveLocalMetadata: true
+        PathInfos: []
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: UpdateLibraryOptions
+  - name: persisted-options readback (unnormalized LibraryOptions capture)
+    method: GET
+    path: /Library/VirtualFolders
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    capture:
+      persisted_enable_internet_providers: 0.LibraryOptions.EnableInternetProviders
+      persisted_save_local_metadata: 0.LibraryOptions.SaveLocalMetadata
+    normalizers: &read_persisted
+      - library-folder-ids
+      - library-options-persisted
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetVirtualFolders
+  - name: cleanup options probe library
+    method: DELETE
+    path: /Library/VirtualFolders
+    params:
+      name: OptionsProbe
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 204
+    normalizers: *write
+    operation_id: RemoveVirtualFolder

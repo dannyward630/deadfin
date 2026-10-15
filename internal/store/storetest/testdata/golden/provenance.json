@@ -1,0 +1,14 @@
+{
+  "format": "goldenrec-itemquery-provenance/v1",
+  "stock_version": "12.0.0",
+  "stock_image_digest": "sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a",
+  "upstream_commit": "b04614e18d2aeed8d3d3de920c381c6bd5b97bdb",
+  "upstream_commit_authority": "api-parity-source",
+  "fixture_sha256": "3bba3375e924adf4b158b9a6ae4852f56e0b963a5c57ccf9e49cfe74965f26db",
+  "recorder_sha256": "8b54e98883433085550856922b14ba84538f409c2ccdad71adbdf2a32ddafc7c",
+  "request_manifest_sha256": "63403ede5d3d9c3a9d93ac3778dc2f4b2f05bedd093731ea948833cbe0f99e37",
+  "seed_sha256": "ddd9e81ad90a9c1bfc128d087b9f0c266cf7093a57b16c3488094087daab3cb2",
+  "provider_policy_sha256": "18b7431ab19723d86aaf10aa2a07551710cdfe7ec85feac5832b0d7a93fe3c5c",
+  "expected_inventory_sha256": "860392998a8f79d4f4f4e905d9fca3822c6cc1eb20cd6120bd1a0e18b4e8c279",
+  "fixture_manifest_sha256": "bebfe0bdab1630fbf5b406c5ad92b8a4d4cfc67d9a1ceefe174cb7548689ba94"
+}

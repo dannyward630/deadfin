@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/deadfin-org/deadfin/blob/master/tools/difftool/schema/results.schema.json",
+  "title": "Jellyport differential replay results",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "run_id", "steps"],
+  "properties": {
+    "format": {"const": "difftool-results/v1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["scenario", "step", "operation-id", "status"],
+        "properties": {
+          "scenario": {"type": "string", "minLength": 1},
+          "step": {"type": "string", "minLength": 1},
+          "operation-id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["pass", "fail"]},
+          "body_length_counted": {"type": "integer", "minimum": 0},
+          "issue": {"type": "string"}
+        }
+      }
+    }
+  }
+}

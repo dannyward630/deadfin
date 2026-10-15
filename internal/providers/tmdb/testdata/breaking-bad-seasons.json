@@ -1,0 +1,398 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/configuration",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "images": {
+        "secure_base_url": "https://image.tmdb.org/t/p/"
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396/season/1?language=en&include_image_language=en,null&append_to_response=credits,images,external_ids,videos",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 3572,
+      "name": "Season 1",
+      "overview": "High school chemistry teacher Walter White's life is suddenly transformed.",
+      "air_date": "2008-01-20",
+      "season_number": 1,
+      "poster_path": "/season1-fallback.jpg",
+      "external_ids": {
+        "tvdb_id": 30272
+      },
+      "images": {
+        "posters": [
+          {
+            "file_path": "/season1.jpg",
+            "iso_639_1": "en",
+            "width": 1000,
+            "height": 1500
+          }
+        ]
+      },
+      "videos": {
+        "results": []
+      },
+      "credits": {
+        "cast": [
+          {
+            "id": 17419,
+            "name": "Bryan Cranston",
+            "character": "Walter White",
+            "order": 1,
+            "profile_path": "/bc.jpg"
+          },
+          {
+            "id": 84497,
+            "name": "Aaron Paul",
+            "character": "Jesse Pinkman",
+            "order": 0,
+            "profile_path": "/ap.jpg"
+          }
+        ],
+        "crew": [
+          {
+            "id": 66633,
+            "name": "Vince Gilligan",
+            "job": "Producer",
+            "department": "Production",
+            "profile_path": "/vg.jpg"
+          },
+          {
+            "id": 1,
+            "name": "Grip Person",
+            "job": "Grip",
+            "department": "Crew",
+            "profile_path": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396/season/1/episode/1?language=en&include_image_language=en,null&append_to_response=credits,images,external_ids,videos",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 62101,
+      "name": "Pilot",
+      "overview": "Walter White is diagnosed with cancer.",
+      "air_date": "2008-01-20",
+      "season_number": 1,
+      "episode_number": 1,
+      "vote_average": 8.2,
+      "still_path": "/s1e1.jpg",
+      "external_ids": {
+        "imdb_id": "tt0959621",
+        "tvdb_id": 349232,
+        "tvrage_id": 637041
+      },
+      "images": {
+        "stills": [
+          {
+            "file_path": "/s1e1.jpg",
+            "iso_639_1": null,
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      },
+      "videos": {
+        "results": [
+          {
+            "key": "pilotTrailer",
+            "name": "Pilot Trailer",
+            "site": "YouTube",
+            "type": "Trailer"
+          },
+          {
+            "key": "bts",
+            "name": "Behind",
+            "site": "YouTube",
+            "type": "Featurette"
+          }
+        ]
+      },
+      "credits": {
+        "cast": [
+          {
+            "id": 17419,
+            "name": "Bryan Cranston",
+            "character": "Walter White",
+            "order": 0,
+            "profile_path": "/bc.jpg"
+          }
+        ],
+        "guest_stars": [
+          {
+            "id": 92495,
+            "name": "John Koyama",
+            "character": "Emilio",
+            "order": 1,
+            "profile_path": "/jk.jpg"
+          },
+          {
+            "id": 161591,
+            "name": "Max Arciniega",
+            "character": "Krazy-8",
+            "order": 0,
+            "profile_path": "/ma.jpg"
+          }
+        ],
+        "crew": [
+          {
+            "id": 66633,
+            "name": "Vince Gilligan",
+            "job": "Writer",
+            "department": "Writing",
+            "profile_path": "/vg.jpg"
+          },
+          {
+            "id": 66633,
+            "name": "Vince Gilligan",
+            "job": "Director",
+            "department": "Directing",
+            "profile_path": "/vg.jpg"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396/season/1/episode/2?language=en&include_image_language=en,null&append_to_response=credits,images,external_ids,videos",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 62102,
+      "name": "Cat's in the Bag...",
+      "overview": "Walt and Jesse clean up.",
+      "air_date": "2008-01-27",
+      "season_number": 1,
+      "episode_number": 2,
+      "vote_average": 8.299999999999999,
+      "still_path": "/s1e2.jpg",
+      "external_ids": {
+        "imdb_id": "",
+        "tvdb_id": 349235,
+        "tvrage_id": 0
+      },
+      "images": {
+        "stills": [
+          {
+            "file_path": "/s1e2.jpg",
+            "iso_639_1": null,
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      },
+      "videos": {
+        "results": []
+      },
+      "credits": {
+        "cast": [],
+        "crew": [],
+        "guest_stars": []
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396/season/1/episode/3?language=en&include_image_language=en,null&append_to_response=credits,images,external_ids,videos",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 62103,
+      "name": "...And the Bag's in the River",
+      "overview": "Walt decides.",
+      "air_date": "2008-02-10",
+      "season_number": 1,
+      "episode_number": 3,
+      "vote_average": 8.4,
+      "still_path": "",
+      "external_ids": {
+        "imdb_id": "",
+        "tvdb_id": 349236,
+        "tvrage_id": 0
+      },
+      "images": {
+        "stills": []
+      },
+      "videos": {
+        "results": []
+      },
+      "credits": {
+        "cast": [],
+        "crew": [],
+        "guest_stars": []
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396/season/1/episode/9?language=en&include_image_language=en,null&append_to_response=credits,images,external_ids,videos",
+    "status": 404,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "status_code": 34,
+      "status_message": "The resource you requested could not be found."
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396/episode_groups?language=en",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "results": [
+        {
+          "id": "5b11ba820e0a265847002c6e",
+          "type": 3
+        },
+        {
+          "id": "5d0e6ec5b29d1d001e93e0b1",
+          "type": 2
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/episode_group/5d0e6ec5b29d1d001e93e0b1?language=en",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "groups": [
+        {
+          "order": 1,
+          "episodes": [
+            {
+              "order": 0,
+              "season_number": 1,
+              "episode_number": 1
+            },
+            {
+              "order": 1,
+              "season_number": 1,
+              "episode_number": 2
+            },
+            {
+              "order": 7,
+              "season_number": 2,
+              "episode_number": 1
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396/season/2/episode/1?language=en&include_image_language=en,null&append_to_response=credits,images,external_ids,videos",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 62201,
+      "name": "Seven Thirty-Seven",
+      "overview": "Walt and Jesse realize how dire their situation is.",
+      "air_date": "2009-03-08",
+      "season_number": 2,
+      "episode_number": 1,
+      "vote_average": 8.2,
+      "still_path": "/s2e1.jpg",
+      "external_ids": {
+        "imdb_id": "",
+        "tvdb_id": 438906,
+        "tvrage_id": 0
+      },
+      "images": {
+        "stills": [
+          {
+            "file_path": "/s2e1.jpg",
+            "iso_639_1": null,
+            "width": 1920,
+            "height": 1080
+          }
+        ]
+      },
+      "videos": {
+        "results": []
+      },
+      "credits": {
+        "cast": [],
+        "crew": [],
+        "guest_stars": []
+      }
+    }
+  }
+]

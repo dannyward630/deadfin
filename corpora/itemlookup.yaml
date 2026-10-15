@@ -1,0 +1,400 @@
+format: goldenrec-scenario/v1
+name: ItemLookup differential surface with stock parity
+base_url_env: JELLYFIN_BASE_URL
+steps:
+  # ------------------------------------------------------------------
+  # Phase 1 (steps 1-4): populated RemoteSearch for the four kinds that
+  # have a ported searcher. Real-world names are authored in the SearchInfo
+  # body with IncludeDisabledProviders: true, anchored to fixture item IDs.
+  # Provider traffic is replayed through the cassette (no live external API
+  # use in CI). The recording operator snapshots the cassette from stock.
+  # ------------------------------------------------------------------
+  - name: RemoteSearch Movie (populated)
+    method: POST
+    path: /Items/RemoteSearch/Movie
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: Standalone Movie
+        ProductionYear: 2023
+        IncludeDisabledProviders: true
+      ItemId: 7e897749137a8161f7a084cfad246bd3
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetMovieRemoteSearchResults
+
+  - name: RemoteSearch Series (populated)
+    method: POST
+    path: /Items/RemoteSearch/Series
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: Synthetic Show
+        ProductionYear: 2024
+        IncludeDisabledProviders: true
+      ItemId: e011e5ec55fbe02b6c65c2b6e7d87dee
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetSeriesRemoteSearchResults
+
+  - name: RemoteSearch MusicAlbum (populated)
+    method: POST
+    path: /Items/RemoteSearch/MusicAlbum
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: Synthetic Album
+        AlbumArtists:
+          - Goldenrec Generator
+        IncludeDisabledProviders: true
+      ItemId: da14f54965599e7e141a2deb2b25c823
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetMusicAlbumRemoteSearchResults
+
+  - name: RemoteSearch MusicArtist (populated)
+    method: POST
+    path: /Items/RemoteSearch/MusicArtist
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: Goldenrec Generator
+        IncludeDisabledProviders: true
+      ItemId: c68d545009955cd545a0ee7d168f9bae
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetMusicArtistRemoteSearchResults
+
+  # ------------------------------------------------------------------
+  # Phase 2 (steps 5-9): RemoteSearch for the five kinds Deadfin has no
+  # ported searcher for. Each uses a pinned unmatchable name so stock's
+  # TMDb trailer/boxset/person providers return empty through the cassette
+  # and both hosts agree on 200 []. This pins the wire shape without
+  # hiding the ported-searcher gap behind a normalizer. Person search
+  # requires elevation (ItemLookupController.cs:207).
+  # ------------------------------------------------------------------
+  - name: RemoteSearch Trailer (empty)
+    method: POST
+    path: /Items/RemoteSearch/Trailer
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: zzzzzzzz-nonexistent-lookup-item
+        IncludeDisabledProviders: true
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetTrailerRemoteSearchResults
+
+  - name: RemoteSearch MusicVideo (empty)
+    method: POST
+    path: /Items/RemoteSearch/MusicVideo
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: zzzzzzzz-nonexistent-lookup-item
+        IncludeDisabledProviders: true
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetMusicVideoRemoteSearchResults
+
+  - name: RemoteSearch BoxSet (empty)
+    method: POST
+    path: /Items/RemoteSearch/BoxSet
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: zzzzzzzz-nonexistent-lookup-item
+        IncludeDisabledProviders: true
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetBoxSetRemoteSearchResults
+
+  - name: RemoteSearch Person (empty, elevated)
+    method: POST
+    path: /Items/RemoteSearch/Person
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: zzzzzzzz-nonexistent-lookup-item
+        IncludeDisabledProviders: true
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetPersonRemoteSearchResults
+
+  - name: RemoteSearch Book (empty)
+    method: POST
+    path: /Items/RemoteSearch/Book
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      SearchInfo:
+        Name: zzzzzzzz-nonexistent-lookup-item
+        IncludeDisabledProviders: true
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetBookRemoteSearchResults
+
+  # ------------------------------------------------------------------
+  # Phase 3 (steps 10-16): ExternalIdInfos pre-Apply, RemoteImages/Providers,
+  # Apply (expect 204), post-Apply GET /Items/{itemId} projection, RemoteImages
+  # unfiltered, RemoteImages paginated (TotalRecordCount-before-pagination
+  # probe), and ExternalIdInfos post-Apply. ExternalIdInfos and Apply require
+  # elevation. The external-id-infos normalizer (D-28) removes unported-provider
+  # descriptors before comparison.
+  # ------------------------------------------------------------------
+  - name: ExternalIdInfos pre-Apply
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3/ExternalIdInfos
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - external-id-infos
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetExternalIdInfos
+
+  - name: RemoteImages Providers
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3/RemoteImages/Providers
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetRemoteImageProviders
+
+  - name: Apply RemoteSearchResult (expect 204)
+    method: POST
+    path: /Items/RemoteSearch/Apply/7e897749137a8161f7a084cfad246bd3
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+    auth_role: admin
+    body:
+      Name: Standalone Movie
+      ProductionYear: 2023
+      ProviderIds:
+        Tmdb: "0"
+      ImageUrl: https://image.tmdb.org/t/p/original/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg
+      SearchProviderName: TheMovieDb
+    expect:
+      status: 204
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: ApplySearchCriteria
+
+  - name: GET item post-Apply projection
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - item-id-map
+      - entity-tags
+      - item-created-dates
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetItem
+
+  - name: RemoteImages unfiltered (populated post-Apply)
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3/RemoteImages
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetRemoteImages
+
+  - name: RemoteImages paginated (TotalRecordCount-before-pagination probe)
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3/RemoteImages
+    params:
+      type: Primary
+      startIndex: 0
+      limit: 1
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetRemoteImages
+
+  - name: ExternalIdInfos post-Apply
+    method: GET
+    path: /Items/7e897749137a8161f7a084cfad246bd3/ExternalIdInfos
+    headers:
+      Accept: application/json
+    auth_role: admin
+    expect:
+      status: 200
+    normalizers:
+      - external-id-infos
+      - response-time-headers
+      - response-time-ms-header
+      - process-time-headers
+      - date-header
+      - server-stack-header
+      - content-length-header
+      - content-language-header
+      - vary-header
+    operation_id: GetExternalIdInfos

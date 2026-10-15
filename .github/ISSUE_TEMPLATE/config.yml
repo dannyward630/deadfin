@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and help
+    url: https://github.com/deadfin-org/deadfin/discussions
+    about: Ask setup and usage questions in GitHub Discussions (Q&A).
+  - name: Security problem
+    url: https://github.com/deadfin-org/deadfin/security/advisories/new
+    about: Report security problems privately. Do not open a public issue.
+  - name: Known differences from Jellyfin
+    url: https://github.com/deadfin-org/deadfin/blob/master/docs/alpha/known-differences.md
+    about: Check this list before you report. The gap may be known.

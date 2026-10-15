@@ -1,0 +1,62 @@
+[
+  {
+    "method": "GET",
+    "url": "https://musicbrainz.org/ws/2/release-group/test-rg-id?fmt=json&inc=releases",
+    "status": 200,
+    "header": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": "test-rg-id",
+      "title": "RG Album",
+      "releases": [
+        {
+          "id": "release-1",
+          "title": "RG Album",
+          "date": "2019-03-01",
+          "annotation": "",
+          "artist-credit": [],
+          "release-group": {
+            "id": "test-rg-id",
+            "title": "RG Album"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://musicbrainz.org/ws/2/release/release-1?fmt=json&inc=release-groups",
+    "status": 200,
+    "header": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": "release-1",
+      "title": "RG Album",
+      "date": "2019-03-01",
+      "annotation": "",
+      "artist-credit": [
+        {
+          "name": "RG Artist",
+          "artist": {
+            "id": "rg-artist-id",
+            "name": "RG Artist",
+            "sort-name": "Artist, RG",
+            "life-span": {
+              "begin": "1998"
+            }
+          }
+        }
+      ],
+      "release-group": {
+        "id": "test-rg-id",
+        "title": "RG Album"
+      }
+    }
+  }
+]

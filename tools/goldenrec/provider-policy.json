@@ -1,0 +1,63 @@
+{
+  "DisabledLocalMetadataReaders": [],
+  "EnableAutomaticSeriesGrouping": false,
+  "EnableEmbeddedEpisodeInfos": true,
+  "EnableEmbeddedTitles": true,
+  "EnableInternetProviders": false,
+  "TypeOptions": [
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "Movie"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "Series"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "Season"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "Episode"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "MusicAlbum"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "MusicArtist"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "Audio"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "Photo"
+    },
+    {
+      "ImageFetchers": [],
+      "MetadataFetchers": [],
+      "SimilarItemProviders": [],
+      "Type": "BoxSet"
+    }
+  ]
+}

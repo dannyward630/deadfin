@@ -1,0 +1,35 @@
+# Local build output of `go build ./cmd/deadfin`.
+/deadfin
+/dist/
+
+# The pinned Jellyfin source tree is fetched by `make upstream` at the
+# revision in upstream/PIN. Only the PIN file is committed.
+/upstream/*
+!/upstream/PIN
+
+# Validation tool outputs.
+.diffs/
+results/*
+!results/library-management.json
+__pycache__/
+*.py[cod]
+tools/goldenrec/bin/
+tools/goldenrec/obj/
+tools/compat/*/bin/
+tools/compat/*/obj/
+tools/difftool/difftool
+.webp-replay-state/
+.difftool-media/
+tools/goldenrec/compose.difftool.yaml
+
+# Compiled binaries, test binaries, .NET build output, editor and OS files.
+*.test
+*.exe
+*.dll
+*.pdb
+*.dylib
+**/bin/Debug/
+**/bin/Release/
+**/obj/Debug/
+**/obj/Release/
+.DS_Store

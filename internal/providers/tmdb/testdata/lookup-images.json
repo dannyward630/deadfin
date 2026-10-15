@@ -1,0 +1,211 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/configuration",
+    "status": 200,
+    "header": {
+      "Cache-Control": [
+        "public, max-age=3600"
+      ],
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "images": {
+        "secure_base_url": "https://image.tmdb.org/t/p/",
+        "poster_sizes": [
+          "w92",
+          "w154",
+          "w185",
+          "w342",
+          "w500",
+          "w780",
+          "original"
+        ],
+        "backdrop_sizes": [
+          "w300",
+          "w780",
+          "w1280",
+          "original"
+        ]
+      }
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/movie/603?append_to_response=credits,release_dates,images,videos,keywords",
+    "status": 200,
+    "header": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "body": {
+      "id": 603,
+      "title": "The Matrix",
+      "original_title": "The Matrix",
+      "original_language": "en",
+      "overview": "A computer hacker learns from mysterious rebels.\n\nHe joins the fight.",
+      "tagline": "Free your mind.",
+      "poster_path": "/matrix-poster.jpg",
+      "release_date": "1999-03-31",
+      "imdb_id": "tt0133093",
+      "vote_average": 8.2,
+      "belongs_to_collection": {
+        "id": 2344,
+        "name": "The Matrix Collection"
+      },
+      "genres": [
+        {
+          "name": "Action"
+        },
+        {
+          "name": "Science Fiction"
+        }
+      ],
+      "production_companies": [
+        {
+          "name": "Warner Bros. Pictures"
+        },
+        {
+          "name": "Village Roadshow Pictures"
+        }
+      ],
+      "production_countries": [
+        {
+          "iso_3166_1": "US",
+          "name": "United States of America"
+        }
+      ],
+      "credits": {
+        "cast": [
+          {
+            "id": 6384,
+            "name": "Keanu Reeves",
+            "character": "Neo",
+            "order": 0,
+            "profile_path": "/keanu.jpg"
+          },
+          {
+            "id": 2975,
+            "name": "Laurence Fishburne",
+            "character": "Morpheus",
+            "order": 1,
+            "profile_path": "/laurence.jpg"
+          },
+          {
+            "id": 530,
+            "name": "Carrie-Anne Moss",
+            "character": "Trinity",
+            "order": 2,
+            "profile_path": ""
+          }
+        ],
+        "crew": [
+          {
+            "id": 9339,
+            "name": "Lana Wachowski",
+            "job": "Director",
+            "department": "Directing",
+            "profile_path": "/lana.jpg"
+          },
+          {
+            "id": 9340,
+            "name": "Lilly Wachowski",
+            "job": "Writer",
+            "department": "Writing",
+            "profile_path": "/lilly.jpg"
+          },
+          {
+            "id": 1,
+            "name": "Some Grip",
+            "job": "Grip",
+            "department": "Camera",
+            "profile_path": ""
+          }
+        ]
+      },
+      "keywords": {
+        "keywords": [
+          {
+            "name": "artificial reality"
+          },
+          {
+            "name": "dystopia"
+          }
+        ]
+      },
+      "release_dates": {
+        "results": [
+          {
+            "iso_3166_1": "US",
+            "release_dates": [
+              {
+                "certification": "R"
+              }
+            ]
+          },
+          {
+            "iso_3166_1": "GB",
+            "release_dates": [
+              {
+                "certification": "15"
+              }
+            ]
+          }
+        ]
+      },
+      "videos": {
+        "results": [
+          {
+            "key": "vKQi3bBA1y8",
+            "name": "The Matrix Trailer",
+            "site": "YouTube",
+            "type": "Trailer"
+          },
+          {
+            "key": "abc123",
+            "name": "Featurette",
+            "site": "YouTube",
+            "type": "Featurette"
+          }
+        ]
+      },
+      "images": {
+        "posters": [
+          {
+            "file_path": "/best-poster.jpg",
+            "iso_639_1": "en",
+            "width": 500,
+            "height": 750,
+            "vote_average": 5.6,
+            "vote_count": 12
+          }
+        ],
+        "backdrops": [
+          {
+            "file_path": "/plain-backdrop.jpg",
+            "iso_639_1": null,
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "file_path": "/text-backdrop.jpg",
+            "iso_639_1": "en",
+            "width": 1280,
+            "height": 720
+          }
+        ],
+        "logos": [
+          {
+            "file_path": "/logo.png",
+            "iso_639_1": "en",
+            "width": 800,
+            "height": 310
+          }
+        ]
+      }
+    }
+  }
+]

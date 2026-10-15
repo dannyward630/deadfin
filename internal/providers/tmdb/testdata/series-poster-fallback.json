@@ -1,0 +1,39 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/configuration",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {"images": {"secure_base_url": "https://image.tmdb.org/t/p/"}}
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396?language=en&include_image_language=en,null&append_to_response=credits,external_ids,content_ratings,keywords,videos,images",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "id": 1396,
+      "name": "Breaking Bad",
+      "original_name": "Breaking Bad",
+      "overview": "A chemistry teacher.",
+      "poster_path": "/bb-poster.jpg",
+      "first_air_date": "2008-01-20",
+      "images": {"posters": [], "backdrops": [], "logos": []}
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/tv/1396?append_to_response=credits,external_ids,content_ratings,keywords,videos,images",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "id": 1396,
+      "name": "Breaking Bad",
+      "original_name": "Breaking Bad",
+      "overview": "A chemistry teacher.",
+      "poster_path": "/bb-poster.jpg",
+      "first_air_date": "2008-01-20",
+      "images": {"posters": [], "backdrops": [], "logos": []}
+    }
+  }
+]

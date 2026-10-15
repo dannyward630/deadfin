@@ -1,0 +1,39 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/configuration",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {"images": {"secure_base_url": "https://image.tmdb.org/t/p/"}}
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/movie/11688?language=en&include_image_language=en,null&append_to_response=credits,release_dates,images,videos,keywords",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "id": 11688,
+      "title": "The Emperor's New Groove",
+      "original_title": "The Emperor's New Groove",
+      "overview": "A llama.",
+      "poster_path": "/emperor-poster.jpg",
+      "release_date": "2000-12-15",
+      "images": {"posters": [], "backdrops": [], "logos": []}
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.themoviedb.org/3/movie/11688?append_to_response=credits,release_dates,images,videos,keywords",
+    "status": 200,
+    "header": {"Cache-Control": ["public, max-age=3600"], "Content-Type": ["application/json"]},
+    "body": {
+      "id": 11688,
+      "title": "The Emperor's New Groove",
+      "original_title": "The Emperor's New Groove",
+      "overview": "A llama.",
+      "poster_path": "/emperor-poster.jpg",
+      "release_date": "2000-12-15",
+      "images": {"posters": [], "backdrops": [], "logos": []}
+    }
+  }
+]

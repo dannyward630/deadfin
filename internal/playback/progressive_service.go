@@ -1,0 +1,700 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+package playback
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"io"
+	"path/filepath"
+	"strconv"
+	"strings"
+
+	"github.com/deadfin-org/deadfin/internal/dto"
+	"github.com/deadfin-org/deadfin/internal/encoding"
+	"github.com/deadfin-org/deadfin/internal/images"
+	"github.com/deadfin-org/deadfin/internal/sourcefile"
+)
+
+var (
+	// ErrProgressiveInvalid identifies a malformed progressive request.
+	ErrProgressiveInvalid = errors.New("invalid progressive request")
+	// ErrProgressiveBackend identifies an incomplete or invalid progressive backend response.
+	ErrProgressiveBackend = errors.New("progressive backend failure")
+	// ErrProgressiveUnsupported identifies a valid request that cannot be fulfilled by A/V remux.
+	ErrProgressiveUnsupported = errors.New("unsupported progressive stream copy")
+)
+
+// ProgressiveProcessOpener starts the single process that produces a progressive response.
+// Process ownership stays with the caller, which decides how the returned body is served and closed.
+type ProgressiveProcessOpener interface {
+	Open(context.Context, ProgressiveOpenRequest) (io.ReadCloser, error)
+}
+
+// ProgressiveVideoStreamer is the handler-facing progressive video seam.
+type ProgressiveVideoStreamer interface {
+	OpenProgressive(context.Context, ProgressiveRequest) (ProgressiveResponse, error)
+}
+
+// ProgressiveOpenRequest is the process-facing portion of a progressive request.
+type ProgressiveOpenRequest struct {
+	OutputPath     string
+	Args           []string
+	PlaySessionID  string
+	DeviceID       string
+	SourceRevision string
+	OpenSource     func() (*sourcefile.Source, error)
+}
+
+// ProgressiveServiceConfig supplies the existing source selector and the caller-owned process seam.
+type ProgressiveServiceConfig struct {
+	Sources      DirectFileSourceService
+	TranscodeDir string
+	Opener       ProgressiveProcessOpener
+	// Capabilities returns the encoder capabilities for a new audio
+	// transcode. Nil selects no encoders.
+	Capabilities func() encoding.Capabilities
+	// AudioVBR returns EncodingOptions.EnableAudioVbr. Nil disables VBR.
+	AudioVBR func() bool
+}
+
+// ProgressiveRequest contains the transport facts needed to determine whether a local video can be remuxed.
+type ProgressiveRequest struct {
+	UserID        dto.UUID
+	ItemID        dto.UUID
+	MediaSourceID string
+	Container     string
+
+	DeviceID      string
+	PlaySessionID string
+	UserAgent     string
+
+	VideoCodecs []string
+	AudioCodecs []string
+	VideoCodec  string
+	AudioCodec  string
+
+	VideoStreamIndex            *int
+	AudioStreamIndex            *int
+	SubtitleStreamIndex         *int
+	SubtitleDeliveryMethod      *SubtitleDeliveryMethod
+	StartTimeTicks              int64
+	AllowVideoStreamCopy        bool
+	AllowAudioStreamCopy        bool
+	EnableAutoStreamCopy        bool
+	RequireAvc                  bool
+	RequireNonAnamorphic        bool
+	DeInterlace                 bool
+	Width                       *int
+	Height                      *int
+	MaxWidth                    *int
+	MaxHeight                   *int
+	MaxFramerate                *float32
+	Framerate                   *float32
+	VideoBitrate                *int
+	Profile                     *string
+	Level                       *string
+	MaxRefFrames                *int
+	MaxVideoBitDepth            *int
+	Rotation                    *int
+	AudioBitrate                *int
+	MaxAudioChannels            *int
+	AudioChannels               *int
+	TranscodingMaxAudioChannels *int
+	AudioSampleRate             *int
+	MaxAudioBitDepth            *int
+	StreamOptions               StreamOptions
+	CopyTimestamps              bool
+	Head                        bool
+}
+
+// ProgressiveResponse describes the generated progressive stream. Body is nil for HEAD.
+type ProgressiveResponse struct {
+	Body        io.ReadCloser
+	ContentType string
+	OutputPath  string
+}
+
+// ProgressiveService is the focused local-file A/V copy/remux application seam.
+type ProgressiveService struct {
+	sources      DirectFileSourceService
+	transcodeDir string
+	opener       ProgressiveProcessOpener
+	capabilities func() encoding.Capabilities
+	audioVbr     func() bool
+}
+
+// NewProgressiveService creates the focused progressive A/V copy/remux service.
+func NewProgressiveService(config ProgressiveServiceConfig) *ProgressiveService {
+	return &ProgressiveService{
+		sources:      config.Sources,
+		transcodeDir: config.TranscodeDir,
+		opener:       config.Opener,
+		capabilities: config.Capabilities,
+		audioVbr:     config.AudioVBR,
+	}
+}
+
+func (service *ProgressiveService) currentCapabilities() encoding.Capabilities {
+	if service.capabilities == nil {
+		return encoding.Capabilities{}
+	}
+	return service.capabilities()
+}
+
+// NewProgressiveVideoService creates the handler-facing progressive video service.
+func NewProgressiveVideoService(config ProgressiveServiceConfig) *ProgressiveService {
+	return NewProgressiveService(config)
+}
+
+// OpenProgressive validates a local source for A/V stream copy, builds its pure encoding job, and opens one process.
+func (service *ProgressiveService) OpenProgressive(ctx context.Context, request ProgressiveRequest) (ProgressiveResponse, error) {
+	if err := validateProgressiveRequest(request); err != nil {
+		return ProgressiveResponse{}, err
+	}
+	if service == nil || service.sources == nil || service.transcodeDir == "" {
+		return ProgressiveResponse{}, fmt.Errorf("%w: incomplete progressive service configuration", ErrProgressiveBackend)
+	}
+
+	source, err := service.sources.StaticSource(ctx, request.UserID, request.ItemID, request.MediaSourceID)
+	if err != nil {
+		return ProgressiveResponse{}, err
+	}
+	video, audio, err := progressiveSourceStreams(source, request)
+	if err != nil {
+		return ProgressiveResponse{}, err
+	}
+	if !canCopyVideo(source, video, request) || !canCopyAudio(audio, request) {
+		return ProgressiveResponse{}, ErrProgressiveUnsupported
+	}
+	if !hasCanonicalSourceAuthority(source) {
+		return ProgressiveResponse{}, fmt.Errorf("%w: media source has incomplete canonical file authority", ErrProgressiveUnsupported)
+	}
+
+	outputContainer, extension, contentType := progressiveOutput(request.Container)
+	job := progressiveEncodingJob(source, video, audio, outputContainer, progressiveRenditionIdentityOutputPath, request)
+	identityArgs, err := encoding.BuildProgressiveArgs(job, encoding.Capabilities{})
+	if err != nil {
+		return ProgressiveResponse{}, fmt.Errorf("%w: build progressive family identity: %v", ErrProgressiveUnsupported, err)
+	}
+	outputPath := progressiveOutputPath(service.transcodeDir, request.UserAgent, request.DeviceID, request.PlaySessionID, source.SourceRevision, identityArgs, extension)
+	job.OutputPath = outputPath
+	args, err := encoding.BuildProgressiveArgs(job, encoding.Capabilities{})
+	if err != nil {
+		return ProgressiveResponse{}, fmt.Errorf("%w: build progressive copy job: %v", ErrProgressiveUnsupported, err)
+	}
+
+	response := ProgressiveResponse{ContentType: contentType, OutputPath: outputPath}
+	if request.Head {
+		return response, nil
+	}
+	return service.openProcess(ctx, response, source, args, request.PlaySessionID, request.DeviceID)
+}
+
+// openProcess opens the one ffmpeg process that writes response.OutputPath
+// and attaches its growing output as the response body.
+func (service *ProgressiveService) openProcess(ctx context.Context, response ProgressiveResponse, source MediaSourceInfo, args []string, playSessionID, deviceID string) (ProgressiveResponse, error) {
+	if service.opener == nil {
+		return ProgressiveResponse{}, fmt.Errorf("%w: incomplete progressive service configuration", ErrProgressiveBackend)
+	}
+	body, err := service.opener.Open(ctx, ProgressiveOpenRequest{
+		OutputPath:     response.OutputPath,
+		Args:           args,
+		PlaySessionID:  playSessionID,
+		DeviceID:       deviceID,
+		SourceRevision: source.SourceRevision,
+		OpenSource: func() (*sourcefile.Source, error) {
+			facts := source.FileFacts
+			return sourcefile.Open(source.Path, sourcefile.Expected{
+				Size: facts.Size, ModifiedAt: facts.ModifiedAt, Inode: facts.Inode, ChangedAt: facts.ChangedAt,
+			})
+		},
+	})
+	if err != nil {
+		return ProgressiveResponse{}, err
+	}
+	if body == nil {
+		return ProgressiveResponse{}, fmt.Errorf("%w: process opener returned nil body", ErrProgressiveBackend)
+	}
+	response.Body = body
+	return response, nil
+}
+
+func validateProgressiveRequest(request ProgressiveRequest) error {
+	if request.ItemID == dto.NilUUID {
+		return fmt.Errorf("%w: item ID is required", ErrProgressiveInvalid)
+	}
+	if request.PlaySessionID == "" {
+		return fmt.Errorf("%w: play session ID is required", ErrProgressiveInvalid)
+	}
+	if request.StartTimeTicks < 0 {
+		return fmt.Errorf("%w: start ticks must not be negative", ErrProgressiveInvalid)
+	}
+	if request.VideoStreamIndex != nil && *request.VideoStreamIndex < -1 {
+		return fmt.Errorf("%w: invalid video stream index", ErrProgressiveInvalid)
+	}
+	if request.AudioStreamIndex != nil && *request.AudioStreamIndex < -1 {
+		return fmt.Errorf("%w: invalid audio stream index", ErrProgressiveInvalid)
+	}
+	if request.SubtitleStreamIndex != nil && *request.SubtitleStreamIndex < -1 {
+		return fmt.Errorf("%w: invalid subtitle stream index", ErrProgressiveInvalid)
+	}
+	if request.Container != "ts" && request.Container != "fmp4" && request.Container != "mp4" {
+		return fmt.Errorf("%w: output container %q", ErrProgressiveInvalid, request.Container)
+	}
+	return nil
+}
+
+func progressiveSourceStreams(source MediaSourceInfo, request ProgressiveRequest) (*MediaStream, *MediaStream, error) {
+	if !safeProgressiveSourcePath(source.Path) {
+		return nil, nil, fmt.Errorf("%w: source path is not a safe local path", ErrProgressiveInvalid)
+	}
+	if source.Protocol != MediaProtocolFile || source.IsRemote || source.IsInfiniteStream || source.LiveStreamID != "" || progressiveDiscSource(source) {
+		return nil, nil, ErrProgressiveUnsupported
+	}
+	var video *MediaStream
+	if request.VideoStreamIndex != nil && *request.VideoStreamIndex != -1 {
+		video = source.MediaStream(StreamTypeVideo, *request.VideoStreamIndex)
+	} else {
+		video = source.VideoStream()
+	}
+	if video == nil || video.IsExternal {
+		return nil, nil, ErrProgressiveUnsupported
+	}
+	var audio *MediaStream
+	if request.AudioStreamIndex != nil && *request.AudioStreamIndex != -1 {
+		audio = source.MediaStream(StreamTypeAudio, *request.AudioStreamIndex)
+	} else {
+		audio = source.DefaultAudioStream(nil)
+	}
+	if audio == nil || audio.IsExternal {
+		return nil, nil, ErrProgressiveUnsupported
+	}
+	return video, audio, nil
+}
+
+func safeProgressiveSourcePath(path string) bool {
+	if path == "" || path[0] == '-' {
+		return false
+	}
+	for _, runeValue := range path {
+		if runeValue < 0x20 || runeValue == 0x7f {
+			return false
+		}
+	}
+	return true
+}
+
+func progressiveDiscSource(source MediaSourceInfo) bool {
+	if source.VideoType == nil {
+		return false
+	}
+	return *source.VideoType == VideoTypeIso || *source.VideoType == VideoTypeDVD || *source.VideoType == VideoTypeBluRay || *source.VideoType == VideoTypeHDVD
+}
+
+func canCopyVideo(source MediaSourceInfo, video *MediaStream, request ProgressiveRequest) bool {
+	if video == nil || !request.AllowVideoStreamCopy || !strings.EqualFold(video.Codec, "h264") || !containsProgressiveCodec(request.VideoCodecs, video.Codec) {
+		return false
+	}
+	return canCopyVideoForCodecWithLevel(source, video, request, "h264", progressiveH264VideoLevel(request, "h264"))
+}
+
+// canCopyVideoForCodec applies video stream-copy constraints whose stream
+// options are qualified by the actual source codec. Callers retain ownership
+// of codec/container eligibility before entering this shared predicate.
+func canCopyVideoForCodec(source MediaSourceInfo, video *MediaStream, request ProgressiveRequest, qualifier string) bool {
+	return canCopyVideoForCodecWithLevel(source, video, request, qualifier, progressiveVideoLevel(request, qualifier))
+}
+
+func canCopyVideoForCodecWithLevel(source MediaSourceInfo, video *MediaStream, request ProgressiveRequest, qualifier string, requestedLevel *float64) bool {
+	if video == nil {
+		return false
+	}
+	if video.IsInterlaced && (request.DeInterlace || progressiveDeinterlaceRequested(request, qualifier)) {
+		return false
+	}
+	if request.RequireNonAnamorphic && video.IsAnamorphic != nil && *video.IsAnamorphic {
+		return false
+	}
+	if progressiveSubtitleEncodeRequested(request) {
+		return false
+	}
+	if strings.EqualFold(video.Codec, "h264") && request.RequireAvc && video.IsAVC != nil && !*video.IsAVC {
+		return false
+	}
+	if request.MaxWidth != nil && (video.Width == nil || *video.Width > *request.MaxWidth) {
+		return false
+	}
+	if request.MaxHeight != nil && (video.Height == nil || *video.Height > *request.MaxHeight) {
+		return false
+	}
+	if maximumFramerate := progressiveCopyMaxFramerate(request); maximumFramerate != nil {
+		frameRate := video.ReferenceFrameRate()
+		if frameRate == nil || *frameRate > *maximumFramerate+0.05 {
+			return false
+		}
+	}
+	if request.VideoBitrate != nil && (video.BitRate == nil || *video.BitRate > *request.VideoBitrate) {
+		return false
+	}
+	if !progressiveProfileSupported(video.Profile, progressiveVideoProfile(request, qualifier)) || progressiveExceedsFloat(video.Level, requestedLevel) || progressiveExceedsInt(video.RefFrames, progressiveVideoRefFrames(request, qualifier)) || progressiveExceedsInt(video.BitDepth, progressiveVideoBitDepth(request, qualifier)) || !progressiveRangeTypeSupported(video.VideoRangeType(), progressiveVideoRangeTypes(request, qualifier)) || !progressiveRotationSupported(video.Rotation, progressiveVideoRotation(request, qualifier)) {
+		return false
+	}
+	if strings.EqualFold(source.Container, "avi") && strings.EqualFold(video.Codec, "h264") && (video.IsAVC == nil || !*video.IsAVC) {
+		return false
+	}
+	return true
+}
+
+func canCopyAudio(audio *MediaStream, request ProgressiveRequest) bool {
+	if !request.AllowAudioStreamCopy || !request.EnableAutoStreamCopy || !strings.EqualFold(audio.Codec, "ac3") || !containsProgressiveCodec(request.AudioCodecs, audio.Codec) {
+		return false
+	}
+	if progressiveExceedsInt(audio.BitDepth, progressiveAudioBitDepth(request)) {
+		return false
+	}
+	if maximum := progressiveAudioChannels(request); maximum != nil && (audio.Channels == nil || *audio.Channels <= 0 || *audio.Channels > *maximum) {
+		return false
+	}
+	if request.AudioSampleRate != nil && (audio.SampleRate == nil || *audio.SampleRate <= 0 || *audio.SampleRate > *request.AudioSampleRate) {
+		return false
+	}
+	return request.AudioBitrate == nil || audio.BitRate == nil || *audio.BitRate <= *request.AudioBitrate
+}
+
+func containsProgressiveCodec(codecs []string, codec string) bool {
+	for _, codecsValue := range codecs {
+		for candidate := range strings.SplitSeq(codecsValue, ",") {
+			if strings.EqualFold(strings.TrimSpace(candidate), codec) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func progressiveCopyMaxFramerate(request ProgressiveRequest) *float32 {
+	if request.MaxFramerate != nil {
+		return request.MaxFramerate
+	}
+	return request.Framerate
+}
+
+func progressiveOutputFrameRate(video *MediaStream, request ProgressiveRequest) float64 {
+	if request.Framerate != nil {
+		return float64(*request.Framerate)
+	}
+	if request.MaxFramerate != nil {
+		frameRate := video.ReferenceFrameRate()
+		if frameRate != nil && *frameRate > *request.MaxFramerate {
+			return float64(*request.MaxFramerate)
+		}
+	}
+	return 0
+}
+
+func progressiveProfileSupported(source, requested *string) bool {
+	if source == nil || *source == "" || requested == nil || *requested == "" {
+		return true
+	}
+	sourceProfile := strings.ReplaceAll(*source, " ", "")
+	requestedProfiles := strings.FieldsFunc(*requested, func(r rune) bool { return r == ',' || r == '|' })
+	for _, candidate := range requestedProfiles {
+		if strings.EqualFold(strings.ReplaceAll(candidate, " ", ""), sourceProfile) {
+			return true
+		}
+	}
+	if len(requestedProfiles) == 0 {
+		return true
+	}
+	sourceScore := progressiveH264ProfileScore(sourceProfile)
+	requestedScore := progressiveH264ProfileScore(strings.ReplaceAll(requestedProfiles[0], " ", ""))
+	return sourceScore >= 0 && requestedScore >= 0 && sourceScore <= requestedScore
+}
+
+func progressiveH264ProfileScore(profile string) int {
+	for score, candidate := range []string{"ConstrainedBaseline", "Baseline", "Extended", "Main", "High", "ProgressiveHigh", "ConstrainedHigh", "High10"} {
+		if strings.EqualFold(profile, candidate) {
+			return score
+		}
+	}
+	return -1
+}
+
+func progressiveExceedsInt(source, maximum *int) bool {
+	return source != nil && maximum != nil && *source > *maximum
+}
+
+func progressiveExceedsFloat(source, maximum *float64) bool {
+	return source != nil && maximum != nil && *source > *maximum
+}
+
+func progressiveVideoProfile(request ProgressiveRequest, qualifier string) *string {
+	if request.Profile != nil && *request.Profile != "" {
+		return request.Profile
+	}
+	if value := progressiveVideoOption(request, qualifier, "profile"); value != "" {
+		return &value
+	}
+	return nil
+}
+
+func progressiveVideoLevel(request ProgressiveRequest, qualifier string) *float64 {
+	return parseOptionFloat(progressiveVideoLevelValue(request, qualifier))
+}
+
+func progressiveH264VideoLevel(request ProgressiveRequest, qualifier string) *float64 {
+	level := parseOptionFloat(progressiveVideoLevelValue(request, qualifier))
+	if level == nil || *level < 1 || *level >= 10 {
+		return level
+	}
+	normalized := *level * 10
+	return &normalized
+}
+
+func progressiveVideoLevelValue(request ProgressiveRequest, qualifier string) string {
+	if request.Level != nil && *request.Level != "" {
+		return *request.Level
+	}
+	return progressiveVideoOption(request, qualifier, "level")
+}
+
+func progressiveVideoRefFrames(request ProgressiveRequest, qualifier string) *int {
+	if request.MaxRefFrames != nil {
+		return request.MaxRefFrames
+	}
+	return parseOptionInt(progressiveVideoOption(request, qualifier, "maxrefframes"))
+}
+
+func progressiveVideoBitDepth(request ProgressiveRequest, qualifier string) *int {
+	if request.MaxVideoBitDepth != nil {
+		return request.MaxVideoBitDepth
+	}
+	return parseOptionInt(progressiveVideoOption(request, qualifier, "videobitdepth"))
+}
+
+func progressiveDeinterlaceRequested(request ProgressiveRequest, qualifier string) bool {
+	return strings.EqualFold(progressiveVideoOption(request, qualifier, "deinterlace"), "true")
+}
+
+func progressiveVideoRangeTypes(request ProgressiveRequest, qualifier string) string {
+	return progressiveVideoOption(request, qualifier, "rangetype")
+}
+
+func progressiveVideoOption(request ProgressiveRequest, qualifier, name string) string {
+	if value := request.StreamOptions.Get(qualifier + "-" + name); value != "" {
+		return value
+	}
+	return request.StreamOptions.Get(name)
+}
+
+func progressiveRangeTypeSupported(source VideoRangeType, requested string) bool {
+	if requested == "" {
+		return true
+	}
+	var supported []VideoRangeType
+	for _, candidate := range strings.FieldsFunc(requested, func(r rune) bool { return r == ',' || r == '|' }) {
+		if rangeType, ok := ParseVideoRangeType(strings.TrimSpace(candidate)); ok {
+			supported = append(supported, rangeType)
+			if rangeType == source {
+				return true
+			}
+		}
+	}
+	if len(supported) == 0 {
+		return false
+	}
+	if source == VideoRangeSDR {
+		return true
+	}
+	for _, rangeType := range supported {
+		switch {
+		case rangeType == VideoRangeHDR10 && (source == VideoRangeDOVIWithHDR10 || source == VideoRangeHDR10Plus):
+			return true
+		case rangeType == VideoRangeHLG && source == VideoRangeDOVIWithHLG:
+			return true
+		case rangeType == VideoRangeSDR && source == VideoRangeDOVIWithSDR:
+			return true
+		}
+	}
+	return false
+}
+
+func progressiveVideoRotation(request ProgressiveRequest, qualifier string) string {
+	if request.Rotation != nil {
+		return integerString(*request.Rotation)
+	}
+	if value := request.StreamOptions.Get("rotation"); value != "" {
+		return value
+	}
+	return request.StreamOptions.Get(qualifier + "-rotation")
+}
+
+func progressiveRotationSupported(source *int, requested string) bool {
+	if requested == "" {
+		return true
+	}
+	rotation := 0
+	if source != nil {
+		rotation = *source
+	}
+	if rotation == 0 {
+		return true
+	}
+	for _, candidate := range strings.FieldsFunc(requested, func(r rune) bool { return r == ',' || r == '|' }) {
+		if supported := parseOptionInt(candidate); supported != nil && *supported == rotation {
+			return true
+		}
+	}
+	return false
+}
+
+func progressiveAudioChannels(request ProgressiveRequest) *int {
+	if value := parseOptionInt(request.StreamOptions.Get("ac3-audiochannels")); value != nil {
+		return value
+	}
+	if request.MaxAudioChannels != nil {
+		return request.MaxAudioChannels
+	}
+	if request.AudioChannels != nil {
+		return request.AudioChannels
+	}
+	return request.TranscodingMaxAudioChannels
+}
+
+func progressiveAudioBitDepth(request ProgressiveRequest) *int {
+	if request.MaxAudioBitDepth != nil {
+		return request.MaxAudioBitDepth
+	}
+	return parseOptionInt(request.StreamOptions.Get("ac3-audiobitdepth"))
+}
+
+func progressiveSubtitleEncodeRequested(request ProgressiveRequest) bool {
+	return request.SubtitleStreamIndex != nil && *request.SubtitleStreamIndex >= 0 && request.SubtitleDeliveryMethod != nil && *request.SubtitleDeliveryMethod == SubtitleEncode
+}
+
+func progressiveOutput(container string) (outputContainer, extension, contentType string) {
+	switch container {
+	case "ts":
+		return "ts", ".ts", "video/mp2t"
+	case "fmp4":
+		return "fmp4", ".fmp4", "video/mp4"
+	default: // validateProgressiveRequest has already limited this to the mp4 alias.
+		return "fmp4", ".mp4", "video/mp4"
+	}
+}
+
+const progressiveRenditionIdentityOutputPath = "/progressive-rendition-identity/output"
+
+func progressiveOutputPath(transcodeDir, userAgent, deviceID, playSessionID, sourceRevision string, args []string, extension string) string {
+	key := make([]byte, 0, len(userAgent)+len(deviceID)+len(playSessionID)+len(sourceRevision)+len(extension)+64)
+	for _, value := range []string{"progressive-rendition-v2", userAgent, deviceID, playSessionID, sourceRevision, extension} {
+		key = appendLengthPrefixedIdentity(key, value)
+	}
+	key = strconv.AppendInt(key, int64(len(args)), 10)
+	key = append(key, ':')
+	for _, argument := range args {
+		key = appendLengthPrefixedIdentity(key, argument)
+	}
+	return filepath.Join(transcodeDir, images.MD5GUID(string(key))+extension)
+}
+
+func appendLengthPrefixedIdentity(target []byte, value string) []byte {
+	target = strconv.AppendInt(target, int64(len(value)), 10)
+	target = append(target, ':')
+	return append(target, value...)
+}
+
+func hasCanonicalSourceAuthority(source MediaSourceInfo) bool {
+	return source.SourceRevision != "" && source.FileFacts.Inode != nil && source.FileFacts.ChangedAt != nil
+}
+
+func progressiveOutputDimensions(video *MediaStream, request ProgressiveRequest) (int, int) {
+	if video.Width != nil && video.Height != nil {
+		width, height := *video.Width, *video.Height
+		if video.Rotation != nil && (*video.Rotation == 90 || *video.Rotation == -90) {
+			width, height = height, width
+		}
+		size := images.ResolveDimensions(images.Dimensions{Width: width, Height: height}, images.ResizeOptions{
+			Width: request.Width, Height: request.Height, MaxWidth: request.MaxWidth, MaxHeight: request.MaxHeight,
+		})
+		return size.Width, size.Height
+	}
+	return progressiveDimensionFallback(request.MaxWidth, request.Width), progressiveDimensionFallback(request.MaxHeight, request.Height)
+}
+
+func progressiveDimensionFallback(maximum, fixed *int) int {
+	if maximum != nil {
+		return *maximum
+	}
+	if fixed != nil {
+		return *fixed
+	}
+	return 0
+}
+
+func progressiveEncodingJob(source MediaSourceInfo, video, audio *MediaStream, outputContainer, outputPath string, request ProgressiveRequest) encoding.EncodingJob {
+	outputWidth, outputHeight := progressiveOutputDimensions(video, request)
+	job := encoding.EncodingJob{
+		InputPath:        source.Path,
+		InputContainer:   source.Container,
+		OutputPath:       outputPath,
+		OutputContainer:  outputContainer,
+		OutputFrameRate:  progressiveOutputFrameRate(video, request),
+		OutputVideoCodec: "copy",
+		OutputAudioCodec: "copy",
+		OutputWidth:      outputWidth,
+		OutputHeight:     outputHeight,
+		StartOffsetTicks: request.StartTimeTicks,
+		CopyTimestamps:   request.CopyTimestamps,
+		VideoStream:      encodingVideoStream(video),
+		AudioStream:      encoding.AudioStream{Index: audioIndex(source.MediaStreams, audio), Codec: audioCodec(audio), Channels: audioChannels(audio)},
+	}
+	job.VideoStream.Index = ffmpegStreamIndex(source.MediaStreams, video)
+	return job
+}
+
+func stringPointerValue(value *string) string {
+	if value == nil {
+		return ""
+	}
+	return *value
+}
+
+func nalLengthSize(value *string) string {
+	if value == nil {
+		return "0"
+	}
+	return *value
+}
+
+func intPointerValue(value *int) int {
+	if value == nil {
+		return 0
+	}
+	return *value
+}
+
+// audioIndex returns the ffmpeg input index of the audio stream
+// (EncodingHelper.FindIndex), or zero without audio.
+func audioIndex(streams []MediaStream, audio *MediaStream) int {
+	if audio == nil {
+		return 0
+	}
+	return ffmpegStreamIndex(streams, audio)
+}
+
+func audioCodec(audio *MediaStream) string {
+	if audio == nil {
+		return ""
+	}
+	return audio.Codec
+}
+
+func audioChannels(audio *MediaStream) int {
+	if audio == nil {
+		return 0
+	}
+	return intPointerValue(audio.Channels)
+}

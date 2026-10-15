@@ -1,0 +1,6 @@
+# Synthetic media and stock Jellyfin state are generated locally, never committed.
+fixtures/out/
+state/
+captures/
+*.mitm
+*.jsonl
