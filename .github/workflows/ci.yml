@@ -1,13 +1,15 @@
 # Convention checks, the test suite on amd64, and govulncheck.
 #
-# Pull requests, including forks, run on GitHub-hosted runners with a
-# read-only token. A PostgreSQL service container runs the store tests.
+# Release tags run on GitHub-hosted runners with a read-only token; the
+# Gitea gates (Gate A, the extended matrix, acceptance) test every merge.
+# workflow_dispatch runs it by hand. A PostgreSQL service container runs the
+# store tests.
 name: CI
 
 on:
   push:
-    branches: [master]
-  pull_request: {}
+    tags: ["v*"]
+  workflow_dispatch: {}
 
 permissions:
   contents: read
