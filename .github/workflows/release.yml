@@ -134,6 +134,11 @@ jobs:
           BUILD_CHANNEL: ${{ needs.prepare.outputs.channel }}
         run: tools/image-smoke "$IMAGE_DIGEST_REF" "$COMMIT_SHA" "$BUILD_VERSION" "$BUILD_CHANNEL" false
 
+      # sbom-action writes output-file but does not create its directory
+      # (v0.3.0-rc.4 failed here with ENOENT).
+      - name: Create the SBOM directory
+        run: install -d "$RUNNER_TEMP/sbom"
+
       # anchore/sbom-action v0.24.2. SPDX SBOM of the smoke-tested digest. The
       # publish job attests it and the release job attaches it.
       - name: SBOM for the ${{ matrix.arch }} digest
