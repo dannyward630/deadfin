@@ -8,6 +8,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"math"
 	"sort"
 	"strconv"
 	"time"
@@ -248,8 +249,25 @@ func asInt64(v any) int64 {
 		return 0
 	}
 }
-func asInt(v any) int     { return int(asInt64(v)) }
-func asUint8(v any) uint8 { return uint8(asInt64(v)) }
+
+// asInt and asUint8 read an out-of-range column value as 0, the same
+// result as an unparseable value, instead of a wrapped integer.
+func asInt(v any) int {
+	n := asInt64(v)
+	if n < math.MinInt || n > math.MaxInt {
+		return 0
+	}
+	return int(n)
+}
+
+func asUint8(v any) uint8 {
+	n := asInt64(v)
+	if n < 0 || n > math.MaxUint8 {
+		return 0
+	}
+	return uint8(n)
+}
+
 func asFloat32(v any) float32 {
 	switch x := v.(type) {
 	case float64:

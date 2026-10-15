@@ -325,8 +325,7 @@ func replaceExternalSubtitleStreams(previous, external []playback.MediaStream) [
 		}
 		retained = append(retained, stream)
 	}
-	result := make([]playback.MediaStream, 0, len(external)+len(retained))
-	result = append(result, external...)
+	result := append([]playback.MediaStream(nil), external...)
 	return append(result, shiftStreamIndexes(retained, len(external)-previousExternal)...)
 }
 

@@ -204,9 +204,10 @@ func errUnexpectedConditionType(c ProfileCondition) error {
 
 // parseIntInvariant mirrors int.TryParse with NumberStyles.Integer /
 // InvariantCulture: optional surrounding whitespace, optional leading sign.
+// C# int is 32-bit, so a value outside the Int32 range fails to parse.
 func parseIntInvariant(s string) (int, bool) {
 	s = strings.TrimSpace(s)
-	n, err := strconv.ParseInt(s, 10, 64)
+	n, err := strconv.ParseInt(s, 10, 32)
 	if err != nil {
 		return 0, false
 	}

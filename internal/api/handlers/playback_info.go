@@ -9,6 +9,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 
@@ -404,15 +405,23 @@ func bitratePayloadLength(size int) int {
 const bitrateOutOfRangeMessage = "The requested size must be greater than or equal to 1 and less than or equal to 100000000"
 
 func bitrateUnparseableMessage(raw string) string {
-	escaped, err := json.Marshal(raw)
+	return "The value '" + raw + "' is not valid."
+}
+
+// bitrateProblemString returns message as a complete JSON string literal,
+// quotes included. json.Marshal escapes '"', '\\', control characters and
+// <>&; the apostrophe becomes \u0027 like the System.Text.Json default
+// encoder.
+func bitrateProblemString(message string) string {
+	escaped, err := json.Marshal(message)
 	if err != nil {
-		escaped = []byte(`""`)
+		return `""`
 	}
-	return "The value \\u0027" + string(escaped[1:len(escaped)-1]) + "\\u0027 is not valid."
+	return strings.ReplaceAll(string(escaped), "'", `\u0027`)
 }
 
 // writeBitrateValidationProblem emits the exact ASP.NET ProblemDetails
-// byte template with two substitutions: the pre-escaped message and a
+// byte template with two substitutions: the JSON-encoded message and a
 // per-request W3C traceparent traceId. The traceId is a fixed 55-byte
 // form (00-<32 hex>-<16 hex>-00) so the preserved Content-Length compares
 // equal to stock. Do not marshal through render.JSON: casing negotiation
@@ -421,9 +430,9 @@ func bitrateUnparseableMessage(raw string) string {
 // renderProblem so merges stay order-independent.
 func writeBitrateValidationProblem(w http.ResponseWriter, message string) {
 	traceID := generateTraceID()
-	body := []byte(`{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"size":["` +
-		message +
-		`"]},"traceId":"` +
+	body := []byte(`{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"size":[` +
+		bitrateProblemString(message) +
+		`]},"traceId":"` +
 		traceID +
 		`"}`)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")

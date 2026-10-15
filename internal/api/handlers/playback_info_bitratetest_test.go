@@ -181,6 +181,11 @@ func TestBitrateTestUnparseableValidationProducesProblemDetailsWithEscapedQuotes
 			path: `/Playback/BitrateTest?size=a%5Cb`,
 			want: `{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"size":["The value \u0027a\\b\u0027 is not valid."]},"traceId":"<traceId>"}`,
 		},
+		{
+			name: "apostrophe and markup input",
+			path: `/Playback/BitrateTest?size=%27%5D%7D%3Cx%3E`,
+			want: `{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"size":["The value \u0027\u0027]}\u003cx\u003e\u0027 is not valid."]},"traceId":"<traceId>"}`,
+		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			rec := bitrateTestRequest(handler, tc.path, true)

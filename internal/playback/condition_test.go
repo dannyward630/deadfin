@@ -335,3 +335,25 @@ func TestProfileConditionJSONDefaults(t *testing.T) {
 		t.Errorf("marshal: got %s want %s", out, want)
 	}
 }
+
+// int.TryParse fails outside the Int32 range; the condition then does not
+// apply instead of comparing against a wrapped value.
+func TestParseIntInvariantInt32Range(t *testing.T) {
+	for _, tc := range []struct {
+		in   string
+		want int
+		ok   bool
+	}{
+		{" 42 ", 42, true},
+		{"-2147483648", -2147483648, true},
+		{"2147483647", 2147483647, true},
+		{"2147483648", 0, false},
+		{"-2147483649", 0, false},
+		{"9223372036854775807", 0, false},
+	} {
+		got, ok := parseIntInvariant(tc.in)
+		if got != tc.want || ok != tc.ok {
+			t.Errorf("parseIntInvariant(%q) = %d, %v; want %d, %v", tc.in, got, ok, tc.want, tc.ok)
+		}
+	}
+}
