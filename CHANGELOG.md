@@ -18,7 +18,7 @@ v0.3.0 is the first public alpha of Deadfin.
 ### Highlights
 
 - **The image includes deadfin-web.** Deadfin serves the bundled web client
-  (v0.3.0-rc.3) at `/web/` with no extra download. To use jellyfin-web
+  (v0.3.0-rc.4) at `/web/` with no extra download. To use jellyfin-web
   instead, put its files in `./deadfin/web` and mount that directory at
   `/var/lib/deadfin/web`; a `<data root>/web` with an `index.html` replaces
   the bundled client. An existing `./deadfin/web` mount keeps working and
