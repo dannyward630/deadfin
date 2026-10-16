@@ -22,9 +22,9 @@ Jellyfin data untouched until the new server is accepted.
 | NAS app UI (Unraid, TrueNAS, etc.) | The UI can deploy the OCI image | Map the same paths and ports as the Compose example; inspect generated privileges. |
 
 Deadfin is a Go server that speaks the Jellyfin 12.0.0 API. The image holds the
-server; the web client is a separate set of files. Mount compatible
-`jellyfin-web` files at `/var/lib/deadfin/web`, or deploy `deadfin-web` as its
-own service. The [known differences](known-differences.md) page lists the
+server and the deadfin-web client, which Deadfin serves at `/web/`. To use
+`jellyfin-web` instead, mount its files at `/var/lib/deadfin/web`. You can also
+deploy `deadfin-web` as its own service. The [known differences](known-differences.md) page lists the
 Jellyfin features that Deadfin provides. Deadfin uses two ports: TCP 8096 for
 HTTP and WebSocket, and UDP 7359 for Jellyfin client discovery. UDP 7359 is
 optional when clients use a server URL. A bridge or pod network is sufficient;
@@ -79,8 +79,9 @@ API keys, database URLs, or tokens into issue reports.
 
 ## 3. Docker Compose reference
 
-On a Linux host, prepare a data directory owned by the container identity and
-obtain the web client as described in the Deadfin install guide. Replace the
+On a Linux host, prepare a data directory owned by the container identity.
+The image includes deadfin-web; to use jellyfin-web instead, add the web mount
+that the Deadfin install guide describes. Replace the
 media path and image tag. This example binds HTTP to host loopback, assuming a
 reverse proxy on the same host. To serve a trusted LAN directly, bind the host's
 LAN address instead. Remove the UDP port if discovery is not needed.
@@ -100,7 +101,6 @@ services:
         required: false
     volumes:
       - ./deadfin/data:/var/lib/deadfin
-      - ./deadfin/web:/var/lib/deadfin/web:ro
       - /srv/media:/media:ro
     security_opt:
       - no-new-privileges:true
@@ -113,7 +113,7 @@ services:
 ```
 
 ```sh
-mkdir -p ./deadfin/data ./deadfin/web
+mkdir -p ./deadfin/data
 sudo chown -R 65532:65532 ./deadfin/data
 chmod 0700 ./deadfin/data
 docker compose config
@@ -158,7 +158,6 @@ Rootless Podman can run the same OCI image and path layout. Example:
 podman run -d --name deadfin --replace \
   --publish 127.0.0.1:8096:8096/tcp \
   --volume ./deadfin/data:/var/lib/deadfin:Z \
-  --volume ./deadfin/web:/var/lib/deadfin/web:ro,Z \
   --volume /srv/media:/media:ro,z \
   --security-opt no-new-privileges \
   --cap-drop ALL \
@@ -175,7 +174,8 @@ actually hold the group when it starts. Use a Quadlet or user systemd unit for
 restart management; enable linger if it must run without a login session.
 
 In an Unraid or TrueNAS app form, map the image's **data root** to durable local
-or block-backed storage, the web files read-only, and media read-only. Set the
+or block-backed storage and media read-only. Map web files read-only only to
+replace the bundled deadfin-web. Set the
 container user or permissions for UID 65532. Publish 8096 to LAN or proxy and
 7359/UDP only for discovery. Deadfin's layout differs from a Jellyfin app
 template: one data root in place of `/config` and `/cache`, a fixed UID in
@@ -188,8 +188,9 @@ the media/data mounts as narrow as possible.
 
 Create the `deadfin` namespace, then use a storage class appropriate for the
 cluster. The example
-below shows the **API container**; mount web files into the data PVC before
-enabling `/web`, or deploy `deadfin-web` as a separate service. It assumes a
+below shows the **API container**; it serves the bundled deadfin-web at
+`/web/`. To serve jellyfin-web instead, put its files in `web/` on the data
+PVC. It assumes a
 PVC named `deadfin-data` and a read-only media PVC named `media-ro` already
 exist. Use a block-backed ReadWriteOnce volume for SQLite, a single replica,
 and a rolling strategy that never runs two Deadfin processes on the same data.

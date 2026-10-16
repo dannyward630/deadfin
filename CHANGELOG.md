@@ -17,6 +17,12 @@ v0.3.0 is the first public alpha of Deadfin.
 
 ### Highlights
 
+- **The image includes deadfin-web.** Deadfin serves the bundled web client
+  (v0.3.0-rc.3) at `/web/` with no extra download. To use jellyfin-web
+  instead, put its files in `./deadfin/web` and mount that directory at
+  `/var/lib/deadfin/web`; a `<data root>/web` with an `index.html` replaces
+  the bundled client. An existing `./deadfin/web` mount keeps working and
+  keeps its own files: remove the mount to use the bundled deadfin-web.
 - **Audio and subtitle choice carries to the next episode** (D-36). When you
   pick a language or a subtitle track in one episode, the next episode of the
   same series starts with the matching tracks. Subtitles off also carries.
@@ -41,6 +47,8 @@ v0.3.0 is the first public alpha of Deadfin.
 
 ### Changed
 
+- The startup log names the web client in use: its directory, the source
+  (`data root` or `bundled`) and the version from its `build.json`.
 - The quick start and the install guide put TMDb API key setup first.
 - `DEADFIN_DATA_DIR` sets the data root. `JELLYFIN_DATA_DIR` stays as the
   fallback. The image sets its default, `/var/lib/deadfin`, in `JELLYFIN_DATA_DIR`,

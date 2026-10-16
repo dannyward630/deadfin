@@ -79,8 +79,8 @@ for server setup, then add the apps you already use.
 
 | Client | Maturity | Install | Biggest gap |
 |---|---|---|---|
-| [deadfin-web](https://github.com/deadfin-org/deadfin-web) | Recommended. Experimental alpha. | [Quick start](#quick-start), step 2: a [release](https://github.com/deadfin-org/deadfin-web/releases) in `./deadfin/web`. Deadfin serves it at `/web/`. | No admin dashboard after first-run setup. For users, library changes and server settings, put jellyfin-web in `./deadfin/web` instead. |
-| jellyfin-web 12.0 | Stock and complete: every page, including the dashboard. | [Quick start](#quick-start), step 2: copy it out of the Jellyfin image. | Some dashboard pages (devices, logs, NFO settings) show errors. |
+| [deadfin-web](https://github.com/deadfin-org/deadfin-web) | Recommended. Experimental alpha. | In the image. Deadfin serves it at `/web/`. | No admin dashboard after first-run setup. For users, library changes and server settings, use jellyfin-web instead. |
+| jellyfin-web 12.0 | Stock and complete: every page, including the dashboard. | [Use jellyfin-web instead](#use-jellyfin-web-instead): put its files in `./deadfin/web`. | Some dashboard pages (devices, logs, NFO settings) show errors. |
 | Jellyfin apps: Swiftfin, Infuse, Jellyfin for Android and Android TV, and others | Unchanged stock apps. | Add the server by its URL, as for Jellyfin. | Per app and per path: see the [client matrix](docs/alpha/client-matrix.md). |
 | [SharkParty](https://github.com/deadfin-org/SharkParty) | Pre-alpha tvOS app, a Swiftfin fork. | Build from source with Xcode. | No App Store or TestFlight build. |
 
@@ -97,24 +97,16 @@ the image carries no shared one. A free v3 key takes a few minutes at
 Without it, movies and shows show their file names and no artwork
 (see D-11 in [known differences](docs/alpha/known-differences.md)).
 
-**2. Get a web client.** The image carries no web client. Put
-[deadfin-web](https://github.com/deadfin-org/deadfin-web) in `./deadfin/web`:
+**2. Make the data directory.** The container runs as UID/GID 65532:
 
 ```bash
-mkdir -p ./deadfin/data ./deadfin/web
+mkdir -p ./deadfin/data
 sudo chown 65532:65532 ./deadfin/data
-curl -fsSL https://github.com/deadfin-org/deadfin-web/releases/download/v0.3.0-rc.3/deadfin-web-0.3.0-rc.3.tar.gz \
-  | tar -xz --strip-components=1 -C ./deadfin/web
 ```
 
-For the complete stock interface with the admin dashboard, use jellyfin-web
-12.0 instead: copy it out of the Jellyfin image into the same directory.
-
-```bash
-cid=$(docker create jellyfin/jellyfin@sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a)
-docker cp "$cid":/jellyfin/jellyfin-web/. ./deadfin/web/
-docker rm "$cid"
-```
+The image includes [deadfin-web](https://github.com/deadfin-org/deadfin-web),
+the web client. To use jellyfin-web instead, see
+[Use jellyfin-web instead](#use-jellyfin-web-instead).
 
 **3. Run Deadfin.** `:alpha` follows the newest release or release
 candidate. To control upgrades, put a tag from the
@@ -134,7 +126,6 @@ services:
       TMDB_API_KEY: "your-key"   # from step 1: movie and TV metadata and art
     volumes:
       - ./deadfin/data:/var/lib/deadfin
-      - ./deadfin/web:/var/lib/deadfin/web:ro
       - /srv/media:/media:ro
 ```
 
@@ -150,7 +141,6 @@ docker run -d --name deadfin --restart unless-stopped \
   -p 8096:8096 -p 7359:7359/udp \
   -e TMDB_API_KEY=your-key \
   -v "$PWD/deadfin/data:/var/lib/deadfin" \
-  -v "$PWD/deadfin/web:/var/lib/deadfin/web:ro" \
   -v /srv/media:/media:ro \
   ghcr.io/deadfin-org/deadfin:alpha
 ```
@@ -203,6 +193,30 @@ With `docker run`: `--gpus all -e NVIDIA_DRIVER_CAPABILITIES=compute,video,utili
 
 </details>
 
+### Use jellyfin-web instead
+
+For the complete stock interface with the admin dashboard, put jellyfin-web
+12.0 in `./deadfin/web`. Copy it out of the Jellyfin image:
+
+```bash
+mkdir -p ./deadfin/web
+cid=$(docker create jellyfin/jellyfin@sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a)
+docker cp "$cid":/jellyfin/jellyfin-web/. ./deadfin/web/
+docker rm "$cid"
+```
+
+Then mount it at `/var/lib/deadfin/web` and restart Deadfin:
+
+```yaml
+    volumes:
+      - ./deadfin/data:/var/lib/deadfin
+      - ./deadfin/web:/var/lib/deadfin/web:ro
+```
+
+When `<data root>/web` holds an `index.html`, Deadfin serves it at `/web/`
+in place of the bundled deadfin-web. Remove the mount to go back to the
+bundled client.
+
 The full guide, with volumes, reverse proxies, adding libraries and
 upgrades, is [docs/alpha/install.md](docs/alpha/install.md).
 
@@ -230,7 +244,7 @@ takes a few flags and environment variables, all optional.
 |---|---|---|
 | `--listen` | `:8096` | TCP address for the HTTP server. |
 | `--program-data` | `DEADFIN_DATA_DIR`, then `JELLYFIN_DATA_DIR`, then `./data` | Data root: config, database, metadata, cache, logs. |
-| `DEADFIN_DATA_DIR` | unset; the image sets `JELLYFIN_DATA_DIR=/var/lib/deadfin` | Data root when `--program-data` is not set. Deadfin serves `/web` from `<data root>/web` when it exists. `JELLYFIN_DATA_DIR` is the accepted fallback when `DEADFIN_DATA_DIR` is not set. Deadfin logs a warning for each set `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`, `JELLYFIN_LOG_DIR` or `JELLYFIN_WEB_DIR` and uses `<data root>/config`, `cache`, `log` and `web`. |
+| `DEADFIN_DATA_DIR` | unset; the image sets `JELLYFIN_DATA_DIR=/var/lib/deadfin` | Data root when `--program-data` is not set. Deadfin serves `/web` from `<data root>/web` when it holds an `index.html`, and from the bundled deadfin-web otherwise. `JELLYFIN_DATA_DIR` is the accepted fallback when `DEADFIN_DATA_DIR` is not set. Deadfin logs a warning for each set `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`, `JELLYFIN_LOG_DIR` or `JELLYFIN_WEB_DIR` and uses `<data root>/config`, `cache`, `log` and `web`. |
 | `--database-url`, `DEADFIN_DATABASE_URL` | empty: SQLite in `<data root>/data/deadfin.db` | A `postgres://user:password@host:5432/dbname` URL selects PostgreSQL. The flag wins over the variable. The maintenance commands read the same setting. |
 | `TMDB_API_KEY` | unset | TMDb v3 key for movie and TV metadata and artwork. |
 | `AUDIODB_API_KEY` | unset | TheAudioDB key for music artwork and bios. |

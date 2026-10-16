@@ -17,8 +17,6 @@ you enable a feature that saves files next to media.
 
 - A Linux host with Docker or Podman (amd64 or arm64).
 - Your media on a path the container can read.
-- A web client: deadfin-web or jellyfin-web 12.0 (see
-  [Web client](#web-client)).
 - A TMDb v3 API key, free at
   [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api).
   Movie and TV metadata and artwork come from TMDb, and each server uses its
@@ -47,7 +45,7 @@ The image is public. It ships the license texts of its third-party components
 | Container path | Mode | Holds |
 |---|---|---|
 | `/var/lib/deadfin` | read-write | Everything Deadfin owns except a PostgreSQL database: `config/`, `data/deadfin.db` (SQLite), `metadata/`, `cache/` (transcodes, images), `log/`, `root/` (library definitions). This is `DEADFIN_DATA_DIR`. Back it up. |
-| `/var/lib/deadfin/web` | read-only | The web client files: deadfin-web or jellyfin-web 12.0. Deadfin serves `/web` from `<DEADFIN_DATA_DIR>/web` when that directory exists. |
+| `/var/lib/deadfin/web` | read-only, optional | A web client that replaces the bundled deadfin-web, for example jellyfin-web 12.0. Deadfin serves `/web` from `<DEADFIN_DATA_DIR>/web` when that directory holds an `index.html`. See [Web client](#web-client). |
 | `/media` (your choice) | read-only | Your media. Mount read-write only if you want subtitle uploads, or images and NFO saved next to media. |
 
 The container runs as UID/GID 65532. The data directory must be writable by
@@ -101,26 +99,19 @@ library definitions.
 
 ## Web client
 
-The image carries no web client. Deadfin serves `<DEADFIN_DATA_DIR>/web` at
-`/web/`. Put one web client there.
+The image includes deadfin-web, the default web client, in
+`/usr/share/deadfin/web`. Deadfin serves it at `/web/`. Each Deadfin release
+pins one deadfin-web release; the startup log line `web client` names the
+directory and the version in use, and `/web/build.json` names the version.
 
 **deadfin-web** (recommended, alpha). It covers first-run setup, browsing,
 TV series, search, playback with track selection, and Quick Connect. It has
 no admin dashboard after setup.
 
-```bash
-mkdir -p ./deadfin/web
-curl -fsSL https://github.com/deadfin-org/deadfin-web/releases/download/v0.3.0-rc.3/deadfin-web-0.3.0-rc.3.tar.gz \
-  | tar -xz --strip-components=1 -C ./deadfin/web
-```
-
-The release page has a `.sha256` file for the tarball and a
-`ghcr.io/deadfin-org/deadfin-web:<tag>` image with the same files at
-`/deadfin-web`.
-
-**jellyfin-web 12.0** (stock, complete, with the admin dashboard). Copy it
-out of the stock Jellyfin image that Deadfin's tests use (tag `12.0-rc2`,
-pinned by digest) once:
+**jellyfin-web 12.0** (stock, complete, with the admin dashboard). To use
+jellyfin-web instead, put its files in `./deadfin/web` and mount that
+directory at `/var/lib/deadfin/web`. Copy the files out of the stock Jellyfin
+image that Deadfin's tests use (tag `12.0-rc2`, pinned by digest) once:
 
 ```bash
 mkdir -p ./deadfin/web
@@ -128,6 +119,19 @@ cid=$(docker create jellyfin/jellyfin@sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6e
 docker cp "$cid":/jellyfin/jellyfin-web/. ./deadfin/web/
 docker rm "$cid"
 ```
+
+```yaml
+    volumes:
+      - ./deadfin/data:/var/lib/deadfin
+      - ./deadfin/web:/var/lib/deadfin/web:ro
+```
+
+When `<DEADFIN_DATA_DIR>/web` holds an `index.html`, Deadfin serves that
+directory in place of the bundled client. The same mount runs a different
+deadfin-web release: extract its tarball from the
+[releases page](https://github.com/deadfin-org/deadfin-web/releases) into
+`./deadfin/web`. A `web` directory without an `index.html` has no effect;
+Deadfin logs a warning and serves the bundled client.
 
 ## Run it
 
@@ -144,7 +148,6 @@ services:
       TMDB_API_KEY: "your-key"   # movie and TV metadata and art
     volumes:
       - ./deadfin/data:/var/lib/deadfin
-      - ./deadfin/web:/var/lib/deadfin/web:ro
       - /srv/media:/media:ro
 ```
 
@@ -175,7 +178,6 @@ services:
       TMDB_API_KEY: "your-key"   # movie and TV metadata and art
     volumes:
       - ./deadfin/data:/var/lib/deadfin
-      - ./deadfin/web:/var/lib/deadfin/web:ro
       - /srv/media:/media:ro
   postgres:
     image: postgres:17

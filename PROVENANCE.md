@@ -92,6 +92,7 @@ under their own licenses:
 | SkiaSharp native library 3.119.4 (container image only; fetched from NuGet by `tools/skia-fetch`) | MIT, plus bundled notices | `third_party/skia-sharp/3.119.4/` |
 | jellyfin-ffmpeg 8.1.1-1 (container image only) | GPL-3.0-or-later build of FFmpeg | `third_party/deadfin-image/NOTICE` |
 | libvips (container image only) | LGPL-2.1-or-later | `third_party/deadfin-image/NOTICE` |
+| deadfin-web (container image only; copied from the `ghcr.io/deadfin-org/deadfin-web` release image that the `Dockerfile` pins by digest) | GPL-2.0-only, plus the bundled font licenses | `third_party/deadfin-image/NOTICE` |
 | Go module dependencies | see each module's `LICENSE` | `go.mod` |
 
 Deadfin runs ffmpeg and ffprobe as separate processes.

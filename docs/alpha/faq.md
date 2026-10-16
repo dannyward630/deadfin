@@ -31,11 +31,11 @@ generic FFmpeg build has no software tone mapper; use
 
 ## Where is the web client?
 
-The image carries no web client. Copy jellyfin-web 12.0 out of the stock
-Jellyfin image once and mount it at `/var/lib/deadfin/web`. Deadfin then
-serves it at `http://<host>:8096/web/`. The commands are in
-[install.md](install.md#web-client). Every other Jellyfin client connects
-with the server URL, as it does to Jellyfin.
+The image includes deadfin-web. Deadfin serves it at
+`http://<host>:8096/web/`. To use jellyfin-web 12.0 instead, put its files in
+`./deadfin/web` and mount that directory at `/var/lib/deadfin/web`. The
+commands are in [install.md](install.md#web-client). Every other Jellyfin
+client connects with the server URL, as it does to Jellyfin.
 
 ## How do I move from Jellyfin?
 

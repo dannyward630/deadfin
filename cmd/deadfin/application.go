@@ -670,6 +670,12 @@ func newApplicationWithListen(ctx context.Context, programData, listen string, o
 	if setupRandom == nil {
 		setupRandom = rand.Reader
 	}
+	bundledWebDir := defaultBundledWebDir
+	if appConfig.bundledWebDir != nil {
+		bundledWebDir = *appConfig.bundledWebDir
+	}
+	webClient := resolveWebClient(paths.Root, bundledWebDir)
+	logWebClient(ctx, slog.Default(), webClient)
 	setupGate, err := newSetupGate(manager, network, setupRandom, slog.Default())
 	if err != nil {
 		return nil, err
@@ -681,7 +687,7 @@ func newApplicationWithListen(ctx context.Context, programData, listen string, o
 		webSocketPort:      listenPort(listen),
 		localAddress:       listen,
 		paths:              paths,
-		webPath:            filepath.Join(paths.Root, "web"),
+		webPath:            webClient.Path,
 		startup:            manager,
 		manager:            manager,
 		clock:              realClock,
@@ -804,6 +810,7 @@ type applicationConfig struct {
 	providerRemoteDoer   remote.Doer
 	setupRandom          io.Reader
 	databaseURL          string
+	bundledWebDir        *string
 }
 
 // scheduledTaskRegistration stores one task definition and its runnable for
@@ -834,6 +841,16 @@ func withProviderRemoteDoer(doer remote.Doer) applicationOption {
 // SQLite in the program-data directory.
 func withDatabaseURL(raw string) applicationOption {
 	return func(config *applicationConfig) { config.databaseURL = raw }
+}
+
+// withBundledWebDir replaces defaultBundledWebDir, the web client directory
+// that /web/ serves when <data root>/web does not exist. An empty path
+// disables the bundled client. Composition tests use it to keep the result
+// independent of the host's /usr/share.
+func withBundledWebDir(path string) applicationOption {
+	return func(config *applicationConfig) {
+		config.bundledWebDir = &path
+	}
 }
 
 // withSetupRandom injects the entropy source of the first-run setup token, so

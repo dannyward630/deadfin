@@ -43,6 +43,13 @@ license. Deadfin runs ffmpeg and ffprobe as separate processes.
   Source: https://www.nuget.org/packages/SkiaSharp.NativeAssets.Linux/3.119.4
   (https://github.com/mono/SkiaSharp)
 
+* deadfin-web (the web client, installed in /usr/share/deadfin/web)
+  GNU General Public License, version 2 only (GPL-2.0-only). The license
+  text is in /usr/share/doc/deadfin/LICENSE. /usr/share/deadfin/web/build.json
+  names the version and the source commit. The bundled fonts keep their own
+  licenses: /usr/share/licenses/deadfin-web/
+  Source: https://github.com/deadfin-org/deadfin-web
+
 * Other Debian packages (the base image, ca-certificates, the libraries
   that libvips and jellyfin-ffmpeg depend on, and intel-opencl-icd on amd64)
   Each package's license is in /usr/share/doc/<package>/copyright. Source

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Fresh, run-owned container. Works with host and container-based Docker clients.
 # Proves the OCI labels, the Jellyfin public info, and the native build
-# identity (GET /deadfin/v1/build) all agree with the build facts.
+# identity (GET /deadfin/v1/build) all agree with the build facts, and that
+# /web/build.json serves the bundled deadfin-web.
 set -euo pipefail
 
 # normalize_dirty maps the accepted DIRTY encodings to
@@ -100,7 +101,15 @@ for ((attempt=0; attempt<60; attempt++)); do
       printf '%s\r\n' "$build_headers" | grep -qi $'^Cache-Control: no-cache\r$' || { echo 'native build endpoint lacks Cache-Control: no-cache' >&2; exit 1; }
       compare_build_identity "$public_body" "$build_body" "$sha" "$version" "$channel" "$dirty" \
         || { echo "native build identity mismatch: expected ($sha, $version, $channel, dirty=$dirty); got $build_body" >&2; exit 1; }
-      echo "smoke passed: $image ($sha, $version, $channel, dirty=$dirty)"
+      # The image bundles deadfin-web; a fresh data root has no web/
+      # override, so /web/ serves the bundled release.
+      web_response=$(probe /web/build.json) || { echo 'bundled web client unreachable' >&2; exit 1; }
+      web_status=${web_response%%$'\r\n'*}
+      web_body=${web_response#*$'\r\n\r\n'}
+      [[ $web_status =~ ^HTTP/1\.[01]\ 200\  ]] || { echo "GET /web/build.json returned: $web_status" >&2; exit 1; }
+      printf '%s' "$web_body" | jq -e '.Component == "deadfin-web" and (.Version | type) == "string"' >/dev/null \
+        || { echo "bundled web client identity mismatch: $web_body" >&2; exit 1; }
+      echo "smoke passed: $image ($sha, $version, $channel, dirty=$dirty; web $(printf '%s' "$web_body" | jq -r .Version))"
       exit 0
     fi
   fi

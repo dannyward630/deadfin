@@ -20,6 +20,14 @@
       "groupName": "Go toolchain"
     },
     {
+      "description": "deadfin-web is the bundled web client (Dockerfile DEADFIN_WEB_IMAGE). Open a pull request as soon as each release, rc included, is published; the release order in docs/releases.md waits on it.",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/deadfin-org/deadfin-web"],
+      "versioning": "semver",
+      "ignoreUnstable": false,
+      "schedule": ["at any time"]
+    },
+    {
       "description": "One pull request per week for GitHub Actions digests.",
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions"

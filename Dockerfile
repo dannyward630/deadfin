@@ -1,6 +1,10 @@
 
 
 ARG SOURCE_DATE_EPOCH
+# deadfin-web, the default web client. The image index is pinned by digest;
+# Renovate opens a bump pull request for each deadfin-web release. Release
+# order: tag deadfin-web, merge the bump, then tag deadfin (docs/releases.md).
+ARG DEADFIN_WEB_IMAGE=ghcr.io/deadfin-org/deadfin-web:v0.3.0-rc.3@sha256:1a1e0d14d19924b2f17b28e3f8e92e6ceb65e40bcc58f1adeb539c7b62b6de57
 FROM --platform=$BUILDPLATFORM golang:1.26.9-bookworm@sha256:d9c68c2c51161e12fd77e4c6320687c9cd86e1af1e3ad6e6cd63ff970641453c AS build
 ARG TARGETOS
 ARG TARGETARCH
@@ -60,6 +64,10 @@ COPY tools/skia-fetch/main.go tools/skia-fetch/
 RUN --mount=type=cache,target=/root/.cache/deadfin-skiasharp \
     CGO_ENABLED=0 go run ./tools/skia-fetch -arch "$TARGETARCH" -cache /root/.cache/deadfin-skiasharp -o /out/libSkiaSharp.so
 
+# The deadfin-web release image holds the static bundle at /deadfin-web. The
+# files do not depend on the architecture.
+FROM --platform=$BUILDPLATFORM ${DEADFIN_WEB_IMAGE} AS deadfin-web
+
 FROM --platform=$TARGETPLATFORM debian:bookworm-slim@sha256:7b140f374b289a7c2befc338f42ebe6441b7ea838a042bbd5acbfca6ec875818 AS runtime
 ARG REVISION
 ARG VERSION
@@ -83,6 +91,11 @@ COPY --from=skiasharp /out/libSkiaSharp.so /usr/local/lib/deadfin/libSkiaSharp.s
 COPY third_party/skia-sharp/3.119.4/ /usr/share/licenses/skia-sharp/3.119.4/
 # Deadfin's license and provenance, and the third-party NOTICE with the source offer.
 COPY LICENSE PROVENANCE.md third_party/deadfin-image/NOTICE /usr/share/doc/deadfin/
+# Deadfin serves this directory at /web/ when <data root>/web does not exist
+# (cmd/deadfin/webclient.go). Its licenses/ folder holds the notices of the
+# bundled fonts; deadfin-web itself is GPL-2.0-only, like Deadfin.
+COPY --from=deadfin-web /deadfin-web/ /usr/share/deadfin/web/
+COPY --from=deadfin-web /deadfin-web/licenses/ /usr/share/licenses/deadfin-web/
 FROM runtime AS image-test
 COPY --from=image-test-build --chown=65532:65532 /out/images.test /opt/images/images.test
 COPY --chown=65532:65532 internal/images/testdata/ /opt/images/testdata/
