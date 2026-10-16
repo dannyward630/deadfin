@@ -56,6 +56,18 @@ v0.3.0 is the first public alpha of Deadfin.
   logs a warning for each set `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`,
   `JELLYFIN_LOG_DIR` or `JELLYFIN_WEB_DIR`.
 
+### Security
+
+- `POST /Sessions/Capabilities` and `POST /Sessions/Capabilities/Full`
+  refuse another user's session ID from a non-administrator caller (D-67).
+- `/web/` responses send `Referrer-Policy: no-referrer` and
+  `X-Content-Type-Options: nosniff`. When the served client is deadfin-web,
+  they also send a restrictive `Content-Security-Policy` with
+  `frame-ancestors 'none'` (D-68).
+- The one-time setup cookie is `Secure` when a `KnownProxies` peer reports
+  HTTPS in `X-Forwarded-Proto`. Behind a TLS-terminating proxy, list the
+  proxy in `KnownProxies` before first start (D-53).
+
 ### Fixed
 
 - Comma-delimited enum query parameters drop unknown values, as upstream
@@ -67,6 +79,9 @@ v0.3.0 is the first public alpha of Deadfin.
   decode the HDR10 base layer (D-65).
 - The H.264 level in the HLS master playlist matches the level the encoder
   writes (D-66).
+- The HLS throttler and the transcode cache limits pause ffmpeg again.
+  jellyfin-ffmpeg 8 does not pause on the old key, so a fast remux kept writing
+  segments far ahead of playback.
 
 ## [0.3.0-rc.3] - 2026-10-14
 

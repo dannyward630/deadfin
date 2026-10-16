@@ -252,10 +252,14 @@ Any proxy that works for Jellyfin works for Deadfin. Forward WebSockets on
 `/socket`, and do not buffer `/Videos/` and `/Audio/` responses.
 
 - Use the setup link above for the first run.
-- Deadfin does not read `X-Forwarded-For` and ignores `KnownProxies`. Every
-  client behind the proxy shares the proxy's address. This affects the
-  dashboard's client addresses, the local-network bitrate rules, and the
-  QuickConnect limit of 16 open requests per address (D-55).
+- List the proxy's address or subnet in `KnownProxies` (Dashboard →
+  Networking, or `network.xml`) before the first start. The one-time setup
+  cookie is then `Secure` when the proxy sends `X-Forwarded-Proto: https`
+  (D-53).
+- Client identity stays the proxy's address: every client behind the proxy
+  shares it. This affects the dashboard's client addresses, the
+  local-network bitrate rules, and the QuickConnect limit of 16 open
+  requests per address (D-55).
 - To serve Deadfin under a path such as `/jellyfin`, set the base URL in
   Dashboard → Networking and restart.
 

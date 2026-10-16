@@ -368,10 +368,12 @@ Requests through a proxy or with forwarded-address headers require the
 one-time setup link printed in Deadfin's log at `/deadfin/v1/setup?token=...`.
 Treat the URL as a credential: do not put it in chat, analytics, screenshots,
 or public logs. It changes on restart while setup is pending. Finish setup
-before exposing the service beyond the trusted network. Deadfin currently
-does not use `X-Forwarded-For` or `KnownProxies` for client identity; behind a
-proxy, it sees the proxy address for client-address rules and QuickConnect
-limits. Apply external rate limits at the proxy if needed.
+before exposing the service beyond the trusted network. Behind a
+TLS-terminating proxy, list the proxy in `KnownProxies` before the first
+start, so the setup cookie is `Secure` when the proxy sends
+`X-Forwarded-Proto: https`. Client identity stays the proxy address for
+client-address rules and QuickConnect limits. Apply external rate limits at
+the proxy if needed.
 
 Use individual accounts. Give normal viewers only the libraries and
 administrative rights they need. Keep API keys for automation separate and
