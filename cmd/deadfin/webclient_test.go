@@ -177,3 +177,49 @@ func TestApplicationServesWebClientFromDataRootThenBundled(t *testing.T) {
 		}
 	})
 }
+
+// TestApplicationWebClientHardeningHeaders checks the /web/ headers for the
+// bundled directory and the <data root>/web override (issue #602, D-68).
+// deadfin-web gets the Content-Security-Policy; jellyfin-web, which has no
+// build.json, does not. Both get Referrer-Policy and nosniff.
+func TestApplicationWebClientHardeningHeaders(t *testing.T) {
+	const wantCSP = "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+	for _, tc := range []struct {
+		name     string
+		override string // build.json for <data root>/web; "-" means no override
+		wantCSP  string
+	}{
+		{name: "bundled deadfin-web", override: "-", wantCSP: wantCSP},
+		{name: "override deadfin-web", override: testWebBuildJSON, wantCSP: wantCSP},
+		{name: "override jellyfin-web", override: "", wantCSP: ""},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			root := filepath.Join(t.TempDir(), "program-data")
+			bundled := t.TempDir()
+			writeWebClient(t, bundled, "deadfin-web", testWebBuildJSON)
+			if tc.override != "-" {
+				writeWebClient(t, filepath.Join(root, "web"), "override", tc.override)
+			}
+			app := newCompositionApplication(t, root, withBundledWebDir(bundled))
+			for _, path := range []string{"/web/", "/web/index.html"} {
+				recorder := httptest.NewRecorder()
+				request := httptest.NewRequest(http.MethodGet, path, nil)
+				request.RemoteAddr = "127.0.0.1:40000"
+				app.Router().ServeHTTP(recorder, request)
+				if recorder.Code != http.StatusOK {
+					t.Fatalf("GET %s = %d, want 200", path, recorder.Code)
+				}
+				header := recorder.Header()
+				if got := header.Get("Content-Security-Policy"); got != tc.wantCSP {
+					t.Errorf("GET %s Content-Security-Policy = %q, want %q", path, got, tc.wantCSP)
+				}
+				if got := header.Get("Referrer-Policy"); got != "no-referrer" {
+					t.Errorf("GET %s Referrer-Policy = %q, want no-referrer", path, got)
+				}
+				if got := header.Get("X-Content-Type-Options"); got != "nosniff" {
+					t.Errorf("GET %s X-Content-Type-Options = %q, want nosniff", path, got)
+				}
+			}
+		})
+	}
+}

@@ -354,3 +354,44 @@ func TestRobotsRouteAbsentWithoutWebDirectory(t *testing.T) {
 		t.Fatalf("status = %d, want 404 with no web directory", rec.Code)
 	}
 }
+
+// TestWebHardeningHeaders checks that every /web/ response carries
+// Referrer-Policy and nosniff, and that the Content-Security-Policy is sent
+// only when the client is deadfin-web (divergence D-68).
+func TestWebHardeningHeaders(t *testing.T) {
+	const wantCSP = "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+	for _, tc := range []struct {
+		component string
+		wantCSP   string
+	}{
+		{component: "deadfin-web", wantCSP: wantCSP},
+		{component: "", wantCSP: ""},
+		{component: "other-web", wantCSP: ""},
+	} {
+		t.Run("component="+tc.component, func(t *testing.T) {
+			paths, err := config.NewPaths(t.TempDir())
+			if err != nil {
+				t.Fatalf("derive paths: %v", err)
+			}
+			webPath := filepath.Join(paths.Root, "web")
+			writeWebAsset(t, webPath, "index.html", webIndexHTML)
+			writeWebAsset(t, webPath, "main.js", "console.log('deadfin');")
+			rt := router.New()
+			handlers.RegisterSystemWithConfig(rt, config.DefaultServerIdentity(), completedWebStartup{}, handlers.SystemInfoConfig{
+				Paths: paths, WebPath: webPath, WebComponent: tc.component,
+			})
+			for _, path := range []string{"/web/", "/web/index.html", "/web/main.js", "/web/missing.js"} {
+				rec := issueWebRequest(t, rt, path)
+				if got := rec.Header().Get("Content-Security-Policy"); got != tc.wantCSP {
+					t.Errorf("GET %s Content-Security-Policy = %q, want %q", path, got, tc.wantCSP)
+				}
+				if got := rec.Header().Get("Referrer-Policy"); got != "no-referrer" {
+					t.Errorf("GET %s Referrer-Policy = %q, want no-referrer", path, got)
+				}
+				if got := rec.Header().Get("X-Content-Type-Options"); got != "nosniff" {
+					t.Errorf("GET %s X-Content-Type-Options = %q, want nosniff", path, got)
+				}
+			}
+		})
+	}
+}

@@ -21,15 +21,16 @@ import (
 // Jellyfin.Server/Startup.cs:200-227 (UseDefaultFiles + UseStaticFiles mounted
 // before authentication) and BaseUrlRedirectionMiddleware.cs (/ redirects to
 // web/). It is a no-op when webPath is empty or not an existing directory, so
-// asset-less deployments keep today's route table.
-func registerWeb(rt *router.Router, webPath string) {
+// asset-less deployments keep today's route table. component is the client's
+// build.json Component; it selects the Content-Security-Policy.
+func registerWeb(rt *router.Router, webPath, component string) {
 	if webPath == "" {
 		return
 	}
 	if info, err := os.Stat(webPath); err != nil || !info.IsDir() {
 		return
 	}
-	h := web{root: webPath}
+	h := web{root: webPath, csp: component == deadfinWebComponent}
 
 	rt.Handle(http.MethodGet, "/", router.Route{
 		OperationID: "SHADOW:RedirectRootToWebClient",
@@ -51,6 +52,34 @@ func registerWeb(rt *router.Router, webPath string) {
 
 type web struct {
 	root string
+	// csp is true when the served client is deadfin-web, which runs under
+	// webContentSecurityPolicy. jellyfin-web needs inline script and other
+	// origins, so it gets no policy.
+	csp bool
+}
+
+// deadfinWebComponent is the build.json Component of deadfin-web.
+const deadfinWebComponent = "deadfin-web"
+
+// webContentSecurityPolicy is the policy that the deadfin-web README nginx
+// site sends. Pinned Startup.cs:200-227 sends no hardening headers on /web;
+// Deadfin sends this policy, Referrer-Policy and X-Content-Type-Options
+// (divergence D-68).
+const webContentSecurityPolicy = "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; " +
+	"img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; " +
+	"object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+
+// setHardeningHeaders sets the browser hardening headers on a /web/
+// response. no-referrer keeps api_key media URLs out of the Referer header.
+// nosniff is safe for any client: webContentType gives every script, style
+// and font its media type.
+func (h web) setHardeningHeaders(w http.ResponseWriter) {
+	header := w.Header()
+	header.Set("Referrer-Policy", "no-referrer")
+	header.Set("X-Content-Type-Options", "nosniff")
+	if h.csp {
+		header.Set("Content-Security-Policy", webContentSecurityPolicy)
+	}
 }
 
 // redirectRoot mirrors upstream BaseUrlRedirectionMiddleware with an empty
@@ -118,6 +147,7 @@ func absoluteLocation(r *http.Request, path string) string {
 }
 
 func (h web) serve(w http.ResponseWriter, r *http.Request) {
+	h.setHardeningHeaders(w)
 	rest := chi.URLParam(r, "*")
 	// chi routes on RawPath when the request path was percent-encoded, so the
 	// wildcard may arrive encoded; decode before containment and lookup.

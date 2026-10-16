@@ -688,6 +688,7 @@ func newApplicationWithListen(ctx context.Context, programData, listen string, o
 		localAddress:       listen,
 		paths:              paths,
 		webPath:            webClient.Path,
+		webComponent:       webClient.Component,
 		startup:            manager,
 		manager:            manager,
 		clock:              realClock,
@@ -1912,6 +1913,7 @@ type routeServices struct {
 	identity           config.ServerIdentity
 	paths              config.Paths
 	webPath            string
+	webComponent       string
 	systemIdentity     func() config.ServerIdentity
 	webSocketPort      int
 	localAddress       string
@@ -1988,8 +1990,9 @@ func registerRoutes(rt *router.Router, services routeServices) {
 	var _ handlers.ItemLookupSearcher = identify.LookupAdapter{}
 	var _ handlers.RemoteImagesService = identify.RemoteImagesAdapter{}
 	infoConfig := handlers.SystemInfoConfig{
-		Paths:   services.paths,
-		WebPath: services.webPath,
+		Paths:        services.paths,
+		WebPath:      services.webPath,
+		WebComponent: services.webComponent,
 		CastReceiverApplications: func() []config.CastReceiverApplication {
 			if services.manager == nil {
 				return nil

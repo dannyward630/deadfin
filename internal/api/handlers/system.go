@@ -27,8 +27,11 @@ func RegisterSystem(rt *router.Router, identity config.ServerIdentity, startup i
 // SystemInfoConfig supplies process-owned paths, capabilities, and live
 // configuration accessors for SystemInfo responses.
 type SystemInfoConfig struct {
-	Paths                             config.Paths
-	WebPath                           string
+	Paths   config.Paths
+	WebPath string
+	// WebComponent is the build.json Component of the client at WebPath, or
+	// empty when the client has no build.json (jellyfin-web).
+	WebComponent                      string
 	CastReceiverApplications          func() []config.CastReceiverApplication
 	SupportsLibraryMonitor            bool
 	WebSocketPortNumber               int
@@ -75,7 +78,7 @@ func RegisterSystemWithConfig(rt *router.Router, identity config.ServerIdentity,
 		Anonymous:   true,
 	}, h.ping)
 
-	registerWeb(rt, infoConfig.effectiveWebPath())
+	registerWeb(rt, infoConfig.effectiveWebPath(), infoConfig.WebComponent)
 }
 
 type system struct {
