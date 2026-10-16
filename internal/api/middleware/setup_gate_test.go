@@ -25,7 +25,7 @@ func (privateNetwork) IsInLocalNetwork(address netip.Addr) bool {
 func TestSetupGateConfinesPendingSetup(t *testing.T) {
 	const token = "setup-token"
 	startup := &setupStartupStub{}
-	gate := middleware.NewSetupGate(startup, privateNetwork{}, token)
+	gate := middleware.NewSetupGate(startup, privateNetwork{}, nil, token)
 	reached := func(route router.Route, configure func(*http.Request)) int {
 		handler := gate.Wrap(route, http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) }))
 		request := httptest.NewRequest(http.MethodGet, "/", nil)
@@ -89,10 +89,10 @@ func TestSetupGateConfinesPendingSetup(t *testing.T) {
 }
 
 func TestSetupGateTokenValidation(t *testing.T) {
-	if middleware.NewSetupGate(&setupStartupStub{}, privateNetwork{}, "").ValidToken("") {
+	if middleware.NewSetupGate(&setupStartupStub{}, privateNetwork{}, nil, "").ValidToken("") {
 		t.Fatal("an empty token must never validate")
 	}
-	gate := middleware.NewSetupGate(&setupStartupStub{}, privateNetwork{}, "abc")
+	gate := middleware.NewSetupGate(&setupStartupStub{}, privateNetwork{}, nil, "abc")
 	if !gate.ValidToken("abc") || gate.ValidToken("abcd") || gate.ValidToken("abd") {
 		t.Fatal("ValidToken accepted or rejected the wrong candidates")
 	}

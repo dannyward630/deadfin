@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/deadfin-org/deadfin/internal/api/middleware"
+	"github.com/deadfin-org/deadfin/internal/config"
 )
 
 const setupTestToken = "0000000000000000000000000000000000000000000000000000000000000000"
@@ -105,5 +106,55 @@ func TestFreshApplicationConfinesFirstRunSetupToLocalPeersOrToken(t *testing.T) 
 	}
 	if got := setupGateRequest(handler, http.MethodGet, "/deadfin/v1/setup?token="+setupTestToken, "", remote, nil).Code; got != http.StatusNotFound {
 		t.Fatalf("completed unlock status = %d, want 404", got)
+	}
+}
+
+// TestFreshApplicationSetupCookieSecureBehindKnownProxy covers issue #603.
+// The setup cookie carries Secure when a KnownProxies peer forwards an HTTPS
+// request, not when an unlisted peer claims HTTPS, and not on a direct
+// plain-HTTP LAN request, whose cookie still opens the wizard.
+func TestFreshApplicationSetupCookieSecureBehindKnownProxy(t *testing.T) {
+	app := newCompositionApplication(t, filepath.Join(t.TempDir(), "program-data"), withSetupRandom(bytes.NewReader(make([]byte, 32))))
+	handler := app.Router()
+	unlockCookie := func(t *testing.T, remote string, configure func(*http.Request)) *http.Cookie {
+		t.Helper()
+		unlock := setupGateRequest(handler, http.MethodGet, "/deadfin/v1/setup?token="+setupTestToken, "", remote, configure)
+		cookies := unlock.Result().Cookies()
+		if unlock.Code != http.StatusSeeOther || len(cookies) != 1 {
+			t.Fatalf("unlock from %s = %d cookies %+v, want 303 with one cookie", remote, unlock.Code, cookies)
+		}
+		return cookies[0]
+	}
+	httpsProxy := func(request *http.Request) {
+		request.Header.Set("X-Forwarded-For", "203.0.113.9")
+		request.Header.Set("X-Forwarded-Proto", "https")
+	}
+
+	if cookie := unlockCookie(t, "10.42.0.7:4000", httpsProxy); cookie.Secure {
+		t.Fatal("cookie from an unlisted proxy is Secure, want plain while KnownProxies is empty")
+	}
+	direct := unlockCookie(t, "192.168.1.20:5000", nil)
+	if direct.Secure {
+		t.Fatal("cookie for a direct plain-HTTP LAN request is Secure")
+	}
+	wizard := setupGateRequest(handler, http.MethodGet, "/Startup/User", "", "192.168.1.20:5000", func(request *http.Request) { request.AddCookie(direct) })
+	if wizard.Code != http.StatusOK {
+		t.Fatalf("direct LAN GET /Startup/User with the cookie = %d, want 200", wizard.Code)
+	}
+
+	if err := app.manager.UpdateNetwork(t.Context(), func(network *config.NetworkConfiguration) error {
+		network.KnownProxies = []string{"10.42.0.0/16"}
+		return nil
+	}); err != nil {
+		t.Fatalf("UpdateNetwork: %v", err)
+	}
+	if cookie := unlockCookie(t, "10.42.0.7:4000", httpsProxy); !cookie.Secure {
+		t.Fatal("cookie from a known proxy with X-Forwarded-Proto https is not Secure")
+	}
+	if cookie := unlockCookie(t, "192.168.1.20:5000", httpsProxy); cookie.Secure {
+		t.Fatal("cookie from a peer outside KnownProxies is Secure")
+	}
+	if cookie := unlockCookie(t, "192.168.1.20:5000", nil); cookie.Secure {
+		t.Fatal("cookie for a direct plain-HTTP LAN request is Secure with KnownProxies set")
 	}
 }

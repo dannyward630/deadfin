@@ -214,8 +214,9 @@ func writeAuthorizationError(w http.ResponseWriter, status int) {
 }
 
 // NormalizeClientAddress derives the transport peer address without trusting
-// forwarded headers. Proxy forwarding remains unsupported until a trusted-proxy
-// policy is explicitly composed.
+// forwarded headers. Forwarded client addresses remain unsupported; only the
+// setup cookie reads a forwarded scheme, from KnownProxies peers
+// (ForwardedScheme).
 func NormalizeClientAddress(remoteAddress string) netip.Addr {
 	host, _, err := net.SplitHostPort(remoteAddress)
 	if err != nil {

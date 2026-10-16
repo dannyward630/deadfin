@@ -37,7 +37,7 @@ func RegisterSetupUnlock(rt *router.Router, gate *middleware.SetupGate) {
 			Value:    *query.Token,
 			Path:     "/",
 			HttpOnly: true,
-			Secure:   r.TLS != nil,
+			Secure:   gate.SecureCookie(r),
 			SameSite: http.SameSiteStrictMode,
 		})
 		// A relative target keeps any BaseUrl prefix: the browser resolves it

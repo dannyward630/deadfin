@@ -61,13 +61,29 @@ type SetupNetwork interface {
 type SetupGate struct {
 	startup setupStartup
 	network SetupNetwork
+	proxies KnownProxies
 	token   string
 }
 
 // NewSetupGate constructs the first-run gate. token is the one-time secret the
 // composition root logs at startup; an empty token disables the cookie path.
-func NewSetupGate(startup setupStartup, network SetupNetwork, token string) *SetupGate {
-	return &SetupGate{startup: startup, network: network, token: token}
+// proxies, when not nil, lets SecureCookie honor X-Forwarded-Proto from a
+// known proxy.
+func NewSetupGate(startup setupStartup, network SetupNetwork, proxies KnownProxies, token string) *SetupGate {
+	return &SetupGate{startup: startup, network: network, proxies: proxies, token: token}
+}
+
+// SecureCookie reports whether the setup cookie for request needs the Secure
+// attribute: the client reached Deadfin over HTTPS, directly or through a
+// known proxy that terminates TLS and sends X-Forwarded-Proto: https. A
+// direct plain-HTTP request gets a cookie without Secure, so first-run setup
+// over plain HTTP on the LAN still works.
+func (gate *SetupGate) SecureCookie(request *http.Request) bool {
+	var proxies KnownProxies
+	if gate != nil {
+		proxies = gate.proxies
+	}
+	return RequestIsHTTPS(request, proxies)
 }
 
 // Pending reports whether the startup wizard is not complete.

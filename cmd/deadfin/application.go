@@ -676,7 +676,7 @@ func newApplicationWithListen(ctx context.Context, programData, listen string, o
 	}
 	webClient := resolveWebClient(paths.Root, bundledWebDir)
 	logWebClient(ctx, slog.Default(), webClient)
-	setupGate, err := newSetupGate(manager, network, setupRandom, slog.Default())
+	setupGate, err := newSetupGate(manager, network, &knownProxies{manager: manager}, setupRandom, slog.Default())
 	if err != nil {
 		return nil, err
 	}
