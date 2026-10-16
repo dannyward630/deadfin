@@ -509,7 +509,7 @@ func newApplicationWithListen(ctx context.Context, programData, listen string, o
 		Paths:          virtualPaths,
 		Encoding:       transcodeEncoding,
 	})
-	transcodes, err = ffmpeg.NewTranscodeManager("ffmpeg", paths.Transcodes, ffmpeg.TranscodeManagerOptions{Clock: realClock, LogDirectory: paths.Log, Logger: slog.Default()})
+	transcodes, err = ffmpeg.NewTranscodeManager("ffmpeg", paths.Transcodes, ffmpeg.TranscodeManagerOptions{Clock: realClock, LogDirectory: paths.Log, Logger: slog.Default(), PKeySupported: appConfig.encodingCapabilities.SupportsPKeyPause})
 	if err != nil {
 		return nil, fmt.Errorf("open progressive transcode manager: %w", err)
 	}
@@ -1587,6 +1587,7 @@ func encodingCapabilities(probed ffmpeg.Capabilities, nvidia ffmpeg.NvidiaCapabi
 		SupportsSubtitleExtraction:     containsCapability(probed.Filters, "subtitles"),
 		SupportsTonemapX:               containsCapability(probed.Filters, "tonemapx"),
 		SupportsOverlayCudaAlphaFormat: nvidia.OverlayCudaAlphaFormat,
+		SupportsPKeyPause:              probed.PKeyPause,
 		Decoders:                       append([]string(nil), probed.Decoders...),
 		Filters:                        append([]string(nil), probed.Filters...),
 	}

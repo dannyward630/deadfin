@@ -138,6 +138,10 @@ type Capabilities struct {
 	// SupportsOverlayCudaAlphaFormat is the OverlayCudaAlphaFormat filter
 	// option probe (EncoderValidator.cs:167).
 	SupportsOverlayCudaAlphaFormat bool
+	// SupportsPKeyPause is the "p" runtime-key probe
+	// (MediaEncoder.cs:236). The transcode throttler pauses ffmpeg with "p"
+	// when it is true and with "c" otherwise.
+	SupportsPKeyPause bool
 }
 
 // BuildProgressiveArgs builds logical ffmpeg argv tokens for a progressive video

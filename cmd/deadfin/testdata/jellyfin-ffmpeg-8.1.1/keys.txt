@@ -1,0 +1,18 @@
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Video: wrapped_avframe, yuv420p(progressive), 1x1 [SAR 1:1 DAR 1:1], q=2-31, 200 kb/s, 25 fps, 25 tbn
+    Metadata:
+      encoder         : Lavc62.28.101 wrapped_avframe
+key    function
+?      show this help
++      increase verbosity
+-      decrease verbosity
+c      Send command to first matching filter supporting it
+C      Send/Queue command to all matching filters
+h      dump packets/hex press to cycle through the 3 states
+p      pause transcoding
+q      quit
+u      unpause transcoding
+s      Show QP histogram

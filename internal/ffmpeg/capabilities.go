@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os/exec"
 	"regexp"
 	"sort"
@@ -72,7 +73,15 @@ type Capabilities struct {
 	Filters   []string
 	BSFs      []string
 	HWAccels  []string
+	// PKeyPause reports the "p" pause and "u" unpause runtime keys of
+	// jellyfin-ffmpeg. Without them, the throttler falls back to the "c" key,
+	// which does not stop the threaded pipeline of FFmpeg 7 and later.
+	PKeyPause bool
 }
+
+// pKeyPauseHelp is the runtime-key help row that MediaEncoder.SetFFmpegPath
+// checks (MediaEncoder.cs:236).
+const pKeyPauseHelp = "p      pause transcoding"
 
 // ProbeCapabilities interrogates an ffmpeg binary and enforces the pinned
 // EncoderValidator.cs minimum library versions.
@@ -112,7 +121,22 @@ func ProbeCapabilitiesWithOptions(ctx context.Context, path string, options Capa
 		}
 		*request.into = parseListedCapabilities(string(output), request.arg)
 	}
+	caps.PKeyPause = probeRuntimeKey(ctx, path, options, pKeyPauseHelp)
 	return caps, nil
+}
+
+// probeRuntimeKey ports EncoderValidator.CheckSupportedRuntimeKey
+// (EncoderValidator.cs:545-568): it sends "?" to a null encode and searches the
+// printed key help. The "q" that follows ends the encode after the help, so the
+// probe does not wait for the input duration. A failed probe reports no
+// support, as upstream does.
+func probeRuntimeKey(ctx context.Context, path string, options CapabilityOptions, keyHelp string) bool {
+	output, err := runProbeCommandInput(ctx, path, options, true, strings.NewReader("?q"),
+		"-hide_banner", "-f", "lavfi", "-i", "nullsrc=s=1x1:d=10000", "-f", "null", "-")
+	if err != nil {
+		return false
+	}
+	return bytes.Contains(output, []byte(keyHelp))
 }
 
 func normalizeCapabilityOptions(options CapabilityOptions) CapabilityOptions {
@@ -133,6 +157,11 @@ func runCapabilityCommand(ctx context.Context, path string, options CapabilityOp
 // nonzero exit still returns the captured output, as upstream
 // EncoderValidator.GetProcessOutput does.
 func runProbeCommand(ctx context.Context, path string, options CapabilityOptions, allowExitStatus bool, args ...string) ([]byte, error) {
+	return runProbeCommandInput(ctx, path, options, allowExitStatus, nil, args...)
+}
+
+// runProbeCommandInput is runProbeCommand with stdin read from input.
+func runProbeCommandInput(ctx context.Context, path string, options CapabilityOptions, allowExitStatus bool, input io.Reader, args ...string) ([]byte, error) {
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}
@@ -145,6 +174,7 @@ func runProbeCommand(ctx context.Context, path string, options CapabilityOptions
 	stdout.limit = options.MaxOutput
 	command.Stdout = &stdout
 	command.Stderr = &stdout // version/help headers are emitted on stderr by some builds.
+	command.Stdin = input
 	if err := commandCtx.Err(); err != nil {
 		return nil, err
 	}

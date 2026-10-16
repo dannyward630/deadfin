@@ -15,7 +15,9 @@ import (
 )
 
 // fakeJellyfinFFmpeg returns an ffmpeg that prints the jellyfin-ffmpeg 8.1.1
-// probe output from testdata. The probe calls "ffmpeg -nostdin -<list>".
+// probe output from testdata. The list probes call "ffmpeg -nostdin -<list>".
+// The runtime-key probe calls "ffmpeg -hide_banner -f lavfi ..." and gets the
+// key help that jellyfin-ffmpeg prints for "?".
 func fakeJellyfinFFmpeg(t *testing.T) string {
 	t.Helper()
 	data, err := filepath.Abs("testdata/jellyfin-ffmpeg-8.1.1")
@@ -23,7 +25,7 @@ func fakeJellyfinFFmpeg(t *testing.T) string {
 		t.Fatal(err)
 	}
 	path := filepath.Join(t.TempDir(), "ffmpeg")
-	script := "#!/bin/sh\nexec cat \"" + data + "/${2#-}.txt\"\n"
+	script := "#!/bin/sh\n[ \"$2\" = -f ] && exec cat \"" + data + "/keys.txt\"\nexec cat \"" + data + "/${2#-}.txt\"\n"
 	if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -42,6 +44,11 @@ func TestJellyfinFFmpegProbeSelectsFullQSVPipeline(t *testing.T) {
 	caps := encodingCapabilities(probed, ffmpeg.NvidiaCapabilities{})
 	if !caps.SupportsTonemapX || !caps.SupportsSubtitleExtraction {
 		t.Fatalf("probe lost tonemapx or subtitles: %#v", caps.Filters)
+	}
+	// jellyfin-ffmpeg has the "p" pause key. Without it the throttler sends
+	// "c", which does not pause the threaded FFmpeg 8 pipeline (#523).
+	if !caps.SupportsPKeyPause {
+		t.Fatal("probe lost the jellyfin-ffmpeg p-key pause")
 	}
 
 	options := config.DefaultEncodingOptions()

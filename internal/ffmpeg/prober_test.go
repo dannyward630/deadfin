@@ -724,6 +724,56 @@ func TestProbeCapabilitiesEnforcesPinnedMinimumAndEnumeratesCapabilities(t *test
 	}
 }
 
+// MediaEncoder.SetFFmpegPath enables the "p" pause key only when the "?" help
+// of the binary lists it (MediaEncoder.cs:236). The probe sends "?" and then
+// "q", so the null encode ends after the help.
+func TestProbeCapabilitiesDetectsPKeyPauseFromRuntimeHelp(t *testing.T) {
+	for _, test := range []struct {
+		name string
+		help string
+		want bool
+	}{
+		{name: "jellyfin-ffmpeg", help: "c      Send command to first matching filter supporting it\np      pause transcoding\nq      quit\nu      unpause transcoding", want: true},
+		{name: "stock ffmpeg", help: "c      Send command to first matching filter supporting it\nq      quit"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			stdin := filepath.Join(t.TempDir(), "stdin")
+			path := writeFakeFFmpegBody(t, `case "$2" in
+-version) printf '%s\n' "$FFMPEG_VERSION" ;;
+-f) cat > "$KEYS_STDIN"; printf '%s\n' "$KEYS_HELP" >&2; exit 0 ;;
+*) exit 0 ;;
+esac`)
+			t.Setenv("FFMPEG_VERSION", qualifyingFFmpegVersion())
+			t.Setenv("KEYS_STDIN", stdin)
+			t.Setenv("KEYS_HELP", test.help)
+			caps, err := ProbeCapabilitiesWithOptions(context.Background(), path, CapabilityOptions{Timeout: fixtureTimeout, MaxOutput: 4096})
+			if err != nil {
+				t.Fatal(err)
+			}
+			if caps.PKeyPause != test.want {
+				t.Fatalf("PKeyPause = %t, want %t", caps.PKeyPause, test.want)
+			}
+			if got, err := os.ReadFile(stdin); err != nil || string(got) != "?q" {
+				t.Fatalf("runtime-key probe stdin = %q (%v), want %q", got, err, "?q")
+			}
+		})
+	}
+}
+
+// A binary that fails the runtime-key probe keeps the "c" fallback and still
+// starts, as a failed CheckSupportedRuntimeKey returns false upstream.
+func TestProbeCapabilitiesTreatsFailedRuntimeKeyProbeAsUnsupported(t *testing.T) {
+	path := writeFakeFFmpeg(t)
+	t.Setenv("FFMPEG_VERSION", qualifyingFFmpegVersion())
+	caps, err := ProbeCapabilitiesWithOptions(context.Background(), path, CapabilityOptions{Timeout: fixtureTimeout, MaxOutput: 4096})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if caps.PKeyPause {
+		t.Fatal("PKeyPause = true for a binary that exits 23 on the runtime-key probe")
+	}
+}
+
 func TestProbeCapabilitiesReapsDescendantsAfterDeadline(t *testing.T) {
 	parentPID, childPID := filepath.Join(t.TempDir(), "cap-parent.pid"), filepath.Join(t.TempDir(), "cap-child.pid")
 	t.Setenv("PARENT_PID", parentPID)
