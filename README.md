@@ -6,7 +6,8 @@
 
 <p align="center">
   <strong>Our Go port of Jellyfin.</strong><br>
-  A media server that speaks the Jellyfin API, so your Jellyfin apps just work.
+  Use your Jellyfin apps with Deadfin. Most familiar flows work unchanged; see
+  the <a href="docs/alpha/client-matrix.md">client matrix</a> for tested paths and known alpha gaps.
 </p>
 
 <p align="center">
@@ -22,7 +23,9 @@
 Deadfin is a media server written in Go. It serves the Jellyfin 12.0.0 HTTP
 and WebSocket API, so stock Jellyfin clients connect to it the same way they
 connect to Jellyfin. Point jellyfin-web, Swiftfin, Jellyfin for Android TV or
-Infuse at it, and browse and play your library as before.
+Infuse at it, and browse and play your library. The
+[client matrix](docs/alpha/client-matrix.md) shows what each app was tested
+with and the known alpha gaps.
 
 ## Why Deadfin
 
@@ -30,8 +33,8 @@ Infuse at it, and browse and play your library as before.
   multi-arch (amd64 and arm64) and carries everything it needs, including
   Jellyfin's own FFmpeg build.
 - **Works with the Jellyfin apps you already have.** jellyfin-web 12.0,
-  Swiftfin, Jellyfin for Android TV and Infuse are verified. See
-  [Clients](#clients).
+  Swiftfin and Infuse are tested with the real apps; Jellyfin for Android TV
+  with its own requests. See [Clients](#clients).
 - **Hardware transcoding.** Intel QSV and VAAPI (iHD driver) and NVIDIA
   NVENC on Linux, with HDR10, HLG and Dolby Vision tone mapping. Software
   transcoding works on any host.
@@ -69,6 +72,18 @@ New to Deadfin? The [FAQ](docs/alpha/faq.md) answers the first questions:
 missing artwork, HDR transcodes, the web client, GPUs and reverse proxies.
 All guides are listed in the [documentation index](docs/README.md).
 
+## Choose your client
+
+Use your Jellyfin apps with Deadfin. Pick a web interface for the browser and
+for server setup, then add the apps you already use.
+
+| Client | Maturity | Install | Biggest gap |
+|---|---|---|---|
+| [deadfin-web](https://github.com/deadfin-org/deadfin-web) | Recommended. Experimental alpha. | [Quick start](#quick-start), step 2: a [release](https://github.com/deadfin-org/deadfin-web/releases) in `./deadfin/web`. Deadfin serves it at `/web/`. | No admin dashboard after first-run setup. For users, library changes and server settings, put jellyfin-web in `./deadfin/web` instead. |
+| jellyfin-web 12.0 | Stock and complete: every page, including the dashboard. | [Quick start](#quick-start), step 2: copy it out of the Jellyfin image. | Some dashboard pages (devices, logs, NFO settings) show errors. |
+| Jellyfin apps: Swiftfin, Infuse, Jellyfin for Android and Android TV, and others | Unchanged stock apps. | Add the server by its URL, as for Jellyfin. | Per app and per path: see the [client matrix](docs/alpha/client-matrix.md). |
+| [SharkParty](https://github.com/deadfin-org/SharkParty) | Pre-alpha tvOS app, a Swiftfin fork. | Build from source with Xcode. | No App Store or TestFlight build. |
+
 ## Quick start
 
 Deadfin listens on TCP **8096** and answers client discovery on UDP
@@ -82,26 +97,35 @@ the image carries no shared one. A free v3 key takes a few minutes at
 Without it, movies and shows show their file names and no artwork
 (see D-11 in [known differences](docs/alpha/known-differences.md)).
 
-**2. Get a web client.** The image carries no web client. Copy jellyfin-web
-12.0 out of the stock Jellyfin image once:
+**2. Get a web client.** The image carries no web client. Put
+[deadfin-web](https://github.com/deadfin-org/deadfin-web) in `./deadfin/web`:
 
 ```bash
 mkdir -p ./deadfin/data ./deadfin/web
 sudo chown 65532:65532 ./deadfin/data
+curl -fsSL https://github.com/deadfin-org/deadfin-web/releases/download/v0.3.0-rc.3/deadfin-web-0.3.0-rc.3.tar.gz \
+  | tar -xz --strip-components=1 -C ./deadfin/web
+```
+
+For the complete stock interface with the admin dashboard, use jellyfin-web
+12.0 instead: copy it out of the Jellyfin image into the same directory.
+
+```bash
 cid=$(docker create jellyfin/jellyfin@sha256:2d1a69be5aa2695d0c2df90ebeb76bbcc6efc0a798cb09bfa65906680e1d785a)
 docker cp "$cid":/jellyfin/jellyfin-web/. ./deadfin/web/
 docker rm "$cid"
 ```
 
-**3. Run Deadfin.** Pin a release tag from the
-[tags page](https://github.com/deadfin-org/deadfin/tags) in place of
-`vX.Y.Z`.
+**3. Run Deadfin.** `:alpha` follows the newest release or release
+candidate. To control upgrades, put a tag from the
+[tags page](https://github.com/deadfin-org/deadfin/tags) in its place, for
+example `ghcr.io/deadfin-org/deadfin:v0.3.0-rc.6`.
 
 ```yaml
 # compose.yaml
 services:
   deadfin:
-    image: ghcr.io/deadfin-org/deadfin:vX.Y.Z
+    image: ghcr.io/deadfin-org/deadfin:alpha
     restart: unless-stopped
     ports:
       - "8096:8096"
@@ -128,7 +152,7 @@ docker run -d --name deadfin --restart unless-stopped \
   -v "$PWD/deadfin/data:/var/lib/deadfin" \
   -v "$PWD/deadfin/web:/var/lib/deadfin/web:ro" \
   -v /srv/media:/media:ro \
-  ghcr.io/deadfin-org/deadfin:vX.Y.Z
+  ghcr.io/deadfin-org/deadfin:alpha
 ```
 
 </details>
@@ -221,21 +245,24 @@ The binary also has a few maintenance commands, for example
 
 ## Clients
 
-Results from a fresh install with jellyfin-web 12.0 and generated test media
-(H.264, HEVC 10-bit, AV1, multi-audio, SRT, ASS and PGS subtitles, FLAC and
-MP3). **UI** means tested with the real app. **API** means the app's own
-requests (its device profile and URLs) were replayed against Deadfin.
+How each app was tested: **app** means the real app ran against Deadfin;
+**QA** means the Apple TV QA matrix (server decisions and checks plus a macOS
+AVPlayer probe, for the Swiftfin and SharkParty profiles); **API** means only
+the app's own requests (its device profile and URLs) were sent to Deadfin.
 
 | Client | Sign-in | Browse | Direct play | Transcode | Subtitles |
 |---|---|---|---|---|---|
-| jellyfin-web 12.0 | ✅ UI | ✅ UI | — | — | — |
+| jellyfin-web 12.0 | ✅ app | ✅ app | — | — | — |
+| Swiftfin (tvOS 1.4.1, native player) | — | ✅ app | ✅ app; DV profile 7 ⚠️ | ⚠️ | QA |
 | Swiftfin (iOS) | ✅ API | ✅ API | ✅ API | ✅ API | ✅ API |
+| Infuse 8.5.7 for Mac | ✅ app | ✅ app | ✅ app | direct-plays | — |
 | Jellyfin for Android TV | — | — | ✅ API | ✅ API | ✅ API |
-| Infuse | — | — | ✅ API | direct-plays | ✅ API |
 
-— means no result yet. The full matrix, with test steps for Swiftfin tvOS,
-Jellyfin for Android, Jellyfin Media Player, Findroid, Streamyfin and
-Chromecast, is [docs/alpha/client-matrix.md](docs/alpha/client-matrix.md).
+— means no result yet. ⚠️: on Apple TV, Swiftfin's native player failed on
+Dolby Vision profile 7 and on a 20 Mbit/s H.264 transcode with rc.5. The fix
+is in v0.3.0-rc.6; the Apple TV retest is pending. Versions, dates, limits
+and the test steps for every other client are in
+[docs/alpha/client-matrix.md](docs/alpha/client-matrix.md).
 Tested a client? Open a "Client compatibility report" issue.
 
 ## Build from source

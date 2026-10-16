@@ -17,8 +17,8 @@ you enable a feature that saves files next to media.
 
 - A Linux host with Docker or Podman (amd64 or arm64).
 - Your media on a path the container can read.
-- A copy of jellyfin-web 12.0. The Deadfin image does not include the web
-  client (see [Web client](#web-client)).
+- A web client: deadfin-web or jellyfin-web 12.0 (see
+  [Web client](#web-client)).
 - A TMDb v3 API key, free at
   [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api).
   Movie and TV metadata and artwork come from TMDb, and each server uses its
@@ -29,11 +29,15 @@ you enable a feature that saves files next to media.
 ## Image
 
 ```
-ghcr.io/deadfin-org/deadfin:vX.Y.Z
+ghcr.io/deadfin-org/deadfin:alpha
 ```
 
-Use a release tag, not `latest`. Each tag is a multi-arch image (amd64 and
-arm64) with Jellyfin's FFmpeg build at `/usr/lib/jellyfin-ffmpeg`.
+`:alpha` follows the newest release or release candidate. `:latest` follows
+the newest release (no `-rc.N`); the first one is v0.3.0. To control
+upgrades, pin a tag from the
+[tags page](https://github.com/deadfin-org/deadfin/tags), for example
+`ghcr.io/deadfin-org/deadfin:v0.3.0-rc.6`. Each tag is a multi-arch image
+(amd64 and arm64) with Jellyfin's FFmpeg build at `/usr/lib/jellyfin-ffmpeg`.
 
 The image is public. It ships the license texts of its third-party components
 (see the README, §License).
@@ -43,7 +47,7 @@ The image is public. It ships the license texts of its third-party components
 | Container path | Mode | Holds |
 |---|---|---|
 | `/var/lib/deadfin` | read-write | Everything Deadfin owns except a PostgreSQL database: `config/`, `data/deadfin.db` (SQLite), `metadata/`, `cache/` (transcodes, images), `log/`, `root/` (library definitions). This is `DEADFIN_DATA_DIR`. Back it up. |
-| `/var/lib/deadfin/web` | read-only | The jellyfin-web 12.0 files. Deadfin serves `/web` from `<DEADFIN_DATA_DIR>/web` when that directory exists. |
+| `/var/lib/deadfin/web` | read-only | The web client files: deadfin-web or jellyfin-web 12.0. Deadfin serves `/web` from `<DEADFIN_DATA_DIR>/web` when that directory exists. |
 | `/media` (your choice) | read-only | Your media. Mount read-write only if you want subtitle uploads, or images and NFO saved next to media. |
 
 The container runs as UID/GID 65532. The data directory must be writable by
@@ -97,8 +101,26 @@ library definitions.
 
 ## Web client
 
-The image carries no web client. Copy jellyfin-web out of the stock Jellyfin
-image that Deadfin's tests use (tag `12.0-rc2`, pinned by digest) once:
+The image carries no web client. Deadfin serves `<DEADFIN_DATA_DIR>/web` at
+`/web/`. Put one web client there.
+
+**deadfin-web** (recommended, alpha). It covers first-run setup, browsing,
+TV series, search, playback with track selection, and Quick Connect. It has
+no admin dashboard after setup.
+
+```bash
+mkdir -p ./deadfin/web
+curl -fsSL https://github.com/deadfin-org/deadfin-web/releases/download/v0.3.0-rc.3/deadfin-web-0.3.0-rc.3.tar.gz \
+  | tar -xz --strip-components=1 -C ./deadfin/web
+```
+
+The release page has a `.sha256` file for the tarball and a
+`ghcr.io/deadfin-org/deadfin-web:<tag>` image with the same files at
+`/deadfin-web`.
+
+**jellyfin-web 12.0** (stock, complete, with the admin dashboard). Copy it
+out of the stock Jellyfin image that Deadfin's tests use (tag `12.0-rc2`,
+pinned by digest) once:
 
 ```bash
 mkdir -p ./deadfin/web
@@ -113,7 +135,7 @@ docker rm "$cid"
 # compose.yaml
 services:
   deadfin:
-    image: ghcr.io/deadfin-org/deadfin:vX.Y.Z
+    image: ghcr.io/deadfin-org/deadfin:alpha
     restart: unless-stopped
     ports:
       - "8096:8096"
@@ -140,7 +162,7 @@ Add a `postgres` service and point Deadfin at it:
 # compose.yaml
 services:
   deadfin:
-    image: ghcr.io/deadfin-org/deadfin:vX.Y.Z
+    image: ghcr.io/deadfin-org/deadfin:alpha
     restart: unless-stopped
     depends_on:
       postgres:
@@ -253,7 +275,8 @@ software.
 
 ## Upgrade and roll back
 
-- Upgrade: change the tag and restart. Deadfin migrates the database at
+- Upgrade: on `:alpha`, run `docker compose pull` and restart. On a pinned
+  tag, change the tag and restart. Deadfin migrates the database at
   start. Back up `/var/lib/deadfin` first. The alpha does not support
   downgrades after a migration.
 - Roll back to Jellyfin: stop Deadfin and start your untouched Jellyfin. The

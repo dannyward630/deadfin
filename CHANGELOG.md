@@ -35,7 +35,9 @@ v0.3.0 is the first public alpha of Deadfin.
 - `CHANGELOG.md`. Each GitHub Release body comes from its section here.
 - Release images carry a build provenance attestation and an SPDX SBOM for
   each architecture. The SBOMs are attached to the GitHub Release.
-- `:alpha` and `:latest` image tags.
+- The `:alpha` image tag. It follows the newest release or release
+  candidate. The `:latest` tag follows the newest release (no `-rc.N`), so
+  v0.3.0 publishes it first.
 
 ### Changed
 
@@ -45,6 +47,18 @@ v0.3.0 is the first public alpha of Deadfin.
   so a deployment that sets either variable overrides it. Deadfin
   logs a warning for each set `JELLYFIN_CONFIG_DIR`, `JELLYFIN_CACHE_DIR`,
   `JELLYFIN_LOG_DIR` or `JELLYFIN_WEB_DIR`.
+
+### Fixed
+
+- Comma-delimited enum query parameters drop unknown values, as upstream
+  does. Infuse home rows (`/Items/Latest` with an Emby field) load again.
+- `GET /MediaSegments/{itemId}` returns an empty `QueryResult` for a known
+  item (Infuse called it on every play).
+- HLS stream copy of Dolby Vision profile 7 (`DOVIWithEL`) is tagged `hvc1`,
+  so the init segment matches the `hvc1` master playlist and AVPlayer can
+  decode the HDR10 base layer (D-65).
+- The H.264 level in the HLS master playlist matches the level the encoder
+  writes (D-66).
 
 ## [0.3.0-rc.3] - 2026-10-14
 

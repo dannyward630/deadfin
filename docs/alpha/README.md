@@ -1,7 +1,8 @@
 # Deadfin community alpha
 
 Documentation for alpha testers. The image is
-`ghcr.io/deadfin-org/deadfin:vX.Y.Z`. Report bugs at
+`ghcr.io/deadfin-org/deadfin:alpha` (the newest release or release
+candidate), or a pinned tag such as `:v0.3.0-rc.6`. Report bugs at
 <https://github.com/deadfin-org/deadfin/issues>.
 
 - [faq.md](faq.md): short answers to the first questions.
