@@ -385,6 +385,7 @@ func (h authHandler) capabilities(w http.ResponseWriter, r *http.Request) {
 	err := h.sessions.ReportCapabilities(r.Context(), session.CapabilityReport{
 		ID:        q.ID,
 		CurrentID: sessionIDFor(h.sessions, identity.Client, identity.DeviceID, identity.UserID),
+		Owner:     capabilityOwner(identity),
 		Capabilities: session.Capabilities{
 			PlayableMediaTypes:           []string(body.PlayableMediaTypes),
 			SupportedCommands:            []string(body.SupportedCommands),
@@ -428,6 +429,7 @@ func (h authHandler) postCapabilities(w http.ResponseWriter, r *http.Request) {
 	err := h.sessions.ReportCapabilities(r.Context(), session.CapabilityReport{
 		ID:        q.ID,
 		CurrentID: sessionIDFor(h.sessions, identity.Client, identity.DeviceID, identity.UserID),
+		Owner:     capabilityOwner(identity),
 		Capabilities: session.Capabilities{
 			PlayableMediaTypes:           q.PlayableMediaTypes,
 			SupportedCommands:            q.SupportedCommands,
@@ -464,6 +466,17 @@ func requestRemoteHost(r *http.Request) string {
 
 func requestRemoteIP(r *http.Request) netip.Addr {
 	return middleware.NormalizeClientAddress(r.RemoteAddr)
+}
+
+// capabilityOwner restricts a non-administrator capability report to the
+// caller's own sessions. Pinned SessionController.PostCapabilities and
+// PostFullCapabilities accept any session ID (SessionController.cs:355-386);
+// Deadfin answers another user's ID as an unknown session (divergence D-67).
+func capabilityOwner(identity auth.Identity) *dto.UUID {
+	if identity.Administrator || identity.APIKey {
+		return nil
+	}
+	return &identity.UserID
 }
 
 func sessionIDFor(m *session.Manager, client, device string, userID dto.UUID) string {

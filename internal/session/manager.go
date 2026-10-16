@@ -124,9 +124,12 @@ type Query struct {
 }
 
 // CapabilityReport targets either its explicit ID or the caller's current ID.
+// A non-nil Owner restricts the target to sessions of that user; a session of
+// another user reports ErrNotFound (divergence D-67).
 type CapabilityReport struct {
 	ID           *string
 	CurrentID    string
+	Owner        *dto.UUID
 	Capabilities Capabilities
 }
 
@@ -610,7 +613,7 @@ func (manager *Manager) ReportCapabilities(_ context.Context, report CapabilityR
 		return ErrNotFound
 	}
 	session, found := manager.byKey[key]
-	if !found {
+	if !found || (report.Owner != nil && session.UserID != *report.Owner) {
 		return ErrNotFound
 	}
 	session.Capabilities = cloneCapabilities(report.Capabilities)

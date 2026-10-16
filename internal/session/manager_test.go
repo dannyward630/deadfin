@@ -581,3 +581,31 @@ func sameStrings(got, want []string) bool {
 	}
 	return true
 }
+
+func TestManagerCapabilityReportOwnerRejectsAnotherUsersSession(t *testing.T) {
+	manager, _ := newManager(t)
+	own := logActivity(t, manager, "Jellyfin Web", "own-device", sessionTestUserA)
+	other := logActivity(t, manager, "Jellyfin Web", "other-device", sessionTestUserB)
+	owner := own.UserID
+
+	otherID := other.ID
+	if err := manager.ReportCapabilities(t.Context(), session.CapabilityReport{
+		ID: &otherID, CurrentID: own.ID, Owner: &owner,
+		Capabilities: session.Capabilities{PlayableMediaTypes: []string{"Video"}},
+	}); !errors.Is(err, session.ErrNotFound) {
+		t.Fatalf("owner-restricted report for another user's session error = %v, want ErrNotFound", err)
+	}
+	if got := sessionByID(t, manager.Sessions(session.Query{}), other.ID).Capabilities.PlayableMediaTypes; len(got) != 0 {
+		t.Fatalf("another user's session capabilities = %#v, want unchanged", got)
+	}
+	ownID := own.ID
+	if err := manager.ReportCapabilities(t.Context(), session.CapabilityReport{
+		ID: &ownID, Owner: &owner,
+		Capabilities: session.Capabilities{PlayableMediaTypes: []string{"Audio"}},
+	}); err != nil {
+		t.Fatalf("owner-restricted report for own session: %v", err)
+	}
+	if got := sessionByID(t, manager.Sessions(session.Query{}), own.ID).Capabilities.PlayableMediaTypes; !sameStrings(got, []string{"Audio"}) {
+		t.Fatalf("own session capabilities = %#v, want Audio", got)
+	}
+}
