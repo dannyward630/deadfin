@@ -25,10 +25,20 @@ Deadfin is alpha software. Security fixes go to the newest release tag.
 
 ## Scope
 
-This policy covers the Deadfin server in this repository and the release
-images at `ghcr.io/deadfin-org/deadfin`. Report problems in Jellyfin clients,
-jellyfin-web, or the third-party programs in the image to their upstream
-projects.
+This policy covers:
+
+- the Deadfin server in this repository and the release images at
+  `ghcr.io/deadfin-org/deadfin`;
+- the [deadfin-web](https://github.com/deadfin-org/deadfin-web) client and
+  its release assets at `ghcr.io/deadfin-org/deadfin-web`;
+- the [SharkParty](https://github.com/deadfin-org/SharkParty) tvOS app.
+
+Report problems in all three here. Put the project name in the title. For a
+client, give its build or commit, the browser or the tvOS version, and the
+server build.
+
+Report problems in Jellyfin clients, jellyfin-web, Swiftfin, or the
+third-party programs in the image to their upstream projects.
 
 ## Hardening notes
 
